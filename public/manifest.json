@@ -1,0 +1,27 @@
+{
+  "background_color": "#775a41",
+  "display": "standalone",
+  "homepage_url": "https://sekira-nft.com/",
+  "providedBy": { "name": "SのKIRA", "url": "https://sekira-nft.com/" },
+  "icons": [
+    {
+      "src": "./images/192x192_App_Icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./images/512x512_App_Icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "portrait",
+  "name": "SのKIRA",
+  "description": "SのKIRA is an NFT Collection of 5,555 Generative female character inspired by Japan. Our aim is to build a culture based community that is different from all other projects, with our members defining SのKIRA, represent SのKIRA and become SのKIRA.",
+  "iconPath": "./images/512x512_App_Icon.png",
+  "short_name": "sekira",
+  "start_url": ".",
+  "theme_color": "#775a41"
+}
