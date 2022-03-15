@@ -7,5 +7,5 @@ export const MULTICALL_ADDRESS: AddressMap = {
 }
 
 export const PANGA_ADDRESS: AddressMap = {
-  ...constructSameAddressMap('0xF3ac416803fa2c338F93aB292D1CF394F61A37f2'),
+  ...constructSameAddressMap('0x7CcAd161335Aa709864f1F0d33C6d465486C4cD8'),
 }

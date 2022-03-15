@@ -311,10 +311,11 @@ export default function Home() {
         minthash,
         mintErrorMessage,
       })
-      const totalPrice = tier ? parseEther('0.04').mul(proofs.length) : parseEther('0.02').mul(proofs.length)
+      const sum = tier ? 2 : 1
+      const totalPrice = tier ? parseEther('0.04').mul(sum) : parseEther('0.02').mul(sum)
 
       pangaContract
-        ?.mintPresale(proofs.length, tier, proofs, { value: totalPrice })
+        ?.mintPresale(sum, tier, proofs, { value: totalPrice })
         .then(async (result: TransactionResponse) => {
           const { wait, hash } = result
           setModal({
@@ -374,7 +375,7 @@ export default function Home() {
       })
 
       pangaContract
-        ?.mintFreeSale(3)
+        .mintFreeSale(1)
         .then(async (result: TransactionResponse) => {
           const { wait, hash } = result
           setModal({
@@ -496,9 +497,15 @@ export default function Home() {
                     <Minus size={18} />
                   </Operation>
                 </MintInputWrapper>
-                <MintButton color={'#E7B44D'} onClick={() => mintPublicSale()}>
-                  <Text fontSize={31}>MINT</Text>
-                </MintButton>
+                {Number(currently) > Number(total) ? (
+                  <MintButton>
+                    <Text fontSize={31}>SOLD OUT</Text>
+                  </MintButton>
+                ) : (
+                  <MintButton color={'#E7B44D'} onClick={mintPublicSale}>
+                    <Text fontSize={31}>MINT</Text>
+                  </MintButton>
+                )}
               </>
             ) : isPresaleActive ? (
               tier !== undefined && proofs !== undefined ? (
@@ -528,13 +535,13 @@ export default function Home() {
               )
             ) : isFreeMintActive ? (
               <>
-                <MintButton color={'#E7B44D'} disabled={mintedForPresale} onClick={mintFreeSale}>
+                <MintButton color={'#E7B44D'} onClick={mintFreeSale}>
                   <Text fontSize={31}>MINT</Text>
                 </MintButton>
               </>
             ) : (
-              <MintButton>
-                <Text fontSize={31}>SOLD OUT</Text>
+              <MintButton disabled>
+                <Text fontSize={31}>NOT STARTED</Text>
               </MintButton>
             )}
           </MintWrapper>

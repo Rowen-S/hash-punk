@@ -15,11 +15,6 @@ msgstr ""
 msgid "Account"
 msgstr "Account"
 
-#: 
-#: 
-#~ msgid "Apply Now"
-#~ msgstr "Apply Now"
-
 #: src/components/WalletModal/index.tsx
 msgid "Back"
 msgstr "Back"
@@ -61,17 +56,9 @@ msgstr "Copied"
 msgid "Copy Address"
 msgstr "Copy Address"
 
-#: 
-#~ msgid "Dark Theme"
-#~ msgstr "Dark Theme"
-
 #: src/components/AccountDetails/index.tsx
 msgid "Disconnect"
 msgstr "Disconnect"
-
-#: 
-#~ msgid "Discord"
-#~ msgstr "Discord"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Dismiss"
@@ -90,10 +77,6 @@ msgstr "Error connecting"
 msgid "Error connecting. Try refreshing the page."
 msgstr "Error connecting. Try refreshing the page."
 
-#: 
-#~ msgid "Get $SOS"
-#~ msgstr "Get $SOS"
-
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
 msgstr "In range"
@@ -105,22 +88,6 @@ msgstr "Initializing..."
 #: src/components/WalletModal/index.tsx
 msgid "Install Metamask"
 msgstr "Install Metamask"
-
-#: 
-#~ msgid "Light Theme"
-#~ msgstr "Light Theme"
-
-#: 
-#~ msgid "Loading"
-#~ msgstr "Loading"
-
-#: 
-#~ msgid "Menu"
-#~ msgstr "Menu"
-
-#: 
-#~ msgid "Message"
-#~ msgstr "Message"
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -138,35 +105,14 @@ msgstr "PLEASE CONNECT YOUR WALLET"
 msgid "Please connect to the appropriate Ethereum network."
 msgstr "Please connect to the appropriate Ethereum network."
 
-#: 
-#~ msgid "Please wait for the Apply in progress"
-#~ msgstr "Please wait for the Apply in progress"
-
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/TransactionSubmissionModal/index.tsx
 msgid "Return"
 msgstr "Return"
 
-#: 
-#~ msgid "Save"
-#~ msgstr "Save"
-
-#: 
-#~ msgid "Starting time"
-#~ msgstr "Starting time"
-
 #: src/components/TransactionSubmissionModal/index.tsx
 msgid "Submitting Transaction"
 msgstr "Submitting Transaction"
-
-#: 
-#: 
-#~ msgid "Success"
-#~ msgstr "Success"
-
-#: 
-#~ msgid "TBA"
-#~ msgstr "TBA"
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
@@ -203,10 +149,6 @@ msgstr "Transaction failed"
 msgid "Try Again"
 msgstr "Try Again"
 
-#: 
-#~ msgid "Twitter"
-#~ msgstr "Twitter"
-
 #: src/components/TransactionSubmissionModal/index.tsx
 msgid "View on Etherscan"
 msgstr "View on Etherscan"
@@ -220,21 +162,9 @@ msgstr "View on Explorer"
 msgid "View transaction on Explorer"
 msgstr "View transaction on Explorer"
 
-#: 
-#~ msgid "Waiting"
-#~ msgstr "Waiting"
-
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Waiting For Confirmation"
 msgstr "Waiting For Confirmation"
-
-#: 
-#~ msgid "Warning"
-#~ msgstr "Warning"
-
-#: 
-#~ msgid "Whitelist"
-#~ msgstr "Whitelist"
 
 #: src/components/WalletModal/index.tsx
 msgid "Wrong Network"
@@ -243,15 +173,6 @@ msgstr "Wrong Network"
 #: src/components/Badge/RangeBadge.tsx
 msgid "Your position has 0 liquidity, and is not earning fees."
 msgstr "Your position has 0 liquidity, and is not earning fees."
-
-#: 
-#: 
-#~ msgid "{0}"
-#~ msgstr "{0}"
-
-#: 
-#~ msgid "{0} 2022 @ SEKIRA"
-#~ msgstr "{0} 2022 @ SEKIRA"
 
 #: src/components/Textarea/index.tsx
 msgid "{label}"
