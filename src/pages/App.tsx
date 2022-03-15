@@ -26,15 +26,10 @@ const BodyWrapper = styled.div`
   width: 100%;
 
   min-height: 100vh;
-  /* padding: 76px 0px 0px 0px; */
   padding: 0px;
   align-items: center;
   flex: 1;
   z-index: 1;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 2rem;
-  `};
 `
 const HeaderWrapper = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -61,7 +56,6 @@ function App() {
             <Polling />
             <Switch>
               <Route exact strict path="/" component={Home} />
-
               <Route component={RedirectPathToHomeOnly} />
             </Switch>
           </BodyWrapper>

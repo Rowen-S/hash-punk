@@ -1,8 +1,8 @@
 {
   "background_color": "#775a41",
   "display": "standalone",
-  "homepage_url": "https://sekira-nft.com/",
-  "providedBy": { "name": "SのKIRA", "url": "https://sekira-nft.com/" },
+  "homepage_url": "https://panganft.com/",
+  "providedBy": { "name": "潘噶之交", "url": "https://panganft.com/" },
   "icons": [
     {
       "src": "./images/192x192_App_Icon.png",
@@ -18,10 +18,10 @@
     }
   ],
   "orientation": "portrait",
-  "name": "SのKIRA",
-  "description": "SのKIRA is an NFT Collection of 5,555 Generative female character inspired by Japan. Our aim is to build a culture based community that is different from all other projects, with our members defining SのKIRA, represent SのKIRA and become SのKIRA.",
+  "name": "潘噶之交",
+  "description": "潘嘎之交让你们天天都能喝到酒",
   "iconPath": "./images/512x512_App_Icon.png",
-  "short_name": "sekira",
+  "short_name": "潘噶之交",
   "start_url": ".",
   "theme_color": "#775a41"
 }

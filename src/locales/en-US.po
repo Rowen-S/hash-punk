@@ -36,6 +36,10 @@ msgstr "Close"
 msgid "Closed"
 msgstr "Closed"
 
+#: src/components/TransactionSubmissionModal/VoteModalFooter.tsx
+msgid "Confirm"
+msgstr "Confirm"
+
 #: src/components/ModalViews/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Confirm this transaction in your wallet"
@@ -54,21 +58,20 @@ msgid "Copied"
 msgstr "Copied"
 
 #: src/components/AccountDetails/index.tsx
-#: src/components/AccountDetails/index.tsx
 msgid "Copy Address"
 msgstr "Copy Address"
 
-#: src/components/Menu/index.tsx
-msgid "Dark Theme"
-msgstr "Dark Theme"
+#: 
+#~ msgid "Dark Theme"
+#~ msgstr "Dark Theme"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Disconnect"
 msgstr "Disconnect"
 
-#: src/components/Menu/index.tsx
-msgid "Discord"
-msgstr "Discord"
+#: 
+#~ msgid "Discord"
+#~ msgstr "Discord"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Dismiss"
@@ -87,9 +90,9 @@ msgstr "Error connecting"
 msgid "Error connecting. Try refreshing the page."
 msgstr "Error connecting. Try refreshing the page."
 
-#: src/components/AccountDetails/index.tsx
-msgid "Get $SOS"
-msgstr "Get $SOS"
+#: 
+#~ msgid "Get $SOS"
+#~ msgstr "Get $SOS"
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "In range"
@@ -103,21 +106,21 @@ msgstr "Initializing..."
 msgid "Install Metamask"
 msgstr "Install Metamask"
 
-#: src/components/Menu/index.tsx
-msgid "Light Theme"
-msgstr "Light Theme"
+#: 
+#~ msgid "Light Theme"
+#~ msgstr "Light Theme"
 
-#: src/components/TransactionSubmissionModal/index.tsx
-msgid "Loading"
-msgstr "Loading"
+#: 
+#~ msgid "Loading"
+#~ msgstr "Loading"
 
-#: src/components/Menu/index.tsx
-msgid "Menu"
-msgstr "Menu"
+#: 
+#~ msgid "Menu"
+#~ msgstr "Menu"
 
-#: src/components/TransactionConfirmationModal/index.tsx
-msgid "Message"
-msgstr "Message"
+#: 
+#~ msgid "Message"
+#~ msgstr "Message"
 
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -135,27 +138,31 @@ msgstr "PLEASE CONNECT YOUR WALLET"
 msgid "Please connect to the appropriate Ethereum network."
 msgstr "Please connect to the appropriate Ethereum network."
 
-#: src/components/TransactionSubmissionModal/ConfirmVoteModal.tsx
-msgid "Please wait for the Apply in progress"
-msgstr "Please wait for the Apply in progress"
+#: 
+#~ msgid "Please wait for the Apply in progress"
+#~ msgstr "Please wait for the Apply in progress"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/TransactionSubmissionModal/index.tsx
 msgid "Return"
 msgstr "Return"
 
-#: src/components/TransactionSubmissionModal/ModalFooter.tsx
-msgid "Save"
-msgstr "Save"
+#: 
+#~ msgid "Save"
+#~ msgstr "Save"
 
 #: 
 #~ msgid "Starting time"
 #~ msgstr "Starting time"
 
-#: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/TransactionSubmissionModal/index.tsx
-msgid "Success"
-msgstr "Success"
+msgid "Submitting Transaction"
+msgstr "Submitting Transaction"
+
+#: 
+#: 
+#~ msgid "Success"
+#~ msgstr "Success"
 
 #: 
 #~ msgid "TBA"
@@ -169,20 +176,43 @@ msgstr "The price of this pool is outside of your selected range. Your position 
 msgid "The price of this pool is within your selected range. Your position is currently earning fees."
 msgstr "The price of this pool is within your selected range. Your position is currently earning fees."
 
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/TransactionSubmissionModal/index.tsx
+msgid "Transaction Submitted"
+msgstr "Transaction Submitted"
+
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+msgid "Transaction confirmed"
+msgstr "Transaction confirmed"
+
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+#: src/pages/Home/index.tsx
+msgid "Transaction failed"
+msgstr "Transaction failed"
+
 #: src/components/WalletModal/PendingView.tsx
 msgid "Try Again"
 msgstr "Try Again"
 
-#: src/components/Menu/index.tsx
-msgid "Twitter"
-msgstr "Twitter"
+#: 
+#~ msgid "Twitter"
+#~ msgstr "Twitter"
 
 #: src/components/TransactionSubmissionModal/index.tsx
 msgid "View on Etherscan"
 msgstr "View on Etherscan"
 
 #: src/components/AccountDetails/index.tsx
-#: src/components/AccountDetails/index.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
 msgid "View on Explorer"
 msgstr "View on Explorer"
 
@@ -198,9 +228,9 @@ msgstr "View transaction on Explorer"
 msgid "Waiting For Confirmation"
 msgstr "Waiting For Confirmation"
 
-#: src/components/TransactionConfirmationModal/index.tsx
-msgid "Warning"
-msgstr "Warning"
+#: 
+#~ msgid "Warning"
+#~ msgstr "Warning"
 
 #: 
 #~ msgid "Whitelist"
@@ -214,14 +244,14 @@ msgstr "Wrong Network"
 msgid "Your position has 0 liquidity, and is not earning fees."
 msgstr "Your position has 0 liquidity, and is not earning fees."
 
-#: src/components/Table/index.tsx
-#: src/components/Table/index.tsx
-msgid "{0}"
-msgstr "{0}"
+#: 
+#: 
+#~ msgid "{0}"
+#~ msgstr "{0}"
 
-#: src/components/Footer/index.tsx
-msgid "{0} 2022 @ SEKIRA"
-msgstr "{0} 2022 @ SEKIRA"
+#: 
+#~ msgid "{0} 2022 @ SEKIRA"
+#~ msgstr "{0} 2022 @ SEKIRA"
 
 #: src/components/Textarea/index.tsx
 msgid "{label}"

@@ -7,7 +7,7 @@ export enum SupportedChainId {
   KOVAN = 42,
 }
 
-export const defaultChainId = SupportedChainId.MAINNET
+export const defaultChainId = SupportedChainId.RINKEBY
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,

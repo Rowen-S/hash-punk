@@ -1,7 +1,7 @@
 // import { darken } from 'polished'
 // import { NavLink } from 'react-router-dom'
 import { Text } from 'rebass'
-import { useDarkModeManager } from 'state/user/hooks'
+// import { useDarkModeManager } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { ExternalLink } from '../../theme'
@@ -37,7 +37,7 @@ const HeaderFrame = styled.div`
   /* box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.bg2}; */
   border-bottom: 2px solid transparent;
   ${({ theme }) => theme.mediaWidth.upToLarge`
-    grid-template-columns: 48px 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   `};
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
@@ -47,7 +47,7 @@ const HeaderFrame = styled.div`
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding:  1rem;
-    grid-template-columns: 36px 1fr;
+    grid-template-columns: 1fr 1fr;
   `};
 `
 
@@ -124,19 +124,20 @@ const BalanceText = styled(Text)`
   `};
 `
 
-const Title = styled.a`
-  display: flex;
-  align-items: center;
-  pointer-events: auto;
-  justify-self: flex-start;
-  margin-right: 12px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    justify-self: center;
-  `};
-  :hover {
-    cursor: pointer;
-  }
-`
+// const Title = styled.a`
+//   display: flex;
+//   align-items: center;
+//   pointer-events: auto;
+//   justify-self: flex-start;
+//   margin-right: 12px;
+//   ${({ theme }) => theme.mediaWidth.upToSmall`
+//     justify-self: center;
+//   `};
+//   :hover {
+//     cursor: pointer;
+//   }
+// `
+
 const HeaderLinks = styled(Row)`
   justify-self: flex-end;
   width: fit-content;
@@ -147,9 +148,6 @@ const HeaderLinks = styled(Row)`
   grid-gap: 10px;
   overflow: auto;
   align-items: center;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none;
-  `}
 `
 
 // const activeClassName = 'ACTIVE'
@@ -229,7 +227,7 @@ export default function Header() {
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
-  const [darkMode] = useDarkModeManager()
+  // const [darkMode] = useDarkModeManager()
 
   return (
     <HeaderFrame>
@@ -238,13 +236,13 @@ export default function Header() {
       </Title> */}
 
       <HeaderLinks>
-        <LogoLink href="https://twitter.com/apezuki_nft">
+        <LogoLink href="https://twitter.com/panga3747">
           <Logo src={Twitter} alt="Twitter" />
         </LogoLink>
-        <LogoLink href="https://discord.gg/apezuki">
+        <LogoLink href="https://discord.gg/pangazhijiao">
           <Logo src={Discord} alt="Discord" />
         </LogoLink>
-        <LogoLink href="https://opensea.io/collection/ape-zuki">
+        <LogoLink href="https://opensea.io/collection/pangazhijiao">
           <Logo src={Opensea} alt="Opensea" />
         </LogoLink>
       </HeaderLinks>

@@ -1,19 +1,18 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { t } from '@lingui/macro'
-import { Color } from 'theme/styled'
 import { Text } from 'rebass'
 import { darken } from 'polished'
-import ReactGA from 'react-ga'
+import { Minus, Plus } from 'react-feather'
 
-import { useCherryContract } from 'hooks/useContract'
+import { usePangaContract } from 'hooks/useContract'
 import { useSingleCallResult } from 'state/multicall/hooks'
-import { useAddPopup } from 'state/application/hooks'
+import { useAddPopup, useWalletModalToggle } from 'state/application/hooks'
 
 import styled, { ThemeContext } from 'styled-components/macro'
 
-import Column, { AutoColumn } from 'components/Column'
-import { ButtonEmpty } from 'components/Button'
-import Row, { RowBetween, RowFixed, RowFlat } from 'components/Row'
+import Column from 'components/Column'
+import { ButtonEmpty, ButtonOutlined } from 'components/Button'
+import Row from 'components/Row'
 import NumericalInput from 'components/NumericalInput'
 import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
 import { DEFAULT_TXN_DISMISS_MS, L2_TXN_DISMISS_MS } from 'constants/misc'
@@ -23,21 +22,25 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { defaultChainId } from 'constants/chains'
 
 import { TransactionResponse } from '@ethersproject/providers'
+//formatEther,
 import { parseEther } from '@ethersproject/units'
+// import { BigNumber } from '@ethersproject/bignumber'
+
+import { get } from 'utils/request'
+import { switchToNetwork } from 'utils/switchToNetwork'
 
 import BannerImg from 'assets/images/banner.png'
+import BannerPhoneImg from 'assets/images/phone-bg.png'
+import BannerIpadImg from 'assets/images/ipad-bg.png'
 import YellowbuttonBg from 'assets/images/yellow-button.png'
 
 import Jun from 'assets/images/jiu.png'
-import One from 'assets/images/x1.png'
 import Two from 'assets/images/x2.png'
+import Three from 'assets/images/x3.png'
 
 const HomeWrapper = styled.main`
   width: 100%;
   min-height: 100vh;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 0px 20px;
-  `};
 `
 
 const BannerOptionWraper = styled.div`
@@ -50,24 +53,34 @@ const BannerOptionWraper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    overflow-x: auto;
+    background: url(${BannerIpadImg}) center center / cover no-repeat;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    background: url(${BannerPhoneImg}) center center / cover no-repeat;
   `};
 `
 const MintOptionWrapper = styled(Row)`
   background: #fff0c6;
   padding: 0.875rem 2.875rem;
-
   border-radius: 64px;
   position: absolute;
-  width: 800px;
   bottom: 4.375rem;
-  justify-content: flex-end;
+  width: 800px;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    width: 95%;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%;
+  `};
 `
-const MintWrapper = styled(RowFlat)`
-  position: relative;
-  bottom: 0;
-  right: 0;
-  align-items: center;
+const MintWrapper = styled(Row)`
+  width: 100%;
+  margin-left: 160px;
+  justify-content: space-around;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-left: unset;
+    flex-direction: column;
+  `};
 `
 
 const AlcoholImg = styled.img`
@@ -76,14 +89,23 @@ const AlcoholImg = styled.img`
   height: 180px;
   bottom: 0;
   left: 3.625rem;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    position: unset;
+    width: 100px;
+    height: 160px;
+  `};
 `
-const MintButton = styled(ButtonEmpty)<{ color?: Color; open?: boolean }>`
+const MintButton = styled(ButtonEmpty)<{ color?: string; open?: boolean; bg?: string }>`
   position: relative;
   width: 10.75rem;
   height: 5.3125rem;
   background: url(${YellowbuttonBg}) center center / cover no-repeat;
+  background: ${({ bg }) => bg};
   background-size: 100% 100%;
   color: ${({ theme }) => theme.text1};
+  :disabled {
+    background: ${({ theme }) => theme.bg6};
+  }
 `
 const DoubleImg = styled.img`
   position: absolute;
@@ -93,15 +115,62 @@ const DoubleImg = styled.img`
   height: 3.25rem;
 `
 
+const MintInputWrapper = styled(Row)`
+  justify-content: center;
+  width: 10.75rem;
+  height: 5.3125rem;
+  background: url(${YellowbuttonBg}) center center / cover no-repeat;
+`
+const MintInput = styled(NumericalInput)`
+  flex: 1 1 auto;
+  width: 0;
+  max-width: 55px;
+  max-height: 2.5rem;
+  font-size: 1rem;
+  padding: 5px;
+  font-weight: 400;
+  width: 100%;
+  border-radius: 2px;
+  background-color: white;
+  text-align: center;
+`
+const Operation = styled(ButtonOutlined)`
+  max-width: 50px;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  &:active {
+    box-shadow: 0 0 0 1pt ${darken(0.1, '#E7B44D')};
+  }
+`
+
 export default function Home() {
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
+  const toggleWalletModal = useWalletModalToggle()
+  const showSwitchAMainnet = Boolean(chainId !== defaultChainId)
+  const showAccount = Boolean(!account)
+
   const theme = useContext(ThemeContext)
   const addPopup = useAddPopup()
-  const cherryContract = useCherryContract()
-  const showSwitchAMainnet = Boolean(chainId !== defaultChainId)
+  const pangaContract = usePangaContract()
+  const mintedForPublic = useSingleCallResult(pangaContract, 'mintedForPublic', [account ?? undefined])?.result?.[0]
+  const mintedForPresale = useSingleCallResult(pangaContract, 'mintedForPresale', [account ?? undefined])?.result?.[0]
+
+  // currently sold
+  const currently = useSingleCallResult(pangaContract, 'totalSupply')?.result?.[0]
+  // total
+  const total = useSingleCallResult(pangaContract, 'maxTokens')?.result?.[0]
+  // maxPublicMint
+  const maxPublicMint = useSingleCallResult(pangaContract, 'maxPublicMint')?.result?.[0]
+
+  const isFreeMintActive = useSingleCallResult(pangaContract, 'isFreeMintActive')?.result?.[0]
+
+  const isPresaleActive = useSingleCallResult(pangaContract, 'isPresaleActive')?.result?.[0]
+
+  const isPublicActive = useSingleCallResult(pangaContract, 'isPublicActive')?.result?.[0]
+
   // mint Max
-  const [mintNum, setMintNum] = useState<number>(0)
-  const [mintAmount, setMintAmount] = useState('2')
+  const [amount, setAmount] = useState('1')
 
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
     minting: boolean
@@ -112,29 +181,61 @@ export default function Home() {
     minthash: undefined,
     mintErrorMessage: undefined,
   })
-
   // mint status
-  const [{ type, r, s, v }, setMintSign] = useState<{
-    type: 'raffle' | 'presale' | undefined
-    r: string | undefined
-    s: string | undefined
-    v: number | undefined
+  const [{ tier, proofs }, setCheckPoof] = useState<{
+    tier: number | undefined
+    proofs: string[] | undefined
   }>({
-    type: undefined,
-    r: undefined,
-    s: undefined,
-    v: undefined,
+    tier: undefined,
+    proofs: undefined,
   })
 
-  //totalMint
-  const availableMint = type === 'presale' || type === 'raffle' ? 2 : !type ? 3 : 0
+  const getCheckPoof = useCallback(async () => {
+    if (account) {
+      const { code, data } = await get(`https://panganft.com/apis/getAccount?address=${account.toLocaleLowerCase()}`)
+      if (code == 0 && data) {
+        const { tier, proofs } = data
+        setTimeout(() => {
+          setCheckPoof({
+            tier,
+            proofs,
+          })
+        }, 100)
+      } else {
+        setCheckPoof({
+          tier: undefined,
+          proofs: undefined,
+        })
+      }
+    }
+  }, [account, setCheckPoof])
 
-  // _config
-  const config = useSingleCallResult(cherryContract, '_config').result
-  console.log(config)
+  const handleAmountInput = useCallback(
+    (value: string) => {
+      value = value.replace(/\D+/, '')
+      setAmount(value)
+    },
+    [setAmount]
+  )
 
-  // totalSupply
-  const totalSupply = useSingleCallResult(cherryContract, 'totalSupply').result
+  const handlePlus = useCallback(
+    (val: number) => {
+      const totalSupply = val + 1 + Number(mintedForPublic)
+      if (totalSupply <= maxPublicMint) {
+        setAmount(val >= maxPublicMint ? String(val) : String(val + 1))
+      }
+    },
+    [maxPublicMint, mintedForPublic, setAmount]
+  )
+
+  const handleMinus = useCallback(
+    (val: number) => {
+      if (val > 1) {
+        setAmount(String((val -= 1)))
+      }
+    },
+    [setAmount]
+  )
 
   const handleDismissSubmissionModal = useCallback(() => {
     setModal({
@@ -144,74 +245,145 @@ export default function Home() {
     })
   }, [setModal])
 
-  const handleAmountInput = useCallback(
-    (value: string) => {
-      value = value.replace(/\D+/, '')
-      const lastMint = availableMint - mintNum
-      setMintAmount(Number(value) >= lastMint ? String(lastMint) : value)
+  const mintPublicSale = useCallback(
+    () => {
+      setModal({
+        minting: true,
+        minthash,
+        mintErrorMessage,
+      })
+      const totalPrice = parseEther('0.05').mul(amount)
+      pangaContract
+        .mintPublicSale(amount, { value: totalPrice })
+        .then(async (result: TransactionResponse) => {
+          const { wait, hash } = result
+          setModal({
+            minting: true,
+            mintErrorMessage,
+            minthash: hash,
+          })
+          if (wait) {
+            await wait().then((res: any) => {
+              const { transactionHash, status } = res
+              if (status === 1) {
+                addPopup(
+                  {
+                    txn: {
+                      hash: transactionHash,
+                      success: true,
+                      summary: t`Transaction confirmed`,
+                    },
+                  },
+                  transactionHash,
+                  DEFAULT_TXN_DISMISS_MS
+                )
+              } else {
+                addPopup(
+                  {
+                    txn: {
+                      hash: transactionHash,
+                      success: false,
+                      summary: t`Transaction failed`,
+                    },
+                  },
+                  transactionHash,
+                  L2_TXN_DISMISS_MS
+                )
+              }
+            })
+          }
+        })
+        .catch((err: any) => {
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        })
     },
-    [availableMint, mintNum, setMintAmount]
+    // eslint-disable-next-line
+    [pangaContract, account, addPopup, amount]
+  )
+  const mintPresale = useCallback(
+    (proofs: string[], tier: number) => {
+      setModal({
+        minting: true,
+        minthash,
+        mintErrorMessage,
+      })
+      const totalPrice = tier ? parseEther('0.04').mul(proofs.length) : parseEther('0.02').mul(proofs.length)
+
+      pangaContract
+        ?.mintPresale(proofs.length, tier, proofs, { value: totalPrice })
+        .then(async (result: TransactionResponse) => {
+          const { wait, hash } = result
+          setModal({
+            minting: true,
+            mintErrorMessage,
+            minthash: hash,
+          })
+          if (wait) {
+            await wait().then((res: any) => {
+              const { transactionHash, status } = res
+              if (status === 1) {
+                addPopup(
+                  {
+                    txn: {
+                      hash: transactionHash,
+                      success: true,
+                      summary: t`Transaction confirmed`,
+                    },
+                  },
+                  transactionHash,
+                  DEFAULT_TXN_DISMISS_MS
+                )
+              } else {
+                addPopup(
+                  {
+                    txn: {
+                      hash: transactionHash,
+                      success: false,
+                      summary: t`Transaction failed`,
+                    },
+                  },
+                  transactionHash,
+                  L2_TXN_DISMISS_MS
+                )
+              }
+            })
+          }
+        })
+        .catch((err: any) => {
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        })
+    },
+    // eslint-disable-next-line
+    [pangaContract, account, addPopup, amount]
   )
 
-  // setMintNum
-  const getPreSaleMinted = useCallback(async () => {
-    if (type === 'presale') {
-      const sum = await cherryContract?._presaleMinted(account)
-      setMintNum(sum)
-      setMintAmount((availableMint - sum).toString())
-    }
-  }, [cherryContract, availableMint, account, type, setMintNum, setMintAmount])
-  // setMintNum
+  const mintFreeSale = useCallback(
+    () => {
+      setModal({
+        minting: true,
+        minthash,
+        mintErrorMessage,
+      })
 
-  const getRafSaleMinted = useCallback(async () => {
-    if (type === 'raffle') {
-      const sum = await cherryContract?._raffleSaleMinted(account)
-      setMintNum(sum)
-      setMintAmount((availableMint - sum).toString())
-    }
-  }, [cherryContract, availableMint, account, type, setMintNum])
-
-  //setMintNum
-  const getPublicSaleMinted = useCallback(async () => {
-    if (config?.isPublicSaleActive) {
-      const sum = await cherryContract?._publicSaleMinted(account)
-      setMintNum(sum)
-      setMintAmount((availableMint - sum).toString())
-    }
-  }, [cherryContract, availableMint, account, config, setMintNum])
-
-  /**
-   * public mint
-   */
-
-  const publicSaleMint = useCallback(async () => {
-    setModal({
-      minting: true,
-      minthash,
-      mintErrorMessage,
-    })
-
-    // presalePrice gas
-    const price = parseEther('0.0001').mul(config?.publicSalePrice).mul(mintAmount)
-
-    // sekiraRaffleSaleMint
-    cherryContract
-      ?.sekiraPublicMint(mintAmount, { value: price })
-      .then(async (result: TransactionResponse) => {
-        const { wait, hash } = result
-        setModal({
-          minting: true,
-          mintErrorMessage,
-          minthash: hash,
-        })
-        ReactGA.event({
-          category: 'Mint',
-          action: 'public Mint w/ Send',
-          label: [account, mintAmount].join('/'),
-        })
-        if (wait) {
-          await wait()
-            .then((res: any) => {
+      pangaContract
+        ?.mintFreeSale(3)
+        .then(async (result: TransactionResponse) => {
+          const { wait, hash } = result
+          setModal({
+            minting: true,
+            mintErrorMessage,
+            minthash: hash,
+          })
+          if (wait) {
+            await wait().then((res: any) => {
               const { transactionHash, status } = res
               if (status === 1) {
                 addPopup(
@@ -239,173 +411,31 @@ export default function Home() {
                 )
               }
             })
-            .finally(() => getPublicSaleMinted())
-        }
-      })
-      .catch((err: any) => {
-        setModal({
-          minting: true,
-          minthash,
-          mintErrorMessage: err.message,
+          }
         })
-      })
+        .catch((err: any) => {
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        })
+    },
     // eslint-disable-next-line
-  }, [account, mintAmount, cherryContract, config, addPopup, getPublicSaleMinted])
-
-  /**
-   * presale mint
-   */
-  const presaleSaleMint = useCallback(async () => {
-    setModal({
-      minting: true,
-      minthash,
-      mintErrorMessage,
-    })
-
-    // presalePrice gas
-    const price = parseEther('0.0001').mul(config?.presalePrice).mul(mintAmount)
-
-    // sekiraRaffleSaleMint
-    cherryContract
-      ?.sekiraPresaleMint(mintAmount, v, r, s, { value: price })
-      .then(async (result: TransactionResponse) => {
-        const { wait, hash } = result
-        setModal({
-          minting: true,
-          mintErrorMessage,
-          minthash: hash,
-        })
-        ReactGA.event({
-          category: 'Mint',
-          action: 'presale Mint w/ Send',
-          label: [account, mintAmount].join('/'),
-        })
-        if (wait) {
-          await wait()
-            .then((res: any) => {
-              const { transactionHash, status } = res
-              if (status === 1) {
-                addPopup(
-                  {
-                    txn: {
-                      hash: transactionHash,
-                      success: true,
-                      summary: t`Transaction confirmed`,
-                    },
-                  },
-                  transactionHash,
-                  DEFAULT_TXN_DISMISS_MS
-                )
-              } else {
-                addPopup(
-                  {
-                    txn: {
-                      hash: transactionHash,
-                      success: false,
-                      summary: t`Transaction failed`,
-                    },
-                  },
-                  transactionHash,
-                  L2_TXN_DISMISS_MS
-                )
-              }
-            })
-            .finally(() => getPreSaleMinted())
-        }
-      })
-      .catch((err: any) => {
-        setModal({
-          minting: true,
-          minthash,
-          mintErrorMessage: err.message,
-        })
-      })
-    // eslint-disable-next-line
-  }, [account, mintAmount, v, r, s, cherryContract, config, addPopup, getPreSaleMinted])
-
-  /**
-   * raffle mint
-   */
-  const raffleSaleMint = useCallback(async () => {
-    setModal({
-      minting: true,
-      minthash,
-      mintErrorMessage,
-    })
-
-    // rafflePrice gas
-    const price = parseEther('0.0001').mul(config?.raffleSalePrice).mul(mintAmount)
-
-    // sekiraRaffleSaleMint
-    cherryContract
-      ?.sekiraRaffleSaleMint(mintAmount, v, r, s, { value: price })
-      .then(async (result: TransactionResponse) => {
-        const { wait, hash } = result
-        setModal({
-          minting: true,
-          mintErrorMessage,
-          minthash: hash,
-        })
-        ReactGA.event({
-          category: 'Mint',
-          action: 'raffle Mint w/ Send',
-          label: [account, mintAmount].join('/'),
-        })
-        if (wait) {
-          await wait()
-            .then((res: any) => {
-              const { transactionHash, status } = res
-              if (status === 1) {
-                addPopup(
-                  {
-                    txn: {
-                      hash: transactionHash,
-                      success: true,
-                      summary: t`Transaction confirmed`,
-                    },
-                  },
-                  transactionHash,
-                  DEFAULT_TXN_DISMISS_MS
-                )
-              } else {
-                addPopup(
-                  {
-                    txn: {
-                      hash: transactionHash,
-                      success: false,
-                      summary: t`Transaction failed`,
-                    },
-                  },
-                  transactionHash,
-                  L2_TXN_DISMISS_MS
-                )
-              }
-            })
-            .finally(() => getRafSaleMinted())
-        }
-      })
-      .catch((err: any) => {
-        setModal({
-          minting: true,
-          minthash,
-          mintErrorMessage: err.message,
-        })
-      })
-    // eslint-disable-next-line
-  }, [account, mintAmount, v, r, s, cherryContract, config, addPopup, getRafSaleMinted])
+    [pangaContract, account, addPopup, amount]
+  )
 
   useEffect(() => {
     if (!showSwitchAMainnet) {
-      if (type === 'presale') {
-        getPreSaleMinted()
-      } else if (type === 'raffle') {
-        getRafSaleMinted()
-      }
+      getCheckPoof()
     }
     return () => {
-      setMintNum(2)
+      setCheckPoof({
+        tier: undefined,
+        proofs: undefined,
+      })
     }
-  }, [type, showSwitchAMainnet, getPreSaleMinted, getRafSaleMinted, getPublicSaleMinted])
+  }, [showSwitchAMainnet, getCheckPoof])
 
   return (
     <HomeWrapper>
@@ -423,70 +453,89 @@ export default function Home() {
               <Text fontSize={27} color={theme.text6}>
                 Minted
               </Text>
-              <Row>
-                <Text fontSize={53} color={theme.text5}>
-                  {totalSupply ? Number(totalSupply) + config?.devReservedSupply : 0}
-                </Text>
-                <Text fontSize={35} color={theme.text5}>
-                  {'/'}
-                  {config?.maxSupply || 2000}
-                </Text>
-              </Row>
+              {!showAccount && !showSwitchAMainnet ? (
+                <Row>
+                  <Text fontSize={53} color={theme.text5}>
+                    {Number(currently)}
+                  </Text>
+                  <Text fontSize={35} color={theme.text5}>
+                    {'/'}
+                    {Number(total)}
+                  </Text>
+                </Row>
+              ) : null}
             </Column>
-            {config?.maxSupply - config?.devReservedSupply === Number(totalSupply) ? (
-              <MintButton>
-                <Text fontSize={31}>SOLD OUT</Text>
+            {showAccount ? (
+              <MintButton color={'#E7B44D'} onClick={toggleWalletModal}>
+                <Text fontSize={31}>Connect</Text>
               </MintButton>
-            ) : (
+            ) : showSwitchAMainnet ? (
+              <MintButton
+                bg={theme.red1}
+                disabled={mintedForPresale}
+                onClick={() => {
+                  if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
+                    return
+                  }
+                  switchToNetwork({ library, chainId: defaultChainId })
+                }}
+              >
+                <Text fontSize={31}>Switch</Text>
+              </MintButton>
+            ) : isPublicActive ? (
               <>
-                <MintButton
-                  color={'#E7B44D'}
-                  disabled={
-                    !(
-                      availableMint - mintNum > 0 &&
-                      (config?.isRaffleSaleActive === (type === 'raffle') ||
-                        config?.isPresaleActive === (type === 'presale') ||
-                        config?.isPublicSaleActive)
-                    )
-                  }
-                  onClick={() => {
-                    if (type === 'raffle') {
-                      raffleSaleMint()
-                    } else if (type === 'presale') {
-                      presaleSaleMint()
-                    } else {
-                      publicSaleMint()
-                    }
-                  }}
-                >
-                  <DoubleImg src={One} alt="1x" />
-                  <Text fontSize={31}>MINT</Text>
-                </MintButton>
-
-                <MintButton
-                  color={'#E7B44D'}
-                  disabled={
-                    !(
-                      availableMint - mintNum > 0 &&
-                      (config?.isRaffleSaleActive === (type === 'raffle') ||
-                        config?.isPresaleActive === (type === 'presale') ||
-                        config?.isPublicSaleActive)
-                    )
-                  }
-                  onClick={() => {
-                    if (type === 'raffle') {
-                      raffleSaleMint()
-                    } else if (type === 'presale') {
-                      presaleSaleMint()
-                    } else {
-                      publicSaleMint()
-                    }
-                  }}
-                >
-                  <DoubleImg src={Two} alt="2x" />
+                <MintInputWrapper>
+                  <Operation
+                    onClick={() => handlePlus(parseInt(amount))}
+                    disabled={Number(amount) + Number(mintedForPublic) >= maxPublicMint}
+                  >
+                    <Plus size={18} />
+                  </Operation>
+                  <MintInput value={amount} disabled onUserInput={(val) => handleAmountInput(val)} placeholder="0" />
+                  <Operation onClick={() => handleMinus(parseInt(amount))} disabled={Number(amount) == 1}>
+                    <Minus size={18} />
+                  </Operation>
+                </MintInputWrapper>
+                <MintButton color={'#E7B44D'} onClick={() => mintPublicSale()}>
                   <Text fontSize={31}>MINT</Text>
                 </MintButton>
               </>
+            ) : isPresaleActive ? (
+              tier !== undefined && proofs !== undefined ? (
+                tier === 0 ? (
+                  <MintButton
+                    color={'#E7B44D'}
+                    disabled={mintedForPresale > 0}
+                    onClick={() => mintPresale(proofs, tier)}
+                  >
+                    <DoubleImg src={Two} alt="2x" />
+                    <Text fontSize={31}>MINT</Text>
+                  </MintButton>
+                ) : (
+                  <MintButton
+                    color={'#E7B44D'}
+                    disabled={mintedForPresale > 0}
+                    onClick={() => mintPresale(proofs, tier)}
+                  >
+                    <DoubleImg src={Three} alt="3x" />
+                    <Text fontSize={31}>MINT</Text>
+                  </MintButton>
+                )
+              ) : (
+                <Text fontSize={31} color={theme.red1}>
+                  Not qualified
+                </Text>
+              )
+            ) : isFreeMintActive ? (
+              <>
+                <MintButton color={'#E7B44D'} disabled={mintedForPresale} onClick={mintFreeSale}>
+                  <Text fontSize={31}>MINT</Text>
+                </MintButton>
+              </>
+            ) : (
+              <MintButton>
+                <Text fontSize={31}>SOLD OUT</Text>
+              </MintButton>
             )}
           </MintWrapper>
         </MintOptionWrapper>

@@ -31,9 +31,9 @@ precacheAndRoute(manifest)
 // https://developers.google.com/web/fundamentals/architecture/app-shell
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
 registerRoute(({ request, url }: { request: Request; url: URL }) => {
-  // If this isn't sekira-nft.com, skip. IPFS gateways may not have domain
+  // If this isn't xxxx, skip. IPFS gateways may not have domain
   // separation, so they cannot use App Shell-style routing.
-  if (url.hostname !== 'sekira-nft.com') {
+  if (url.hostname !== 'xxxx') {
     return false
   }
 
