@@ -108,8 +108,9 @@ const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme, active }) => (!active ? theme.bg1 : theme.bg6)};
-  border-radius: 12px;
+  /* todo */
+  background-color: ${({ theme, active }) => (!active ? theme.bg1 : '')};
+  border-radius: 6px;
   white-space: nowrap;
   width: 100%;
 

@@ -13,7 +13,9 @@ import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 
 import Home from './Home'
 
+import { ThemedBackground } from '../theme'
 import { RedirectPathToHomeOnly } from './Home/redirects'
+
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -24,13 +26,14 @@ const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  min-height: 100vh;
-  padding: 0px;
   align-items: center;
   flex: 1;
   z-index: 1;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 16px;
+  `};
 `
+
 const HeaderWrapper = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
@@ -46,21 +49,22 @@ function App() {
       <Route component={GoogleAnalyticsReporter} />
       <Route component={DarkModeQueryParamReader} />
       <Route component={ApeModeQueryParamReader} />
-      <Web3ReactManager>
-        <AppWrapper>
-          <HeaderWrapper>
-            <Header />
-          </HeaderWrapper>
-          <BodyWrapper>
-            <Popups />
-            <Polling />
+      <AppWrapper>
+        <HeaderWrapper>
+          <Header />
+        </HeaderWrapper>
+        <BodyWrapper>
+          <ThemedBackground />
+          <Popups />
+          <Polling />
+          <Web3ReactManager>
             <Switch>
               <Route exact strict path="/" component={Home} />
               <Route component={RedirectPathToHomeOnly} />
             </Switch>
-          </BodyWrapper>
-        </AppWrapper>
-      </Web3ReactManager>
+          </Web3ReactManager>
+        </BodyWrapper>
+      </AppWrapper>
     </ErrorBoundary>
   )
 }

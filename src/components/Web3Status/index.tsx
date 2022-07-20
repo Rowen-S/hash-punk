@@ -10,14 +10,12 @@ import { injected, walletconnect } from '../../connectors'
 import { NetworkContextName } from '../../constants/misc'
 import { useWalletModalToggle } from '../../state/application/hooks'
 
-import { defaultChainId } from 'constants/chains'
-// randomNumber
 import { shortenAddress } from '../../utils'
-import { switchToNetwork } from 'utils/switchToNetwork'
 
 import { ButtonSecondary } from '../Button'
 import Identicon from '../Identicon'
 import WalletModal from '../WalletModal'
+import useENSName from 'hooks/useENSName'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -69,19 +67,21 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean; error?: b
   ${({ faded }) =>
     faded &&
     css`
-      background-color: ${({ theme }) => theme.bg6};
-      color: ${({ theme }) => theme.black};
+      background-color: ${({ theme }) => theme.primary5};
+      border: 1px solid ${({ theme }) => theme.primary5};
+      color: ${({ theme }) => theme.primaryText1};
 
       :hover,
       :focus {
         border: 1px solid ${({ theme }) => darken(0.05, theme.primary4)};
-        color: ${({ theme }) => darken(0.05, theme.black)};
+        color: ${({ theme }) => darken(0.05, theme.primaryText1)};
       }
     `}
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  border: 1px solid ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)};
+  /* background-color: ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)}; */
+  border: 1px dashed ${({ pending, theme }) => (pending ? theme.primary1 : theme.red1)};
   padding: 1rem;
   font-family: Nippo-Bold;
   color: ${({ pending, theme }) => (pending ? theme.white : theme.black)};
@@ -130,31 +130,15 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 }
 
 function Web3StatusInner() {
-  const { account, chainId, connector, library, error } = useActiveWeb3React()
-  const showSwitchAMainnet = Boolean(chainId !== defaultChainId)
-
+  const { account, connector, error } = useActiveWeb3React()
+  const { ENSName } = useENSName(account ?? undefined)
+  debugger
   const toggleWalletModal = useWalletModalToggle()
 
   if (account) {
-    if (showSwitchAMainnet) {
-      return (
-        <Web3StatusConnect
-          error={true}
-          id="web3-status-switch"
-          onClick={() => {
-            if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
-              return
-            }
-            switchToNetwork({ library, chainId: defaultChainId })
-          }}
-        >
-          Switch to Mainnet
-        </Web3StatusConnect>
-      )
-    }
     return (
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal}>
-        <Text>{shortenAddress(account, 5)}</Text>
+        <Text>{ENSName || shortenAddress(account)}</Text>
         {connector && <StatusIcon connector={connector} />}
       </Web3StatusConnected>
     )

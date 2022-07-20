@@ -6,7 +6,7 @@ import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import styled, { css } from 'styled-components/macro'
 import { switchToNetwork } from 'utils/switchToNetwork'
-import { CHAIN_INFO, defaultChainId, SupportedChainId } from '../../constants/chains'
+import { CHAIN_INFO, SupportedChainId } from '../../constants/chains'
 
 const BaseWrapper = css`
   position: relative;
@@ -63,7 +63,7 @@ export default function NetworkCard() {
     if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
       return
     }
-    switchToNetwork({ library, chainId: defaultChainId })
+    switchToNetwork({ library, chainId })
       .then((x) => x ?? setImplements3085(true))
       .catch(() => setImplements3085(false))
   }, [library, chainId])

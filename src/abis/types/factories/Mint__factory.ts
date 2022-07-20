@@ -10,9 +10,54 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
-        name: "presaleRoot",
-        type: "bytes32",
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "treasury_",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "allowListSigner_",
+        type: "address",
+      },
+      {
+        internalType: "uint48",
+        name: "startTime_",
+        type: "uint48",
+      },
+      {
+        internalType: "uint48",
+        name: "endTime_",
+        type: "uint48",
+      },
+      {
+        internalType: "string",
+        name: "baseURI_",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "maxTokenCount_",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "oneFreeRemainPUB_",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "oneFreeRemainWLA_",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "lockedBaseURI_",
+        type: "bool",
       },
     ],
     stateMutability: "nonpayable",
@@ -30,17 +75,75 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "ApprovalToCurrentOwner",
-    type: "error",
-  },
-  {
-    inputs: [],
     name: "ApproveToCaller",
     type: "error",
   },
   {
     inputs: [],
     name: "BalanceQueryForZeroAddress",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "mint",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "max",
+        type: "uint256",
+      },
+    ],
+    name: "ExccededMaxMintPerAccount",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "totalSupply",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "max",
+        type: "uint256",
+      },
+    ],
+    name: "ExccededTotalSupply",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "recieved",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "expected",
+        type: "uint256",
+      },
+    ],
+    name: "InsufficientFunds",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidQueryRange",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidSigner",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "MintERC2309QuantityExceedsLimit",
     type: "error",
   },
   {
@@ -54,8 +157,19 @@ const _abi = [
     type: "error",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "caller",
+        type: "address",
+      },
+    ],
+    name: "NotHuman",
+    type: "error",
+  },
+  {
     inputs: [],
-    name: "OwnerIndexOutOfBounds",
+    name: "NotYetStarted",
     type: "error",
   },
   {
@@ -65,7 +179,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "TokenIndexOutOfBounds",
+    name: "OwnershipNotInitializedForExtraData",
     type: "error",
   },
   {
@@ -91,6 +205,11 @@ const _abi = [
   {
     inputs: [],
     name: "URIQueryForNonexistentToken",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroAmount",
     type: "error",
   },
   {
@@ -148,6 +267,37 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint256",
+        name: "fromTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "toTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "ConsecutiveTransfer",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: "address",
         name: "previousOwner",
         type: "address",
@@ -186,6 +336,161 @@ const _abi = [
     ],
     name: "Transfer",
     type: "event",
+  },
+  {
+    inputs: [],
+    name: "ALLOWLIST_ONE_FREEMINT_HASH_TYPE",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "ALLOWLIST_TEN_FREEMINT_HASH_TYPE",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "INDEX_ALLOWLIST_ONE_FREE",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "INDEX_PUBLIC_ONE_FREE",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "MAX_MINT_PER_ACCOUNT_PUB",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "MAX_MINT_PER_ACCOUNT_WB",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "PUBLIC_MINT_PRICE",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "v",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes32",
+        name: "r",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "s",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "allowListOneFreeMint",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "allowListSigner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "v",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes32",
+        name: "r",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "s",
+        type: "bytes32",
+      },
+    ],
+    name: "allowListTenFreeMint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     inputs: [
@@ -245,12 +550,207 @@ const _abi = [
         type: "uint256",
       },
     ],
+    name: "burn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "v",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes32",
+        name: "r",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "s",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "hashType",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "who",
+        type: "address",
+      },
+    ],
+    name: "checkSignature",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "target",
+        type: "address",
+      },
+      {
+        internalType: "bytes",
+        name: "data",
+        type: "bytes",
+      },
+    ],
+    name: "doCall",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "endTime",
+    outputs: [
+      {
+        internalType: "uint48",
+        name: "",
+        type: "uint48",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "explicitOwnershipOf",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            internalType: "uint64",
+            name: "startTimestamp",
+            type: "uint64",
+          },
+          {
+            internalType: "bool",
+            name: "burned",
+            type: "bool",
+          },
+          {
+            internalType: "uint24",
+            name: "extraData",
+            type: "uint24",
+          },
+        ],
+        internalType: "struct IERC721A.TokenOwnership",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "tokenIds",
+        type: "uint256[]",
+      },
+    ],
+    name: "explicitOwnershipsOf",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            internalType: "uint64",
+            name: "startTimestamp",
+            type: "uint64",
+          },
+          {
+            internalType: "bool",
+            name: "burned",
+            type: "bool",
+          },
+          {
+            internalType: "uint24",
+            name: "extraData",
+            type: "uint24",
+          },
+        ],
+        internalType: "struct IERC721A.TokenOwnership[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
     name: "getApproved",
     outputs: [
       {
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "hashType",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "target",
+        type: "address",
+      },
+    ],
+    name: "getDigest",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
       },
     ],
     stateMutability: "view",
@@ -282,185 +782,14 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "isFreeMintActive",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "isPresaleActive",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "isPublicActive",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "maxOGTMint",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "maxPresaleMint",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "maxPresaleSupply",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "maxPublicMint",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "maxTokens",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "numberOfTokens",
-        type: "uint256",
-      },
-    ],
-    name: "mintFreeSale",
+    name: "lockBaseURI",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "numberOfTokens",
-        type: "uint256",
-      },
-      {
-        internalType: "uint8",
-        name: "tier",
-        type: "uint8",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "proof",
-        type: "bytes32[]",
-      },
-    ],
-    name: "mintPresale",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "numberOfTokens",
-        type: "uint256",
-      },
-    ],
-    name: "mintPublicSale",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "mintedForPresale",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "mintedForPublic",
+    inputs: [],
+    name: "maxTokenCount",
     outputs: [
       {
         internalType: "uint256",
@@ -479,6 +808,63 @@ const _abi = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "who",
+        type: "address",
+      },
+    ],
+    name: "numberBurned",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "who",
+        type: "address",
+      },
+    ],
+    name: "numberMinted",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "oneFreeRemain",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -517,42 +903,16 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "presaleMerkleRoot",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "price",
-    outputs: [
+    inputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "amount",
         type: "uint256",
       },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "priceOG",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
+    name: "publicMint",
+    outputs: [],
+    stateMutability: "payable",
     type: "function",
   },
   {
@@ -560,6 +920,35 @@ const _abi = [
     name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "salePrice",
+        type: "uint256",
+      },
+    ],
+    name: "royaltyInfo",
+    outputs: [
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "royaltyAmount",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -635,7 +1024,7 @@ const _abi = [
     inputs: [
       {
         internalType: "string",
-        name: "newBaseURI",
+        name: "baseURI_",
         type: "string",
       },
     ],
@@ -647,12 +1036,17 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint8",
-        name: "_maxPresaleMint",
-        type: "uint8",
+        internalType: "uint48",
+        name: "startTime_",
+        type: "uint48",
+      },
+      {
+        internalType: "uint48",
+        name: "endTime_",
+        type: "uint48",
       },
     ],
-    name: "setMaxPresaleMint",
+    name: "setTime",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -660,27 +1054,27 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "_maxPresaleMintSupply",
-        type: "uint256",
+        internalType: "address",
+        name: "treasury_",
+        type: "address",
       },
     ],
-    name: "setMaxPresaleMintSupply",
+    name: "setTreasury",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [
+    inputs: [],
+    name: "startTime",
+    outputs: [
       {
-        internalType: "bytes32",
-        name: "presaleRoot",
-        type: "bytes32",
+        internalType: "uint48",
+        name: "",
+        type: "uint48",
       },
     ],
-    name: "setPresaleMerkleRoot",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -716,40 +1110,38 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "toggleFreeMintActive",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "togglePresaleActive",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "togglePublicSaleActive",
-    outputs: [],
-    stateMutability: "nonpayable",
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "tokenURI",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        internalType: "address",
+        name: "owner",
+        type: "address",
       },
     ],
-    name: "tokenByIndex",
+    name: "tokensOfOwner",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "uint256[]",
         name: "",
-        type: "uint256",
+        type: "uint256[]",
       },
     ],
     stateMutability: "view",
@@ -764,35 +1156,21 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "index",
+        name: "start",
         type: "uint256",
       },
-    ],
-    name: "tokenOfOwnerByIndex",
-    outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "stop",
         type: "uint256",
       },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "tokenURI",
+    name: "tokensOfOwnerIn",
     outputs: [
       {
-        internalType: "string",
+        internalType: "uint256[]",
         name: "",
-        type: "string",
+        type: "uint256[]",
       },
     ],
     stateMutability: "view",
@@ -845,6 +1223,19 @@ const _abi = [
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "treasury",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

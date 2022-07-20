@@ -11,8 +11,8 @@
     -->
   <!-- <link rel="shortcut icon" type="image/png" href="%PUBLIC_URL%/favicon.png" /> -->
   <link rel="shortcut icon" type="images/x-icon" href="%PUBLIC_URL%/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/images/192x192_App_Icon.png" />
-  <link rel="apple-touch-icon" sizes="512x512" href="%PUBLIC_URL%/images/512x512_App_Icon.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/192x192_App_Icon.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="%PUBLIC_URL%/512x512_App_Icon.png" />
   <link rel="stylesheet" type="text/css" href="MyFontsWebfontsKit.css" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,76 +38,13 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  <style>
-    * {
-      font-family: 'Lilita', sans-serif;
-      box-sizing: border-box;
-    }
 
-    @supports (font-variation-settings: normal) {
-      * {
-        font-family: 'Lilita', 'AvenirNext', sans-serif;
-      }
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      overflow-y: auto;
-    }
-
-    button {
-      user-select: none;
-    }
-
-    html {
-      font-size: 16px;
-      font-variant: none;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
-    }
-
-    #background-radial-gradient {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      pointer-events: none;
-      width: 200vw;
-      height: 200vh;
-      background: radial-gradient(50% 50% at 50% 50%, #f7e7ef10 0%, rgba(255, 255, 255, 0) 100%);
-      transform: translate(-50vw, -100vh);
-      z-index: -1;
-    }
-
-    html {
-      min-height: 100%;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      html {
-        background: linear-gradient(180deg, #775a41 0%, #775a41 100%);
-      }
-    }
-
-    @media (prefers-color-scheme: light) {
-      html {
-        background: linear-gradient(180deg, #775a41 0%, #775a41 100%);
-      }
-    }
-  </style>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root">
-    <div style="visibility: hidden">X</div>
-  </div>
-  <div id="background-radial-gradient"></div>
-  <!--
+    <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 

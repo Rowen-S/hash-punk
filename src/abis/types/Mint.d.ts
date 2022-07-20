@@ -22,129 +22,170 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface MintInterface extends ethers.utils.Interface {
   functions: {
+    "ALLOWLIST_ONE_FREEMINT_HASH_TYPE()": FunctionFragment;
+    "ALLOWLIST_TEN_FREEMINT_HASH_TYPE()": FunctionFragment;
+    "INDEX_ALLOWLIST_ONE_FREE()": FunctionFragment;
+    "INDEX_PUBLIC_ONE_FREE()": FunctionFragment;
+    "MAX_MINT_PER_ACCOUNT_PUB()": FunctionFragment;
+    "MAX_MINT_PER_ACCOUNT_WB()": FunctionFragment;
+    "PUBLIC_MINT_PRICE()": FunctionFragment;
+    "allowListOneFreeMint(uint8,bytes32,bytes32,uint256)": FunctionFragment;
+    "allowListSigner()": FunctionFragment;
+    "allowListTenFreeMint(uint8,bytes32,bytes32)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "baseURI()": FunctionFragment;
+    "burn(uint256)": FunctionFragment;
+    "checkSignature(uint8,bytes32,bytes32,bytes32,address)": FunctionFragment;
+    "doCall(address,bytes)": FunctionFragment;
+    "endTime()": FunctionFragment;
+    "explicitOwnershipOf(uint256)": FunctionFragment;
+    "explicitOwnershipsOf(uint256[])": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
+    "getDigest(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "isFreeMintActive()": FunctionFragment;
-    "isPresaleActive()": FunctionFragment;
-    "isPublicActive()": FunctionFragment;
-    "maxOGTMint()": FunctionFragment;
-    "maxPresaleMint()": FunctionFragment;
-    "maxPresaleSupply()": FunctionFragment;
-    "maxPublicMint()": FunctionFragment;
-    "maxTokens()": FunctionFragment;
-    "mintFreeSale(uint256)": FunctionFragment;
-    "mintPresale(uint256,uint8,bytes32[])": FunctionFragment;
-    "mintPublicSale(uint256)": FunctionFragment;
-    "mintedForPresale(address)": FunctionFragment;
-    "mintedForPublic(address)": FunctionFragment;
+    "lockBaseURI()": FunctionFragment;
+    "maxTokenCount()": FunctionFragment;
     "name()": FunctionFragment;
+    "numberBurned(address)": FunctionFragment;
+    "numberMinted(address)": FunctionFragment;
+    "oneFreeRemain(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
-    "presaleMerkleRoot()": FunctionFragment;
-    "price()": FunctionFragment;
-    "priceOG()": FunctionFragment;
+    "publicMint(uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "royaltyInfo(uint256,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseURI(string)": FunctionFragment;
-    "setMaxPresaleMint(uint8)": FunctionFragment;
-    "setMaxPresaleMintSupply(uint256)": FunctionFragment;
-    "setPresaleMerkleRoot(bytes32)": FunctionFragment;
+    "setTime(uint48,uint48)": FunctionFragment;
+    "setTreasury(address)": FunctionFragment;
+    "startTime()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
-    "toggleFreeMintActive()": FunctionFragment;
-    "togglePresaleActive()": FunctionFragment;
-    "togglePublicSaleActive()": FunctionFragment;
-    "tokenByIndex(uint256)": FunctionFragment;
-    "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
+    "tokensOfOwner(address)": FunctionFragment;
+    "tokensOfOwnerIn(address,uint256,uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "treasury()": FunctionFragment;
     "withdraw()": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "ALLOWLIST_ONE_FREEMINT_HASH_TYPE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "ALLOWLIST_TEN_FREEMINT_HASH_TYPE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "INDEX_ALLOWLIST_ONE_FREE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "INDEX_PUBLIC_ONE_FREE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "MAX_MINT_PER_ACCOUNT_PUB",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "MAX_MINT_PER_ACCOUNT_WB",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "PUBLIC_MINT_PRICE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allowListOneFreeMint",
+    values: [BigNumberish, BytesLike, BytesLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allowListSigner",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allowListTenFreeMint",
+    values: [BigNumberish, BytesLike, BytesLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "approve",
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(functionFragment: "baseURI", values?: undefined): string;
+  encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "checkSignature",
+    values: [BigNumberish, BytesLike, BytesLike, BytesLike, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "doCall",
+    values: [string, BytesLike]
+  ): string;
+  encodeFunctionData(functionFragment: "endTime", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "explicitOwnershipOf",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "explicitOwnershipsOf",
+    values: [BigNumberish[]]
+  ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getDigest",
+    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "isFreeMintActive",
+    functionFragment: "lockBaseURI",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "isPresaleActive",
+    functionFragment: "maxTokenCount",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isPublicActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxOGTMint",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxPresaleMint",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxPresaleSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "maxPublicMint",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "maxTokens", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "mintFreeSale",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintPresale",
-    values: [BigNumberish, BigNumberish, BytesLike[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintPublicSale",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintedForPresale",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintedForPublic",
-    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "numberBurned",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "numberMinted",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "oneFreeRemain",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "presaleMerkleRoot",
-    values?: undefined
+    functionFragment: "publicMint",
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "price", values?: undefined): string;
-  encodeFunctionData(functionFragment: "priceOG", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "royaltyInfo",
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom",
@@ -156,45 +197,27 @@ interface MintInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "setBaseURI", values: [string]): string;
   encodeFunctionData(
-    functionFragment: "setMaxPresaleMint",
-    values: [BigNumberish]
+    functionFragment: "setTime",
+    values: [BigNumberish, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "setMaxPresaleMintSupply",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPresaleMerkleRoot",
-    values: [BytesLike]
-  ): string;
+  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
+  encodeFunctionData(functionFragment: "startTime", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "toggleFreeMintActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "togglePresaleActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "togglePublicSaleActive",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tokenByIndex",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tokenOfOwnerByIndex",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "tokenURI",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokensOfOwner",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokensOfOwnerIn",
+    values: [string, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -208,76 +231,106 @@ interface MintInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
+  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "ALLOWLIST_ONE_FREEMINT_HASH_TYPE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "ALLOWLIST_TEN_FREEMINT_HASH_TYPE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "INDEX_ALLOWLIST_ONE_FREE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "INDEX_PUBLIC_ONE_FREE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "MAX_MINT_PER_ACCOUNT_PUB",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "MAX_MINT_PER_ACCOUNT_WB",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "PUBLIC_MINT_PRICE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "allowListOneFreeMint",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "allowListSigner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "allowListTenFreeMint",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "checkSignature",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "doCall", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "endTime", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "explicitOwnershipOf",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "explicitOwnershipsOf",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getDigest", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "isFreeMintActive",
+    functionFragment: "lockBaseURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "isPresaleActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isPublicActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "maxOGTMint", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "maxPresaleMint",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxPresaleSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "maxPublicMint",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "maxTokens", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "mintFreeSale",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintPresale",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintPublicSale",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintedForPresale",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintedForPublic",
+    functionFragment: "maxTokenCount",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "presaleMerkleRoot",
+    functionFragment: "numberBurned",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "priceOG", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "numberMinted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "oneFreeRemain",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "publicMint", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "royaltyInfo",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -289,44 +342,26 @@ interface MintInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setBaseURI", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setTime", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "setMaxPresaleMint",
+    functionFragment: "setTreasury",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMaxPresaleMintSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setPresaleMerkleRoot",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "startTime", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "toggleFreeMintActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "togglePresaleActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "togglePublicSaleActive",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenByIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenOfOwnerByIndex",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokensOfOwner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tokensOfOwnerIn",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -339,17 +374,20 @@ interface MintInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "ConsecutiveTransfer(uint256,uint256,address,address)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ConsecutiveTransfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
@@ -367,6 +405,15 @@ export type ApprovalForAllEvent = TypedEvent<
     owner: string;
     operator: string;
     approved: boolean;
+  }
+>;
+
+export type ConsecutiveTransferEvent = TypedEvent<
+  [BigNumber, BigNumber, string, string] & {
+    fromTokenId: BigNumber;
+    toTokenId: BigNumber;
+    from: string;
+    to: string;
   }
 >;
 
@@ -422,6 +469,41 @@ export class Mint extends BaseContract {
   interface: MintInterface;
 
   functions: {
+    ALLOWLIST_ONE_FREEMINT_HASH_TYPE(
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    ALLOWLIST_TEN_FREEMINT_HASH_TYPE(
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    INDEX_ALLOWLIST_ONE_FREE(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    INDEX_PUBLIC_ONE_FREE(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    MAX_MINT_PER_ACCOUNT_PUB(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    MAX_MINT_PER_ACCOUNT_WB(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    PUBLIC_MINT_PRICE(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    allowListOneFreeMint(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      amount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    allowListSigner(overrides?: CallOverrides): Promise<[string]>;
+
+    allowListTenFreeMint(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -432,8 +514,64 @@ export class Mint extends BaseContract {
 
     baseURI(overrides?: CallOverrides): Promise<[string]>;
 
+    burn(
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    checkSignature(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      hashType: BytesLike,
+      who: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    doCall(
+      target: string,
+      data: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    endTime(overrides?: CallOverrides): Promise<[number]>;
+
+    explicitOwnershipOf(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        [string, BigNumber, boolean, number] & {
+          addr: string;
+          startTimestamp: BigNumber;
+          burned: boolean;
+          extraData: number;
+        }
+      ]
+    >;
+
+    explicitOwnershipsOf(
+      tokenIds: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        ([string, BigNumber, boolean, number] & {
+          addr: string;
+          startTimestamp: BigNumber;
+          burned: boolean;
+          extraData: number;
+        })[]
+      ]
+    >;
+
     getApproved(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    getDigest(
+      hashType: BytesLike,
+      target: string,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -443,50 +581,22 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    isFreeMintActive(overrides?: CallOverrides): Promise<[boolean]>;
-
-    isPresaleActive(overrides?: CallOverrides): Promise<[boolean]>;
-
-    isPublicActive(overrides?: CallOverrides): Promise<[boolean]>;
-
-    maxOGTMint(overrides?: CallOverrides): Promise<[number]>;
-
-    maxPresaleMint(overrides?: CallOverrides): Promise<[number]>;
-
-    maxPresaleSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    maxPublicMint(overrides?: CallOverrides): Promise<[number]>;
-
-    maxTokens(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    mintFreeSale(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    lockBaseURI(
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    mintPresale(
-      numberOfTokens: BigNumberish,
-      tier: BigNumberish,
-      proof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    mintPublicSale(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    mintedForPresale(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    mintedForPublic(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    maxTokenCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
+
+    numberBurned(who: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    numberMinted(who: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    oneFreeRemain(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -495,15 +605,22 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    presaleMerkleRoot(overrides?: CallOverrides): Promise<[string]>;
-
-    price(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    priceOG(overrides?: CallOverrides): Promise<[BigNumber]>;
+    publicMint(
+      amount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    royaltyInfo(
+      tokenId: BigNumberish,
+      salePrice: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
+    >;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -527,24 +644,22 @@ export class Mint extends BaseContract {
     ): Promise<ContractTransaction>;
 
     setBaseURI(
-      newBaseURI: string,
+      baseURI_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setMaxPresaleMint(
-      _maxPresaleMint: BigNumberish,
+    setTime(
+      startTime_: BigNumberish,
+      endTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setMaxPresaleMintSupply(
-      _maxPresaleMintSupply: BigNumberish,
+    setTreasury(
+      treasury_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setPresaleMerkleRoot(
-      presaleRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    startTime(overrides?: CallOverrides): Promise<[number]>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -553,33 +668,22 @@ export class Mint extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    toggleFreeMintActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    togglePresaleActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    togglePublicSaleActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    tokenByIndex(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
+
+    tokensOfOwner(
+      owner: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
+
+    tokensOfOwnerIn(
+      owner: string,
+      start: BigNumberish,
+      stop: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -595,10 +699,43 @@ export class Mint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    treasury(overrides?: CallOverrides): Promise<[string]>;
+
     withdraw(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
+
+  ALLOWLIST_ONE_FREEMINT_HASH_TYPE(overrides?: CallOverrides): Promise<string>;
+
+  ALLOWLIST_TEN_FREEMINT_HASH_TYPE(overrides?: CallOverrides): Promise<string>;
+
+  INDEX_ALLOWLIST_ONE_FREE(overrides?: CallOverrides): Promise<BigNumber>;
+
+  INDEX_PUBLIC_ONE_FREE(overrides?: CallOverrides): Promise<BigNumber>;
+
+  MAX_MINT_PER_ACCOUNT_PUB(overrides?: CallOverrides): Promise<BigNumber>;
+
+  MAX_MINT_PER_ACCOUNT_WB(overrides?: CallOverrides): Promise<BigNumber>;
+
+  PUBLIC_MINT_PRICE(overrides?: CallOverrides): Promise<BigNumber>;
+
+  allowListOneFreeMint(
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    amount: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  allowListSigner(overrides?: CallOverrides): Promise<string>;
+
+  allowListTenFreeMint(
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   approve(
     to: string,
@@ -610,8 +747,60 @@ export class Mint extends BaseContract {
 
   baseURI(overrides?: CallOverrides): Promise<string>;
 
+  burn(
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  checkSignature(
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    hashType: BytesLike,
+    who: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  doCall(
+    target: string,
+    data: BytesLike,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  endTime(overrides?: CallOverrides): Promise<number>;
+
+  explicitOwnershipOf(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [string, BigNumber, boolean, number] & {
+      addr: string;
+      startTimestamp: BigNumber;
+      burned: boolean;
+      extraData: number;
+    }
+  >;
+
+  explicitOwnershipsOf(
+    tokenIds: BigNumberish[],
+    overrides?: CallOverrides
+  ): Promise<
+    ([string, BigNumber, boolean, number] & {
+      addr: string;
+      startTimestamp: BigNumber;
+      burned: boolean;
+      extraData: number;
+    })[]
+  >;
+
   getApproved(
     tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  getDigest(
+    hashType: BytesLike,
+    target: string,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -621,58 +810,43 @@ export class Mint extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  isFreeMintActive(overrides?: CallOverrides): Promise<boolean>;
-
-  isPresaleActive(overrides?: CallOverrides): Promise<boolean>;
-
-  isPublicActive(overrides?: CallOverrides): Promise<boolean>;
-
-  maxOGTMint(overrides?: CallOverrides): Promise<number>;
-
-  maxPresaleMint(overrides?: CallOverrides): Promise<number>;
-
-  maxPresaleSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  maxPublicMint(overrides?: CallOverrides): Promise<number>;
-
-  maxTokens(overrides?: CallOverrides): Promise<BigNumber>;
-
-  mintFreeSale(
-    numberOfTokens: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  lockBaseURI(
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  mintPresale(
-    numberOfTokens: BigNumberish,
-    tier: BigNumberish,
-    proof: BytesLike[],
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  mintPublicSale(
-    numberOfTokens: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  mintedForPresale(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  mintedForPublic(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxTokenCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
+
+  numberBurned(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  numberMinted(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  oneFreeRemain(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  presaleMerkleRoot(overrides?: CallOverrides): Promise<string>;
-
-  price(overrides?: CallOverrides): Promise<BigNumber>;
-
-  priceOG(overrides?: CallOverrides): Promise<BigNumber>;
+  publicMint(
+    amount: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  royaltyInfo(
+    tokenId: BigNumberish,
+    salePrice: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
+  >;
 
   "safeTransferFrom(address,address,uint256)"(
     from: string,
@@ -696,24 +870,22 @@ export class Mint extends BaseContract {
   ): Promise<ContractTransaction>;
 
   setBaseURI(
-    newBaseURI: string,
+    baseURI_: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setMaxPresaleMint(
-    _maxPresaleMint: BigNumberish,
+  setTime(
+    startTime_: BigNumberish,
+    endTime_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setMaxPresaleMintSupply(
-    _maxPresaleMintSupply: BigNumberish,
+  setTreasury(
+    treasury_: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setPresaleMerkleRoot(
-    presaleRoot: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  startTime(overrides?: CallOverrides): Promise<number>;
 
   supportsInterface(
     interfaceId: BytesLike,
@@ -722,30 +894,16 @@ export class Mint extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  toggleFreeMintActive(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  togglePresaleActive(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  togglePublicSaleActive(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  tokenByIndex(
-    index: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  tokenOfOwnerByIndex(
-    owner: string,
-    index: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  tokensOfOwner(owner: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+
+  tokensOfOwnerIn(
+    owner: string,
+    start: BigNumberish,
+    stop: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -761,11 +919,48 @@ export class Mint extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  treasury(overrides?: CallOverrides): Promise<string>;
+
   withdraw(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    ALLOWLIST_ONE_FREEMINT_HASH_TYPE(
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    ALLOWLIST_TEN_FREEMINT_HASH_TYPE(
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    INDEX_ALLOWLIST_ONE_FREE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    INDEX_PUBLIC_ONE_FREE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    MAX_MINT_PER_ACCOUNT_PUB(overrides?: CallOverrides): Promise<BigNumber>;
+
+    MAX_MINT_PER_ACCOUNT_WB(overrides?: CallOverrides): Promise<BigNumber>;
+
+    PUBLIC_MINT_PRICE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    allowListOneFreeMint(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    allowListSigner(overrides?: CallOverrides): Promise<string>;
+
+    allowListTenFreeMint(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -776,8 +971,57 @@ export class Mint extends BaseContract {
 
     baseURI(overrides?: CallOverrides): Promise<string>;
 
+    burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    checkSignature(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      hashType: BytesLike,
+      who: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    doCall(
+      target: string,
+      data: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    endTime(overrides?: CallOverrides): Promise<number>;
+
+    explicitOwnershipOf(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber, boolean, number] & {
+        addr: string;
+        startTimestamp: BigNumber;
+        burned: boolean;
+        extraData: number;
+      }
+    >;
+
+    explicitOwnershipsOf(
+      tokenIds: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<
+      ([string, BigNumber, boolean, number] & {
+        addr: string;
+        startTimestamp: BigNumber;
+        burned: boolean;
+        extraData: number;
+      })[]
+    >;
+
     getApproved(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    getDigest(
+      hashType: BytesLike,
+      target: string,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -787,62 +1031,36 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    isFreeMintActive(overrides?: CallOverrides): Promise<boolean>;
+    lockBaseURI(overrides?: CallOverrides): Promise<void>;
 
-    isPresaleActive(overrides?: CallOverrides): Promise<boolean>;
-
-    isPublicActive(overrides?: CallOverrides): Promise<boolean>;
-
-    maxOGTMint(overrides?: CallOverrides): Promise<number>;
-
-    maxPresaleMint(overrides?: CallOverrides): Promise<number>;
-
-    maxPresaleSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    maxPublicMint(overrides?: CallOverrides): Promise<number>;
-
-    maxTokens(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mintFreeSale(
-      numberOfTokens: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    mintPresale(
-      numberOfTokens: BigNumberish,
-      tier: BigNumberish,
-      proof: BytesLike[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    mintPublicSale(
-      numberOfTokens: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    mintedForPresale(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    mintedForPublic(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    maxTokenCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
+
+    numberBurned(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    numberMinted(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    oneFreeRemain(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    presaleMerkleRoot(overrides?: CallOverrides): Promise<string>;
-
-    price(overrides?: CallOverrides): Promise<BigNumber>;
-
-    priceOG(overrides?: CallOverrides): Promise<BigNumber>;
+    publicMint(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    royaltyInfo(
+      tokenId: BigNumberish,
+      salePrice: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
+    >;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -865,22 +1083,17 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setBaseURI(newBaseURI: string, overrides?: CallOverrides): Promise<void>;
+    setBaseURI(baseURI_: string, overrides?: CallOverrides): Promise<void>;
 
-    setMaxPresaleMint(
-      _maxPresaleMint: BigNumberish,
+    setTime(
+      startTime_: BigNumberish,
+      endTime_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setMaxPresaleMintSupply(
-      _maxPresaleMintSupply: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setTreasury(treasury_: string, overrides?: CallOverrides): Promise<void>;
 
-    setPresaleMerkleRoot(
-      presaleRoot: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    startTime(overrides?: CallOverrides): Promise<number>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -889,24 +1102,19 @@ export class Mint extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    toggleFreeMintActive(overrides?: CallOverrides): Promise<void>;
-
-    togglePresaleActive(overrides?: CallOverrides): Promise<void>;
-
-    togglePublicSaleActive(overrides?: CallOverrides): Promise<void>;
-
-    tokenByIndex(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    tokensOfOwner(
+      owner: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
+
+    tokensOfOwnerIn(
+      owner: string,
+      start: BigNumberish,
+      stop: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -921,6 +1129,8 @@ export class Mint extends BaseContract {
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    treasury(overrides?: CallOverrides): Promise<string>;
 
     withdraw(overrides?: CallOverrides): Promise<void>;
   };
@@ -962,6 +1172,26 @@ export class Mint extends BaseContract {
       { owner: string; operator: string; approved: boolean }
     >;
 
+    "ConsecutiveTransfer(uint256,uint256,address,address)"(
+      fromTokenId?: BigNumberish | null,
+      toTokenId?: null,
+      from?: string | null,
+      to?: string | null
+    ): TypedEventFilter<
+      [BigNumber, BigNumber, string, string],
+      { fromTokenId: BigNumber; toTokenId: BigNumber; from: string; to: string }
+    >;
+
+    ConsecutiveTransfer(
+      fromTokenId?: BigNumberish | null,
+      toTokenId?: null,
+      from?: string | null,
+      to?: string | null
+    ): TypedEventFilter<
+      [BigNumber, BigNumber, string, string],
+      { fromTokenId: BigNumber; toTokenId: BigNumber; from: string; to: string }
+    >;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -998,6 +1228,41 @@ export class Mint extends BaseContract {
   };
 
   estimateGas: {
+    ALLOWLIST_ONE_FREEMINT_HASH_TYPE(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    ALLOWLIST_TEN_FREEMINT_HASH_TYPE(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    INDEX_ALLOWLIST_ONE_FREE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    INDEX_PUBLIC_ONE_FREE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    MAX_MINT_PER_ACCOUNT_PUB(overrides?: CallOverrides): Promise<BigNumber>;
+
+    MAX_MINT_PER_ACCOUNT_WB(overrides?: CallOverrides): Promise<BigNumber>;
+
+    PUBLIC_MINT_PRICE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    allowListOneFreeMint(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      amount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    allowListSigner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    allowListTenFreeMint(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -1008,8 +1273,46 @@ export class Mint extends BaseContract {
 
     baseURI(overrides?: CallOverrides): Promise<BigNumber>;
 
+    burn(
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    checkSignature(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      hashType: BytesLike,
+      who: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    doCall(
+      target: string,
+      data: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    endTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    explicitOwnershipOf(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    explicitOwnershipsOf(
+      tokenIds: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getDigest(
+      hashType: BytesLike,
+      target: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1019,50 +1322,22 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    isFreeMintActive(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isPresaleActive(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isPublicActive(overrides?: CallOverrides): Promise<BigNumber>;
-
-    maxOGTMint(overrides?: CallOverrides): Promise<BigNumber>;
-
-    maxPresaleMint(overrides?: CallOverrides): Promise<BigNumber>;
-
-    maxPresaleSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    maxPublicMint(overrides?: CallOverrides): Promise<BigNumber>;
-
-    maxTokens(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mintFreeSale(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    lockBaseURI(
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    mintPresale(
-      numberOfTokens: BigNumberish,
-      tier: BigNumberish,
-      proof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    mintPublicSale(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    mintedForPresale(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    mintedForPublic(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    maxTokenCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    numberBurned(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    numberMinted(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    oneFreeRemain(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1071,14 +1346,19 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    presaleMerkleRoot(overrides?: CallOverrides): Promise<BigNumber>;
-
-    price(overrides?: CallOverrides): Promise<BigNumber>;
-
-    priceOG(overrides?: CallOverrides): Promise<BigNumber>;
+    publicMint(
+      amount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    royaltyInfo(
+      tokenId: BigNumberish,
+      salePrice: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256)"(
@@ -1103,24 +1383,22 @@ export class Mint extends BaseContract {
     ): Promise<BigNumber>;
 
     setBaseURI(
-      newBaseURI: string,
+      baseURI_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setMaxPresaleMint(
-      _maxPresaleMint: BigNumberish,
+    setTime(
+      startTime_: BigNumberish,
+      endTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setMaxPresaleMintSupply(
-      _maxPresaleMintSupply: BigNumberish,
+    setTreasury(
+      treasury_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setPresaleMerkleRoot(
-      presaleRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -1129,31 +1407,17 @@ export class Mint extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    toggleFreeMintActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    togglePresaleActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    togglePublicSaleActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    tokenByIndex(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     tokenURI(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    tokensOfOwner(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokensOfOwnerIn(
+      owner: string,
+      start: BigNumberish,
+      stop: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1171,12 +1435,57 @@ export class Mint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    treasury(overrides?: CallOverrides): Promise<BigNumber>;
+
     withdraw(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    ALLOWLIST_ONE_FREEMINT_HASH_TYPE(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    ALLOWLIST_TEN_FREEMINT_HASH_TYPE(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    INDEX_ALLOWLIST_ONE_FREE(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    INDEX_PUBLIC_ONE_FREE(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    MAX_MINT_PER_ACCOUNT_PUB(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    MAX_MINT_PER_ACCOUNT_WB(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    PUBLIC_MINT_PRICE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    allowListOneFreeMint(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      amount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    allowListSigner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    allowListTenFreeMint(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -1190,8 +1499,46 @@ export class Mint extends BaseContract {
 
     baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    burn(
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    checkSignature(
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      hashType: BytesLike,
+      who: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    doCall(
+      target: string,
+      data: BytesLike,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    endTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    explicitOwnershipOf(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    explicitOwnershipsOf(
+      tokenIds: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getDigest(
+      hashType: BytesLike,
+      target: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1201,50 +1548,28 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    isFreeMintActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isPresaleActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isPublicActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    maxOGTMint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    maxPresaleMint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    maxPresaleSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    maxPublicMint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    maxTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mintFreeSale(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    lockBaseURI(
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    mintPresale(
-      numberOfTokens: BigNumberish,
-      tier: BigNumberish,
-      proof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    mintPublicSale(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    mintedForPresale(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    mintedForPublic(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    maxTokenCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    numberBurned(
+      who: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    numberMinted(
+      who: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    oneFreeRemain(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1253,14 +1578,19 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    presaleMerkleRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    priceOG(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    publicMint(
+      amount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    royaltyInfo(
+      tokenId: BigNumberish,
+      salePrice: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
@@ -1285,24 +1615,22 @@ export class Mint extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setBaseURI(
-      newBaseURI: string,
+      baseURI_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setMaxPresaleMint(
-      _maxPresaleMint: BigNumberish,
+    setTime(
+      startTime_: BigNumberish,
+      endTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setMaxPresaleMintSupply(
-      _maxPresaleMintSupply: BigNumberish,
+    setTreasury(
+      treasury_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setPresaleMerkleRoot(
-      presaleRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -1311,31 +1639,20 @@ export class Mint extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    toggleFreeMintActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    togglePresaleActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    togglePublicSaleActive(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    tokenByIndex(
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    tokenOfOwnerByIndex(
-      owner: string,
-      index: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     tokenURI(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tokensOfOwner(
+      owner: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tokensOfOwnerIn(
+      owner: string,
+      start: BigNumberish,
+      stop: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1352,6 +1669,8 @@ export class Mint extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
       overrides?: Overrides & { from?: string | Promise<string> }

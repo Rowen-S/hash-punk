@@ -4,12 +4,14 @@ import { useActiveWeb3React } from './web3'
 
 import { abi as MulticallABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
 
+import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
+import ENS_ABI from 'abis/ens-registrar.json'
 import MINT_ABI from 'abis/mint.json'
 
-import { MULTICALL_ADDRESS, MINT_ADDRESS } from 'constants/addresses'
+import { MULTICALL_ADDRESS, ENS_REGISTRAR_ADDRESSES, MINT_ADDRESS } from 'constants/addresses'
 
 import { UniswapInterfaceMulticall } from 'types/v3'
-import { Mint } from '../abis/types'
+import { EnsPublicResolver, EnsRegistrar, Mint } from '../abis/types'
 
 import { useMemo } from 'react'
 
@@ -38,6 +40,14 @@ export function useContract<T extends Contract = Contract>(
 
 export function useMulticall2Contract() {
   return useContract<UniswapInterfaceMulticall>(MULTICALL_ADDRESS, MulticallABI, false) as UniswapInterfaceMulticall
+}
+
+export function useENSRegistrarContract(withSignerIfPossible?: boolean) {
+  return useContract<EnsRegistrar>(ENS_REGISTRAR_ADDRESSES, ENS_ABI, withSignerIfPossible)
+}
+
+export function useENSResolverContract(address: string | undefined, withSignerIfPossible?: boolean) {
+  return useContract<EnsPublicResolver>(address, ENS_PUBLIC_RESOLVER_ABI, withSignerIfPossible)
 }
 
 export function useMintContract() {

@@ -4,14 +4,16 @@ import { save, load } from 'redux-localstorage-simple'
 import application from './application/reducer'
 import { updateVersion } from './global/actions'
 import user from './user/reducer'
+import transactions from './transactions/reducer'
 import multicall from './multicall/reducer'
 
-const PERSISTED_KEYS: string[] = ['user']
+const PERSISTED_KEYS: string[] = ['user', 'transactions']
 
 const store = configureStore({
   reducer: {
     application,
     user,
+    transactions,
     multicall,
   },
   middleware: (getDefaultMiddleware) =>

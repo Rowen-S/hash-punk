@@ -14,8 +14,9 @@ import store from './state'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import ApplicationUpdater from './state/application/updater'
 import MulticallUpdater from './state/multicall/updater'
+import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
-import ThemeProvider, { ThemedGlobalStyle } from './theme'
+import ThemeProvider, { FixedGlobalStyle, ThemedGlobalStyle } from './theme'
 import RadialGradientByChainUpdater from './theme/RadialGradientByChainUpdater'
 import getLibrary from './utils/getLibrary'
 
@@ -51,6 +52,7 @@ function Updaters() {
     <>
       <RadialGradientByChainUpdater />
       <UserUpdater />
+      <TransactionUpdater />
       <ApplicationUpdater />
       <MulticallUpdater />
     </>
@@ -58,6 +60,7 @@ function Updaters() {
 }
 ReactDOM.render(
   <StrictMode>
+    <FixedGlobalStyle />
     <Provider store={store}>
       <BrowserRouter>
         <LanguageProvider>

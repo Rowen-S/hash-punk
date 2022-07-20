@@ -208,12 +208,12 @@ export const ThemedBackground = styled.div<{ backgroundColor?: string | undefine
 
 export const FixedGlobalStyle = createGlobalStyle`
 html, input, textarea, button {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Lilita','Inter', sans-serif;
   font-display: fallback;
 }
 @supports (font-variation-settings: normal) {
   html, input, textarea, button {
-    font-family: 'Inter var', sans-serif;
+    font-family: 'Lilita','Inter var', sans-serif;
   }
 }
 html,
@@ -244,7 +244,7 @@ html {
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg1};
+  background-color: ${({ theme }) => theme.yellow3};
 }
 body {
   min-height: 100vh;

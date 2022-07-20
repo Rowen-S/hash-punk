@@ -170,6 +170,48 @@ export const ButtonYellow = styled(Base)`
   }
 `
 
+export const ButtonYellow2 = styled(Base)`
+  background-color: ${({ theme }) => theme.yellow2};
+  color: white;
+  &:focus {
+    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.05, theme.yellow2)};
+    background-color: ${({ theme }) => darken(0.05, theme.yellow2)};
+  }
+  &:hover {
+    background-color: ${({ theme }) => darken(0.05, theme.yellow2)};
+  }
+  &:active {
+    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.1, theme.yellow2)};
+    background-color: ${({ theme }) => darken(0.1, theme.yellow2)};
+  }
+  &:disabled {
+    background-color: ${({ theme }) => theme.yellow2};
+    opacity: 50%;
+    cursor: auto;
+  }
+`
+
+export const ButtonRed = styled(Base)`
+  background-color: ${({ theme }) => theme.red3};
+  color: white;
+  &:focus {
+    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.05, theme.red3)};
+    background-color: ${({ theme }) => darken(0.05, theme.red3)};
+  }
+  &:hover {
+    background-color: ${({ theme }) => darken(0.05, theme.red3)};
+  }
+  &:active {
+    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.1, theme.red3)};
+    background-color: ${({ theme }) => darken(0.1, theme.red3)};
+  }
+  &:disabled {
+    background-color: ${({ theme }) => theme.red3};
+    opacity: 50%;
+    cursor: auto;
+  }
+`
+
 export const ButtonEmpty = styled(Base)`
   background-color: transparent;
   color: ${({ theme }) => theme.primary1};
