@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { Box, Text } from 'rebass'
 import { darken } from 'polished'
 import { Minus, Plus } from 'react-feather'
@@ -19,13 +19,25 @@ import { useActiveWeb3React } from 'hooks/web3'
 
 import { defaultChainId } from 'constants/chains'
 
-import { parseEther, formatEther } from '@ethersproject/units'
+import { formatEther } from '@ethersproject/units'
+import { BytesLike } from '@ethersproject/bytes'
+import { BigNumberish } from '@ethersproject/bignumber'
 
 import { switchToNetwork } from 'utils/switchToNetwork'
 import { LightGreyCard } from 'components/Card'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { BigNumber } from '@ethersproject/bignumber'
 import Loader from 'components/Loader'
+
+import WhiteList from './WL.json'
+import { NULL_ADDRESS } from 'utils'
+
+interface Sign {
+  account: string
+  v: BigNumberish
+  r: BytesLike
+  s: BytesLike
+}
 
 const HomeWrapper = styled.main`
   width: 100%;
@@ -71,6 +83,9 @@ const Operation = styled(ButtonYellow)`
   }
 `
 
+const INDEX_PUBLIC_ONE_FREE = 0
+const INDEX_ALLOWLIST_ONE_FREE = 1
+
 export default function Home() {
   const { account, chainId, library } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
@@ -82,12 +97,13 @@ export default function Home() {
   const showAccount = Boolean(!account)
 
   const theme = useContext(ThemeContext)
+
   const [{ startTime, endTime, mintPrice, wlAMax, wlBMax }, setInit] = useState<{
     startTime: number | undefined
     endTime: number | undefined
     mintPrice: BigNumber | undefined
-    wlAMax: any
-    wlBMax: any
+    wlAMax: BigNumber | undefined
+    wlBMax: BigNumber | undefined
   }>({
     startTime: undefined,
     endTime: undefined,
@@ -96,15 +112,33 @@ export default function Home() {
     wlBMax: undefined,
   })
 
-  const [maxAmount, setMaxAmount] = useState<number>(0)
-  console.log(maxAmount)
+  const [maxAmount, setMaxAmount] = useState<number>(5)
+
+  const isWlA: Sign | undefined = useMemo(() => {
+    if (!account) return
+    return WhiteList.WLA.find((x) => x.account == account)
+  }, [account])
+
+  const isWlB: Sign | undefined = useMemo(() => {
+    if (!account) return
+    return WhiteList.WLB.find((x) => x.account == account)
+  }, [account])
 
   // currently sold
   const currently = useSingleCallResult(mintContract, 'totalSupply')?.result?.[0]
   // total
   const total = useSingleCallResult(mintContract, 'maxTokenCount')?.result?.[0]
 
-  const isWlB = true
+  const remainingAmount = useMemo(() => {
+    if (!total || !currently) return 0
+    return total - currently
+  }, [total, currently])
+
+  const publicOneFree = useSingleCallResult(mintContract, 'oneFreeRemain', [INDEX_PUBLIC_ONE_FREE])?.result?.[0]
+  const wlAOneFree = useSingleCallResult(mintContract, 'oneFreeRemain', [INDEX_ALLOWLIST_ONE_FREE])?.result?.[0]
+
+  // numberMinted
+  const accountMinted = useSingleCallResult(mintContract, 'numberMinted', [account ?? NULL_ADDRESS])?.result?.[0]
 
   const init = useCallback(async () => {
     const startTime = await mintContract.startTime()
@@ -113,8 +147,6 @@ export default function Home() {
     // wla === free mint (200)
     const wlAMax = await mintContract.MAX_MINT_PER_ACCOUNT_PUB()
     const wlBMax = await mintContract.MAX_MINT_PER_ACCOUNT_WB()
-
-    console.log('init', wlAMax, wlBMax)
     setInit({ startTime: startTime * 1000, endTime: endTime * 1000, wlAMax, wlBMax, mintPrice })
   }, [mintContract])
 
@@ -158,64 +190,120 @@ export default function Home() {
     })
   }, [setModal])
 
-  const mintPublicSale = useCallback(
-    () => {
+  const tenFreeMint = useCallback(
+    async (sign: Sign) => {
+      debugger
+
+      if (!account) return
+      const verify = await mintContract.checkSignature(
+        sign.v,
+        sign.r,
+        sign.s,
+        await mintContract.ALLOWLIST_TEN_FREEMINT_HASH_TYPE(),
+        account
+      )
+      if (!verify) return
       setModal({
         minting: true,
         minthash,
         mintErrorMessage,
       })
-      // const totalPrice = parseEther('0.05').mul(amount)
-      // mintContract
-      //   .mintPublicSale(amount, { value: totalPrice })
-      //   .then(async (result: TransactionResponse) => {
-      //     const { wait, hash } = result
-      //     setModal({
-      //       minting: true,
-      //       mintErrorMessage,
-      //       minthash: hash,
-      //     })
-      //     if (wait) {
-      //       await wait().then((res: any) => {
-      //         const { transactionHash, status } = res
-      //         if (status === 1) {
-      //           addPopup(
-      //             {
-      //               txn: {
-      //                 hash: transactionHash,
-      //                 success: true,
-      //                 summary: t`Transaction confirmed`,
-      //               },
-      //             },
-      //             transactionHash,
-      //             DEFAULT_TXN_DISMISS_MS
-      //           )
-      //         } else {
-      //           addPopup(
-      //             {
-      //               txn: {
-      //                 hash: transactionHash,
-      //                 success: false,
-      //                 summary: t`Transaction failed`,
-      //               },
-      //             },
-      //             transactionHash,
-      //             L2_TXN_DISMISS_MS
-      //           )
-      //         }
-      //       })
-      //     }
-      //   })
-      //   .catch((err: any) => {
-      //     setModal({
-      //       minting: true,
-      //       minthash,
-      //       mintErrorMessage: err.message,
-      //     })
-      //   })
+      mintContract
+        .allowListTenFreeMint(sign.v, sign.r, sign.s)
+        .then((res) => {
+          addTransaction(res)
+          setModal({
+            minting: true,
+            minthash: res.hash,
+            mintErrorMessage,
+          })
+        })
+        .catch((err) =>
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        )
     },
-    // eslint-disable-next-line
-    [mintContract, account, amount]
+    [mintContract, mintErrorMessage, minthash, account, addTransaction]
+  )
+
+  const oneFreeMint = useCallback(
+    async (sign: Sign) => {
+      if (!account) return
+      const verify = await mintContract.checkSignature(
+        sign.v,
+        sign.r,
+        sign.s,
+        await mintContract.ALLOWLIST_ONE_FREEMINT_HASH_TYPE(),
+        account
+      )
+
+      if (!mintPrice || !verify) return
+      setModal({
+        minting: true,
+        minthash,
+        mintErrorMessage,
+      })
+      const totalPrice = parseInt(amount) > 1 ? mintPrice.mul(parseInt(amount) - 1) : mintPrice.sub(mintPrice)
+
+      mintContract
+        .allowListOneFreeMint(sign.v, sign.r, sign.s, amount, {
+          value: totalPrice,
+        })
+        .then((res) => {
+          addTransaction(res)
+          setModal({
+            minting: true,
+            minthash: res.hash,
+            mintErrorMessage,
+          })
+        })
+        .catch((err) =>
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        )
+    },
+    [mintContract, mintErrorMessage, amount, mintPrice, minthash, account, addTransaction]
+  )
+  const publicMint = useCallback(
+    (isFree = false) => {
+      if (!mintPrice || !amount) return
+      setModal({
+        minting: true,
+        minthash,
+        mintErrorMessage,
+      })
+      const totalPrice = isFree
+        ? parseInt(amount) > 1
+          ? mintPrice.mul(parseInt(amount) - 1)
+          : mintPrice.sub(mintPrice)
+        : mintPrice.mul(amount)
+      mintContract
+        .publicMint(amount, {
+          value: totalPrice,
+        })
+        .then((res) => {
+          addTransaction(res)
+          setModal({
+            minting: true,
+            minthash: res.hash,
+            mintErrorMessage,
+          })
+        })
+        .catch((err) =>
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        )
+    },
+    [mintContract, amount, mintPrice, mintErrorMessage, minthash, addTransaction]
   )
 
   const formatNumber = useCallback((num: number) => {
@@ -224,6 +312,122 @@ export default function Home() {
       useGrouping: false,
     })
   }, [])
+
+  const wlRenderer = useCallback(
+    ({
+      hours,
+      minutes,
+      seconds,
+      completed,
+    }: {
+      hours: number
+      minutes: number
+      seconds: number
+      completed: boolean
+    }) => {
+      return (
+        <AutoColumn gap="lg" justify={'center'}>
+          {!completed && (
+            <Text fontSize={44}>
+              {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
+            </Text>
+          )}
+          <Text fontSize={22}>1 NFT costs {mintPrice ? formatEther(mintPrice) : 0.01} ETH</Text>
+          <Text fontSize={18}>Excluding gas Fees.</Text>
+          <Text fontSize={18}>Click buy to mint your NFT.</Text>
+          {showAccount ? (
+            <MintButton onClick={toggleWalletModal}>
+              <Text>Connect</Text>
+            </MintButton>
+          ) : showSwitchAMainnet ? (
+            <MintButton
+              backgroundColor={theme.red1}
+              onClick={() => {
+                if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
+                  return
+                }
+                switchToNetwork({ library, chainId: defaultChainId })
+              }}
+            >
+              <Text>Change Network</Text>
+            </MintButton>
+          ) : (
+            <>
+              <MintInputWrapper>
+                <Operation
+                  onClick={() => handlePlus(parseInt(amount))}
+                  disabled={Number(amount) >= maxAmount || Boolean(isWlB)}
+                >
+                  <Plus size={18} />
+                </Operation>
+                <Text width={16} textAlign={'center'} marginX={30}>
+                  {amount ?? 0}
+                </Text>
+
+                {/* <MintInput value={amount} disabled onUserInput={(val) => handleAmountInput(val)} placeholder="0" /> */}
+                <Operation
+                  onClick={() => handleMinus(parseInt(amount))}
+                  disabled={parseInt(amount) == 1 || Boolean(isWlB)}
+                >
+                  <Minus size={18} />
+                </Operation>
+              </MintInputWrapper>
+              {remainingAmount != 0 ? (
+                accountMinted == 0 ? (
+                  isWlB && remainingAmount >= 10 ? (
+                    <MintButton onClick={() => tenFreeMint(isWlB)}>
+                      <Text>Free Mint</Text>
+                    </MintButton>
+                  ) : isWlA && wlAOneFree > 0 ? (
+                    <MintButton onClick={() => oneFreeMint(isWlA)}>
+                      <Text>One Free Mint</Text>
+                    </MintButton>
+                  ) : publicOneFree > 0 ? (
+                    <MintButton onClick={() => publicMint(true)}>
+                      <Text>One Free Mint</Text>
+                    </MintButton>
+                  ) : null
+                ) : accountMinted > 0 && accountMinted < 5 ? (
+                  <MintButton onClick={publicMint}>
+                    <Text>Public Mint</Text>
+                  </MintButton>
+                ) : (
+                  <MintButton disabled>Used</MintButton>
+                )
+              ) : (
+                <MintButton>
+                  <Text>SOLD OUT</Text>
+                </MintButton>
+              )}
+            </>
+          )}
+        </AutoColumn>
+      )
+    },
+    [
+      amount,
+      chainId,
+      library,
+      mintPrice,
+      showAccount,
+      showSwitchAMainnet,
+      theme,
+      maxAmount,
+      isWlA,
+      isWlB,
+      accountMinted,
+      publicOneFree,
+      remainingAmount,
+      wlAOneFree,
+      formatNumber,
+      handleMinus,
+      handlePlus,
+      toggleWalletModal,
+      tenFreeMint,
+      oneFreeMint,
+      publicMint,
+    ]
+  )
 
   const initRenderer = useCallback(
     ({
@@ -238,101 +442,6 @@ export default function Home() {
       completed: boolean
     }) => {
       // Renderer callback with condition
-      const wlRenderer = ({
-        hours,
-        minutes,
-        seconds,
-        completed,
-      }: {
-        hours: number
-        minutes: number
-        seconds: number
-        completed: boolean
-      }) => {
-        return (
-          <AutoColumn gap="lg" justify={'center'}>
-            {!completed && (
-              <Text fontSize={44}>
-                {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
-              </Text>
-            )}
-            <Text fontSize={22}>1 NFT costs {mintPrice ? formatEther(mintPrice) : 0.01} ETH</Text>
-            <Text fontSize={18}>Excluding gas Fees.</Text>
-            <Text fontSize={18}>Click buy to mint your NFT.</Text>
-
-            {showAccount ? (
-              <MintButton onClick={toggleWalletModal}>
-                <Text>Connect</Text>
-              </MintButton>
-            ) : showSwitchAMainnet ? (
-              <MintButton
-                backgroundColor={theme.red1}
-                onClick={() => {
-                  if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
-                    return
-                  }
-                  switchToNetwork({ library, chainId: defaultChainId })
-                }}
-              >
-                <Text>Change Network</Text>
-              </MintButton>
-            ) : !completed ? (
-              <>
-                <MintInputWrapper>
-                  <Operation onClick={() => handlePlus(parseInt(amount))} disabled={Number(amount) >= maxAmount}>
-                    <Plus size={18} />
-                  </Operation>
-                  <Text width={16} textAlign={'center'} marginX={30}>
-                    {amount ?? 0}
-                  </Text>
-
-                  {/* <MintInput value={amount} disabled onUserInput={(val) => handleAmountInput(val)} placeholder="0" /> */}
-                  <Operation onClick={() => handleMinus(parseInt(amount))} disabled={parseInt(amount) == 1}>
-                    <Minus size={18} />
-                  </Operation>
-                </MintInputWrapper>
-                {Number(currently) >= Number(total) ? (
-                  <MintButton>
-                    <Text>SOLD OUT</Text>
-                  </MintButton>
-                ) : (
-                  <MintButton onClick={mintPublicSale}>
-                    <Text>MINT</Text>
-                  </MintButton>
-                )}
-              </>
-            ) : (
-              <>
-                <MintInputWrapper>
-                  <Operation
-                    onClick={() => handlePlus(parseInt(amount))}
-                    // disabled={Number(amount) + Number(mintedForPublic) >= maxPublicMint}
-                  >
-                    <Plus size={18} />
-                  </Operation>
-                  <Text width={16} textAlign={'center'} marginX={30}>
-                    {amount ?? 0}
-                  </Text>
-
-                  {/* <MintInput value={amount} disabled onUserInput={(val) => handleAmountInput(val)} placeholder="0" /> */}
-                  <Operation onClick={() => handleMinus(parseInt(amount))} disabled={parseInt(amount) == 1}>
-                    <Minus size={18} />
-                  </Operation>
-                </MintInputWrapper>
-                {Number(currently) >= Number(total) ? (
-                  <MintButton>
-                    <Text>SOLD OUT</Text>
-                  </MintButton>
-                ) : (
-                  <MintButton onClick={mintPublicSale}>
-                    <Text>MINT</Text>
-                  </MintButton>
-                )}
-              </>
-            )}
-          </AutoColumn>
-        )
-      }
       if (completed) {
         // Render a completed state
         return <Countdown date={endTime} renderer={wlRenderer} />
@@ -345,37 +454,25 @@ export default function Home() {
         )
       }
     },
-    [
-      endTime,
-      amount,
-      chainId,
-      currently,
-      library,
-      mintPrice,
-      showAccount,
-      showSwitchAMainnet,
-      theme,
-      total,
-      handleMinus,
-      handlePlus,
-      mintPublicSale,
-      toggleWalletModal,
-      formatNumber,
-    ]
+    [endTime, wlRenderer, formatNumber]
   )
 
   useEffect(() => {
-    if (isWlB) {
-      setAmount(String(10))
-      setMaxAmount(10)
-    } else {
-      setAmount(String(5))
-      setMaxAmount(5)
+    if (wlBMax && wlAMax) {
+      if (isWlB) {
+        setAmount(wlBMax.toString())
+        setMaxAmount(wlBMax.toNumber())
+      } else {
+        setAmount(wlAMax.toString())
+        setMaxAmount(wlAMax.toNumber())
+      }
     }
     return () => {
+      setAmount('1')
+      setMaxAmount(5)
       console.log('init')
     }
-  }, [isWlB])
+  }, [isWlB, wlAMax, wlBMax])
 
   useEffect(() => {
     if (account && chainId == defaultChainId) {
@@ -408,6 +505,23 @@ export default function Home() {
               <Text fontSize={35}>&nbsp;/&nbsp;{Number(total || 0)}</Text>
             </RowFixed>
             {startTime ? <Countdown date={startTime} renderer={initRenderer} /> : <Loader />}
+            {showAccount ? (
+              <MintButton onClick={toggleWalletModal}>
+                <Text>Connect</Text>
+              </MintButton>
+            ) : showSwitchAMainnet ? (
+              <MintButton
+                backgroundColor={theme.red1}
+                onClick={() => {
+                  if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
+                    return
+                  }
+                  switchToNetwork({ library, chainId: defaultChainId })
+                }}
+              >
+                <Text>Change Network</Text>
+              </MintButton>
+            ) : null}
           </AutoColumn>
         </MintOptionWrapper>
       </HomeContainer>

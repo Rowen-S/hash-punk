@@ -1,0 +1,18 @@
+{
+  "WLA": [
+    {
+      "account": "0x2b2B1689B4aa41A26abB58EBDE9953e36A25bc55",
+      "r": "0xc5031aeb2c56468b6925e1693d21dc5ff6708bd87923b01b2cc2ab965f72a002",
+      "s": "0x5cd54258df4bbb5a2894aff1dc05f28ef9497cc422e6df2193619550baec8a84",
+      "v": 28
+    }
+  ],
+  "WLB": [
+    {
+      "account": "0x2b2B1689B4aa41A26abB58EBDE9953e36A25bc55",
+      "r": "0xad81e0c5fd9746678e187f8fa0650025259b814a716f1e7e4dd12f4141f6460e",
+      "s": "0x32fd3a2519c3471d1bbb46f97b423e8b3e6c0d6c46b11331ffe5717aab09c6a5",
+      "v": 27
+    }
+  ]
+}

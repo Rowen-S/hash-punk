@@ -9,7 +9,7 @@ export enum SupportedChainId {
   TEST = 1337,
 }
 
-export const defaultChainId = SupportedChainId.TEST
+export const defaultChainId = SupportedChainId.GOERLI
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
@@ -26,6 +26,7 @@ export const L1_CHAIN_IDS = [
   SupportedChainId.RINKEBY,
   SupportedChainId.GOERLI,
   SupportedChainId.KOVAN,
+  SupportedChainId.TEST,
 ] as const
 
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
@@ -59,5 +60,9 @@ export const CHAIN_INFO: ChainInfo = {
   [SupportedChainId.KOVAN]: {
     explorer: 'https://kovan.etherscan.io/',
     label: 'Kovan',
+  },
+  [SupportedChainId.TEST]: {
+    explorer: 'https://kovan.etherscan.io/',
+    label: 'Görli local',
   },
 }

@@ -132,7 +132,6 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
 function Web3StatusInner() {
   const { account, connector, error } = useActiveWeb3React()
   const { ENSName } = useENSName(account ?? undefined)
-  debugger
   const toggleWalletModal = useWalletModalToggle()
 
   if (account) {

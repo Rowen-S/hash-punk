@@ -53,25 +53,4 @@ export function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
 
-export function randomString(e?: number) {
-  const eran = e || 32
-  const t = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
-  const a = t.length
-  let n = ''
-  for (let i = 0; i < eran; i++) {
-    n += t.charAt(Math.floor(Math.random() * a))
-  }
-  return n
-}
-
-export function randomNumber(x = 10000, y = 1000000) {
-  return Math.round(Math.random() * (y - x) + x)
-}
-
-// export function isTokenOnList(tokenAddressMap: TokenAddressMap, token?: Token): boolean {
-//   return Boolean(token?.isToken && tokenAddressMap[token.chainId]?.[token.address])
-// }
-
-export function formattedFeeAmount(feeAmount: FeeAmount): number {
-  return feeAmount / 10000
-}
+export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
