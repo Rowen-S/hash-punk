@@ -89,7 +89,6 @@
   },
   "scripts": {
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types './src/abis/**/*.json'",
-    "compile-v3-contract-types": "typechain --target ethers-v5 --out-dir src/types/v3 './node_modules/@uniswap/?(v3-periphery)/artifacts/contracts/**/*.json'",
     "build": "yarn i18n:extract && react-scripts build",
     "start": "react-scripts start",
     "test": "react-scripts test --env=./custom-test-env.js",

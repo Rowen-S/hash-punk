@@ -1,10 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { t } from '@lingui/macro'
-import { Text } from 'rebass'
+import { Box, Text } from 'rebass'
 import { darken } from 'polished'
 import { Minus, Plus } from 'react-feather'
 
-import { usePangaContract } from 'hooks/useContract'
+import { useMintContract } from 'hooks/useContract'
 import { useSingleCallResult } from 'state/multicall/hooks'
 import { useAddPopup, useWalletModalToggle } from 'state/application/hooks'
 
@@ -28,50 +28,25 @@ import { parseEther } from '@ethersproject/units'
 
 import { get } from 'utils/request'
 import { switchToNetwork } from 'utils/switchToNetwork'
-
-import BannerImg from 'assets/images/banner.png'
-import BannerPhoneImg from 'assets/images/phone-bg.png'
-import BannerIpadImg from 'assets/images/ipad-bg.png'
-import YellowbuttonBg from 'assets/images/yellow-button.png'
-
-import Jun from 'assets/images/jiu.png'
-import Two from 'assets/images/x2.png'
-import Three from 'assets/images/x3.png'
+import { LightGreyCard } from 'components/Card'
 
 const HomeWrapper = styled.main`
   width: 100%;
   min-height: 100vh;
 `
 
-const BannerOptionWraper = styled.div`
+const HomeContainer = styled(Box)<{ image: string }>`
   width: 100%;
   min-height: 100vh;
-  position: relative;
-  background: url(${BannerImg}) center center / cover no-repeat;
-  background-size: 100% 100%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    background: url(${BannerIpadImg}) center center / cover no-repeat;
-  `};
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    background: url(${BannerPhoneImg}) center center / cover no-repeat;
-  `};
+  background-image: ${({ image }) => (image ? `url(${image})` : 'none')};
+  background-size: cover;
+  background-position: center;
 `
-const MintOptionWrapper = styled(Row)`
-  background: #fff0c6;
-  padding: 0.875rem 2.875rem;
-  border-radius: 64px;
-  position: absolute;
-  bottom: 4.375rem;
-  width: 800px;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    width: 95%;
-  `};
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 100%;
-  `};
+const MintOptionWrapper = styled(LightGreyCard)`
+  padding: 2.875rem;
 `
 const MintWrapper = styled(Row)`
   width: 100%;
@@ -99,8 +74,6 @@ const MintButton = styled(ButtonEmpty)<{ color?: string; open?: boolean; bg?: st
   position: relative;
   width: 10.75rem;
   height: 5.3125rem;
-  background: url(${YellowbuttonBg}) center center / cover no-repeat;
-  background: ${({ bg }) => bg};
   background-size: 100% 100%;
   color: ${({ theme }) => theme.text1};
   :disabled {
@@ -119,7 +92,6 @@ const MintInputWrapper = styled(Row)`
   justify-content: center;
   width: 10.75rem;
   height: 5.3125rem;
-  background: url(${YellowbuttonBg}) center center / cover no-repeat;
 `
 const MintInput = styled(NumericalInput)`
   flex: 1 1 auto;
@@ -152,7 +124,7 @@ export default function Home() {
 
   const theme = useContext(ThemeContext)
   const addPopup = useAddPopup()
-  const pangaContract = usePangaContract()
+  const pangaContract = useMintContract()
   const mintedForPublic = useSingleCallResult(pangaContract, 'mintedForPublic', [account ?? undefined])?.result?.[0]
   const mintedForPresale = useSingleCallResult(pangaContract, 'mintedForPresale', [account ?? undefined])?.result?.[0]
 
@@ -446,12 +418,12 @@ export default function Home() {
         onDismiss={handleDismissSubmissionModal}
         errorMessage={mintErrorMessage}
       />
-      <BannerOptionWraper>
+      <HomeContainer image={'/config/images/bg.png'}>
         <MintOptionWrapper>
-          <AlcoholImg src={Jun} alt="Alcohol" />
+          <AlcoholImg src={''} alt="Alcohol" />
           <MintWrapper>
             <Column>
-              <Text fontSize={27} color={theme.text6}>
+              <Text fontSize={27} color={theme.text1}>
                 Minted
               </Text>
               {!showAccount && !showSwitchAMainnet ? (
@@ -515,7 +487,7 @@ export default function Home() {
                     disabled={mintedForPresale > 0}
                     onClick={() => mintPresale(proofs, tier)}
                   >
-                    <DoubleImg src={Two} alt="2x" />
+                    <DoubleImg src={''} alt="1x" />
                     <Text fontSize={31}>MINT</Text>
                   </MintButton>
                 ) : (
@@ -524,7 +496,7 @@ export default function Home() {
                     disabled={mintedForPresale > 0}
                     onClick={() => mintPresale(proofs, tier)}
                   >
-                    <DoubleImg src={Three} alt="3x" />
+                    <DoubleImg src={''} alt="2x" />
                     <Text fontSize={31}>MINT</Text>
                   </MintButton>
                 )
@@ -546,7 +518,7 @@ export default function Home() {
             )}
           </MintWrapper>
         </MintOptionWrapper>
-      </BannerOptionWraper>
+      </HomeContainer>
     </HomeWrapper>
   )
 }

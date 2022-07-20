@@ -12,7 +12,6 @@ export interface Colors {
   text3: Color
   text4: Color
   text5: Color
-  text6: Color
 
   // backgrounds / greys
   bg0: Color
@@ -50,8 +49,6 @@ export interface Colors {
   yellow3: Color
   blue1: Color
   blue2: Color
-
-  blue4: Color
 
   error: Color
   success: Color

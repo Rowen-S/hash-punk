@@ -1,27 +1,27 @@
 {
-  "background_color": "#775a41",
+  "background_color": "#ffffff",
   "display": "standalone",
-  "homepage_url": "https://panganft.com/",
-  "providedBy": { "name": "潘噶之交", "url": "https://panganft.com/" },
+  "homepage_url": "https://test.com/",
+  "providedBy": { "name": "test", "url": "https://test.com/" },
   "icons": [
     {
-      "src": "./images/192x192_App_Icon.png",
+      "src": "./192x192_App_Icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "./images/512x512_App_Icon.png",
+      "src": "./512x512_App_Icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
   "orientation": "portrait",
-  "name": "潘噶之交",
-  "description": "潘嘎之交让你们天天都能喝到酒",
+  "name": "test",
+  "description": "",
   "iconPath": "./images/512x512_App_Icon.png",
-  "short_name": "潘噶之交",
+  "short_name": "test",
   "start_url": ".",
-  "theme_color": "#775a41"
+  "theme_color": "#000000"
 }

@@ -5,9 +5,8 @@ import { darken } from 'polished'
 import { Activity } from 'react-feather'
 import { Trans } from '@lingui/macro'
 import styled, { css } from 'styled-components/macro'
-import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { injected, walletconnect, walletlink } from '../../connectors'
+import { injected, walletconnect } from '../../connectors'
 import { NetworkContextName } from '../../constants/misc'
 import { useWalletModalToggle } from '../../state/application/hooks'
 
@@ -124,12 +123,6 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
     return (
       <IconWrapper size={16}>
         <img src={WalletConnectIcon} alt={'WalletConnect'} />
-      </IconWrapper>
-    )
-  } else if (connector === walletlink) {
-    return (
-      <IconWrapper size={16}>
-        <img src={CoinbaseWalletIcon} alt={'CoinbaseWallet'} />
       </IconWrapper>
     )
   }

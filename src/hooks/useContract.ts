@@ -4,12 +4,12 @@ import { useActiveWeb3React } from './web3'
 
 import { abi as MulticallABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
 
-import PANGA_ABI from 'abis/panga.json'
+import MINT_ABI from 'abis/mint.json'
 
-import { MULTICALL_ADDRESS, PANGA_ADDRESS } from 'constants/addresses'
+import { MULTICALL_ADDRESS, MINT_ADDRESS } from 'constants/addresses'
 
 import { UniswapInterfaceMulticall } from 'types/v3'
-import { Panga } from '../abis/types'
+import { Mint } from '../abis/types'
 
 import { useMemo } from 'react'
 
@@ -40,6 +40,6 @@ export function useMulticall2Contract() {
   return useContract<UniswapInterfaceMulticall>(MULTICALL_ADDRESS, MulticallABI, false) as UniswapInterfaceMulticall
 }
 
-export function usePangaContract() {
-  return useContract<Panga>(PANGA_ADDRESS, PANGA_ABI, true) as Panga
+export function useMintContract() {
+  return useContract<Mint>(MINT_ADDRESS, MINT_ABI, true) as Mint
 }

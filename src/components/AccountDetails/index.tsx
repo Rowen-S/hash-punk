@@ -8,7 +8,6 @@ import Copy from './Copy'
 import { ReactComponent as Close } from '../../assets/images/x.svg'
 
 import { injected, walletconnect, walletlink } from '../../connectors'
-import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
 
 import Identicon from '../Identicon'
@@ -208,12 +207,6 @@ export default function AccountDetails({ toggleWalletModal, openOptions }: Accou
       return (
         <IconWrapper size={16}>
           <img src={WalletConnectIcon} alt={'wallet connect logo'} />
-        </IconWrapper>
-      )
-    } else if (connector === walletlink) {
-      return (
-        <IconWrapper size={16}>
-          <img src={CoinbaseWalletIcon} alt={'coinbase wallet logo'} />
         </IconWrapper>
       )
     }

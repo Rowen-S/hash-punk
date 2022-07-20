@@ -1,10 +1,6 @@
 import { Web3Provider } from '@ethersproject/providers'
-import ms from 'ms.macro'
-import { SupportedChainId } from '../constants/chains'
 
-const NETWORK_POLLING_INTERVALS: { [chainId: number]: number } = {
-  [SupportedChainId.RINKEBY]: ms`1s`,
-}
+const NETWORK_POLLING_INTERVALS: { [chainId: number]: number } = {}
 
 export default function getLibrary(provider: any): Web3Provider {
   const library = new Web3Provider(

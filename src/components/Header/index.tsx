@@ -242,7 +242,7 @@ export default function Header() {
         <LogoLink href="https://discord.gg/pangazhijiao">
           <Logo src={Discord} alt="Discord" />
         </LogoLink>
-        <LogoLink href="https://opensea.io/collection/pangazhijiao">
+        <LogoLink href="https://opensea.io/collection/pan-ga-zhi-jiao">
           <Logo src={Opensea} alt="Opensea" />
         </LogoLink>
       </HeaderLinks>
