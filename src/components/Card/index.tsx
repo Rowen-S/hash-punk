@@ -2,8 +2,8 @@ import styled from 'styled-components/macro'
 import { CardProps, Text } from 'rebass'
 import { Box } from 'rebass/styled-components'
 
-const Card = styled(Box)<{ width?: string; padding?: string; border?: string; $borderRadius?: string }>`
-  width: ${({ width }) => width ?? '100%'};
+const Card = styled(Box)<{ dfWidth?: string; padding?: string; border?: string; $borderRadius?: string }>`
+  width: ${({ dfWidth }) => dfWidth ?? '100%'};
   padding: ${({ padding }) => padding ?? '1rem'};
   border-radius: ${({ $borderRadius }) => $borderRadius ?? '16px'};
   border: ${({ border }) => border};

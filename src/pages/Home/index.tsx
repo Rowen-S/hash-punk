@@ -57,7 +57,6 @@ const HomeContainer = styled(Box)<{ image: string }>`
 const MintOptionWrapper = styled(LightGreyCard)`
   border: 4px dashed ${({ theme }) => theme.red3};
   padding: 1.5rem;
-  width: 50%;
   user-select: none;
 `
 
@@ -498,7 +497,7 @@ export default function Home() {
         errorMessage={mintErrorMessage}
       />
       <HomeContainer image={'/config/images/bg.png'}>
-        <MintOptionWrapper>
+        <MintOptionWrapper width={['90%', '70%', '50%']}>
           <AutoColumn justify={'center'} gap="lg">
             <RowFixed>
               <Text fontSize={53}>{Number(currently || 0)}</Text>
