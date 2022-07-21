@@ -127,23 +127,23 @@ msgstr "The price of this pool is within your selected range. Your position is c
 msgid "Transaction Submitted"
 msgstr "Transaction Submitted"
 
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-msgid "Transaction confirmed"
-msgstr "Transaction confirmed"
+#: 
+#: 
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Transaction confirmed"
+#~ msgstr "Transaction confirmed"
 
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-#: src/pages/Home/index.tsx
-msgid "Transaction failed"
-msgstr "Transaction failed"
+#: 
+#: 
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Transaction failed"
+#~ msgstr "Transaction failed"
 
 #: src/components/WalletModal/PendingView.tsx
 msgid "Try Again"

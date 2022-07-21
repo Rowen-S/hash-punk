@@ -1,4 +1,4 @@
-# Sekira
+# Exiled Dissident NFT
 
 .
 
