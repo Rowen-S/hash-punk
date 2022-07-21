@@ -237,13 +237,13 @@ export default function Header() {
       </Title> */}
 
       <HeaderLinks>
-        <LogoLink href="https://twitter.com/panga3747">
+        <LogoLink href="//">
           <Logo src={Twitter} alt="Twitter" />
         </LogoLink>
-        <LogoLink href="https://discord.gg/pangazhijiao">
+        <LogoLink href="//">
           <Logo src={Discord} alt="Discord" />
         </LogoLink>
-        <LogoLink href="https://opensea.io/collection/pan-ga-zhi-jiao">
+        <LogoLink href="//">
           <Logo src={Opensea} alt="Opensea" />
         </LogoLink>
       </HeaderLinks>

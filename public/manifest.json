@@ -2,7 +2,7 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "homepage_url": "https://test.com/",
-  "providedBy": { "name": "test", "url": "https://test.com/" },
+  "providedBy": { "name": "Exiled Dissident NFT", "url": "https://test.com/" },
   "icons": [
     {
       "src": "./192x192_App_Icon.png",
@@ -18,8 +18,8 @@
     }
   ],
   "orientation": "portrait",
-  "name": "test",
-  "description": "",
+  "name": "Exiled Dissident NFT",
+  "description": "World has been fighting for territorial expansion. Dissidents from various kingdoms are exiled to kezante… WL free mint, CC0, no discord ",
   "iconPath": "./images/512x512_App_Icon.png",
   "short_name": "test",
   "start_url": ".",
