@@ -554,7 +554,6 @@ export default function Home() {
               <Text fontSize={53}>{Number(currently || 0)}</Text>
               <Text fontSize={35}>&nbsp;/&nbsp;{Number(total || 0)}</Text>
             </RowFixed>
-            {nowTime}
             {startTime && nowTime ? (
               <Countdown now={() => nowTime} date={startTime} renderer={initRenderer} />
             ) : (
