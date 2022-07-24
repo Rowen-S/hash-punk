@@ -178,12 +178,12 @@ export default function Home() {
 
   const handlePlus = useCallback(
     (val: number) => {
-      const totalSupply = val + 1
-      if (totalSupply <= maxAmount - accountMinted.toNumber()) {
-        setAmount(val >= maxAmount ? String(val) : String(val + 1))
+      const afterTotal = val + 1
+      if (afterTotal <= maxAmount) {
+        setAmount(String(afterTotal))
       }
     },
-    [maxAmount, accountMinted, setAmount]
+    [maxAmount, setAmount]
   )
 
   const handleMinus = useCallback(
