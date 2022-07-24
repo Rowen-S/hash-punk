@@ -482,7 +482,7 @@ export default function Home() {
   )
 
   useEffect(() => {
-    if (wlBMax && wlAMax) {
+    if (wlBMax && wlAMax && accountMinted !== undefined) {
       if (isWlB) {
         setAmount(wlBMax.toString())
         setMaxAmount(wlBMax.toNumber())
