@@ -31,6 +31,7 @@ import Loader from 'components/Loader'
 
 import WhiteList from './WL.json'
 import { NULL_ADDRESS } from 'utils'
+import usePrevious from 'hooks/usePrevious'
 
 interface Sign {
   account: string
@@ -178,11 +179,11 @@ export default function Home() {
   const handlePlus = useCallback(
     (val: number) => {
       const totalSupply = val + 1
-      if (totalSupply <= maxAmount) {
+      if (totalSupply <= maxAmount - accountMinted.toNumber()) {
         setAmount(val >= maxAmount ? String(val) : String(val + 1))
       }
     },
-    [maxAmount, setAmount]
+    [maxAmount, accountMinted, setAmount]
   )
 
   const handleMinus = useCallback(
@@ -385,7 +386,7 @@ export default function Home() {
                 {/* <MintInput value={amount} disabled onUserInput={(val) => handleAmountInput(val)} placeholder="0" /> */}
                 <Operation
                   onClick={() => handleMinus(parseInt(amount))}
-                  disabled={parseInt(amount) == 1 || Boolean(isWlB)}
+                  disabled={parseInt(amount) <= 1 || Boolean(isWlB)}
                 >
                   <Minus size={18} />
                 </Operation>
@@ -486,15 +487,26 @@ export default function Home() {
         setAmount(wlBMax.toString())
         setMaxAmount(wlBMax.toNumber())
       } else {
-        setAmount(wlAMax.toString())
-        setMaxAmount(wlAMax.toNumber())
+        setAmount(wlAMax.sub(accountMinted).toString())
+        setMaxAmount(wlAMax.sub(accountMinted).toNumber())
       }
     }
     return () => {
       setAmount('1')
       setMaxAmount(5)
     }
+    // eslint-disable-next-line
   }, [isWlB, wlAMax, wlBMax])
+
+  const previousMinted = usePrevious(accountMinted)
+
+  useEffect(() => {
+    if (!accountMinted || !previousMinted) return
+    if (!accountMinted.eq(previousMinted)) {
+      setAmount(String(maxAmount - accountMinted.toNumber()))
+      setMaxAmount(maxAmount - accountMinted.toNumber())
+    }
+  }, [accountMinted, maxAmount, previousMinted])
 
   useEffect(() => {
     if (!nowTime) return
