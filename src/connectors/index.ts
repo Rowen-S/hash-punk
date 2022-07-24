@@ -28,7 +28,7 @@ const NETWORK_URLS: { [key in SupportedChainId]: string } = {
   [SupportedChainId.GOERLI]: `https://goerli.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.KOVAN]: `https://kovan.infura.io/v3/${INFURA_KEY}`,
 
-  [SupportedChainId.TEST]: `https://goerli.infura.io/v3/${INFURA_KEY}`,
+  [SupportedChainId.TEST]: `http://localhost:8545`,
 }
 
 export const network = new NetworkConnector({

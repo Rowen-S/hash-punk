@@ -17,8 +17,8 @@ import NetworkCard from './NetworkCard'
 // import LogoDark from '../../assets/svg/logo_white.png'
 
 import Twitter from '../../assets/svg/twitter.svg'
-import Discord from '../../assets/svg/discord.svg'
-import Opensea from '../../assets/svg/opensea.svg'
+// import Discord from '../../assets/svg/discord.svg'
+// import Opensea from '../../assets/svg/opensea.svg'
 
 const HeaderFrame = styled.div`
   display: grid;
@@ -240,12 +240,12 @@ export default function Header() {
         <LogoLink href="//">
           <Logo src={Twitter} alt="Twitter" />
         </LogoLink>
-        <LogoLink href="//">
+        {/* <LogoLink href="//">
           <Logo src={Discord} alt="Discord" />
         </LogoLink>
         <LogoLink href="//">
           <Logo src={Opensea} alt="Opensea" />
-        </LogoLink>
+        </LogoLink> */}
       </HeaderLinks>
       <HeaderControls>
         <NetworkCard />

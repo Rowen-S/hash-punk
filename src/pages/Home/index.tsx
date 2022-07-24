@@ -97,6 +97,8 @@ export default function Home() {
 
   const theme = useContext(ThemeContext)
 
+  const [nowTime, setNowTime] = useState<number>()
+
   const [{ startTime, endTime, mintPrice, wlAMax, wlBMax }, setInit] = useState<{
     startTime: number | undefined
     endTime: number | undefined
@@ -115,7 +117,8 @@ export default function Home() {
 
   const isWlA: Sign | undefined = useMemo(() => {
     if (!account) return
-    return WhiteList.WLA.find((x) => x.account == account)
+    const data = WhiteList.WLA.find((x) => x.account == account)
+    return data
   }, [account])
 
   const isWlB: Sign | undefined = useMemo(() => {
@@ -148,6 +151,16 @@ export default function Home() {
     const wlBMax = await mintContract.MAX_MINT_PER_ACCOUNT_WB()
     setInit({ startTime: startTime * 1000, endTime: endTime * 1000, wlAMax, wlBMax, mintPrice })
   }, [mintContract])
+
+  const getNowTime = useCallback(() => {
+    if (chainId == defaultChainId && library) {
+      library.getBlock('latest').then((res) => {
+        setNowTime(res.timestamp * 1000)
+      })
+    } else {
+      setNowTime(undefined)
+    }
+  }, [library, chainId, setNowTime])
 
   // mint Max
   const [amount, setAmount] = useState('1')
@@ -191,8 +204,7 @@ export default function Home() {
 
   const tenFreeMint = useCallback(
     async (sign: Sign) => {
-      debugger
-
+      console.log('wl B Mint')
       if (!account) return
       const verify = await mintContract.checkSignature(
         sign.v,
@@ -229,7 +241,8 @@ export default function Home() {
   )
 
   const oneFreeMint = useCallback(
-    async (sign: Sign) => {
+    async (sign: Sign, expire) => {
+      console.log('wl A Mint')
       if (!account) return
       const verify = await mintContract.checkSignature(
         sign.v,
@@ -245,7 +258,11 @@ export default function Home() {
         minthash,
         mintErrorMessage,
       })
-      const totalPrice = parseInt(amount) > 1 ? mintPrice.mul(parseInt(amount) - 1) : mintPrice.sub(mintPrice)
+      const totalPrice = expire
+        ? mintPrice.mul(amount)
+        : parseInt(amount) > 1
+        ? mintPrice.mul(parseInt(amount) - 1)
+        : mintPrice.sub(mintPrice)
 
       mintContract
         .allowListOneFreeMint(sign.v, sign.r, sign.s, amount, {
@@ -270,14 +287,16 @@ export default function Home() {
     [mintContract, mintErrorMessage, amount, mintPrice, minthash, account, addTransaction]
   )
   const publicMint = useCallback(
-    (isFree = false) => {
+    (isWlFree: boolean) => {
+      console.log('publicMint')
+
       if (!mintPrice || !amount) return
       setModal({
         minting: true,
         minthash,
         mintErrorMessage,
       })
-      const totalPrice = isFree
+      const totalPrice = isWlFree
         ? parseInt(amount) > 1
           ? mintPrice.mul(parseInt(amount) - 1)
           : mintPrice.sub(mintPrice)
@@ -378,23 +397,27 @@ export default function Home() {
                       <Text>Free Mint</Text>
                     </MintButton>
                   ) : isWlA && wlAOneFree > 0 ? (
-                    <MintButton onClick={() => oneFreeMint(isWlA)}>
+                    <MintButton onClick={() => oneFreeMint(isWlA, completed)}>
                       <Text>One Free Mint</Text>
                     </MintButton>
                   ) : publicOneFree > 0 ? (
                     <MintButton onClick={() => publicMint(true)}>
                       <Text>One Free Mint</Text>
                     </MintButton>
-                  ) : null
+                  ) : (
+                    <MintButton onClick={() => publicMint(false)} disabled={remainingAmount + amount > total}>
+                      <Text>Public Mint</Text>
+                    </MintButton>
+                  )
                 ) : accountMinted > 0 && accountMinted < 5 ? (
-                  <MintButton onClick={publicMint}>
+                  <MintButton onClick={() => publicMint(false)}>
                     <Text>Public Mint</Text>
                   </MintButton>
                 ) : (
                   <MintButton disabled>Used</MintButton>
                 )
               ) : (
-                <MintButton>
+                <MintButton disabled>
                   <Text>SOLD OUT</Text>
                 </MintButton>
               )}
@@ -405,6 +428,7 @@ export default function Home() {
     },
     [
       amount,
+      total,
       chainId,
       library,
       mintPrice,
@@ -443,7 +467,7 @@ export default function Home() {
       // Renderer callback with condition
       if (completed) {
         // Render a completed state
-        return <Countdown date={endTime} renderer={wlRenderer} />
+        return nowTime && <Countdown now={() => nowTime} date={endTime} renderer={wlRenderer} />
       } else {
         // Render a countdown
         return (
@@ -453,7 +477,7 @@ export default function Home() {
         )
       }
     },
-    [endTime, wlRenderer, formatNumber]
+    [endTime, nowTime, wlRenderer, formatNumber]
   )
 
   useEffect(() => {
@@ -469,13 +493,28 @@ export default function Home() {
     return () => {
       setAmount('1')
       setMaxAmount(5)
-      console.log('init')
     }
   }, [isWlB, wlAMax, wlBMax])
 
   useEffect(() => {
+    if (!nowTime) return
+    const addNowTime = () => {
+      setNowTime(nowTime + 1000)
+    }
+
+    const timerId = setInterval(addNowTime, 1000)
+
+    chainId != defaultChainId ? setNowTime(undefined) : null
+
+    return () => {
+      clearInterval(timerId)
+    }
+  }, [nowTime, chainId])
+
+  useEffect(() => {
     if (account && chainId == defaultChainId) {
       init()
+      getNowTime()
     }
     return () => {
       setInit({
@@ -486,7 +525,7 @@ export default function Home() {
         wlBMax: undefined,
       })
     }
-  }, [account, chainId, init, setInit])
+  }, [account, chainId, init, getNowTime, setInit])
 
   return (
     <HomeWrapper>
@@ -503,7 +542,12 @@ export default function Home() {
               <Text fontSize={53}>{Number(currently || 0)}</Text>
               <Text fontSize={35}>&nbsp;/&nbsp;{Number(total || 0)}</Text>
             </RowFixed>
-            {startTime ? <Countdown date={startTime} renderer={initRenderer} /> : <Loader />}
+            {nowTime}
+            {startTime && nowTime ? (
+              <Countdown now={() => nowTime} date={startTime} renderer={initRenderer} />
+            ) : (
+              <Loader />
+            )}
             {showAccount ? (
               <MintButton onClick={toggleWalletModal}>
                 <Text>Connect</Text>

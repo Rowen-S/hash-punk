@@ -33,7 +33,7 @@ const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
 registerRoute(({ request, url }: { request: Request; url: URL }) => {
   // If this isn't https://test.com/, skip. IPFS gateways may not have domain
   // separation, so they cannot use App Shell-style routing.
-  if (url.hostname !== 'test.com') {
+  if (url.hostname !== 'thedissident.com') {
     return false
   }
 

@@ -63,6 +63,6 @@ export const CHAIN_INFO: ChainInfo = {
   },
   [SupportedChainId.TEST]: {
     explorer: 'https://kovan.etherscan.io/',
-    label: 'Görli local',
+    label: 'Local',
   },
 }
