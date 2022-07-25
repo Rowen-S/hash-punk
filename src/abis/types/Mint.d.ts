@@ -59,7 +59,6 @@ interface MintInterface extends ethers.utils.Interface {
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseURI(string)": FunctionFragment;
     "setTime(uint48,uint48)": FunctionFragment;
-    "setTreasury(address)": FunctionFragment;
     "startTime()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
@@ -69,7 +68,9 @@ interface MintInterface extends ethers.utils.Interface {
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "treasury()": FunctionFragment;
+    "treasury4()": FunctionFragment;
+    "treasury6()": FunctionFragment;
+    "treasurySplitter()": FunctionFragment;
     "withdraw()": FunctionFragment;
   };
 
@@ -200,7 +201,6 @@ interface MintInterface extends ethers.utils.Interface {
     functionFragment: "setTime",
     values: [BigNumberish, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
   encodeFunctionData(functionFragment: "startTime", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
@@ -231,7 +231,12 @@ interface MintInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
-  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
+  encodeFunctionData(functionFragment: "treasury4", values?: undefined): string;
+  encodeFunctionData(functionFragment: "treasury6", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "treasurySplitter",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
   decodeFunctionResult(
@@ -343,10 +348,6 @@ interface MintInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "setBaseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setTime", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setTreasury",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "startTime", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
@@ -374,7 +375,12 @@ interface MintInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "treasury4", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "treasury6", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "treasurySplitter",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
@@ -654,11 +660,6 @@ export class Mint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setTreasury(
-      treasury_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     startTime(overrides?: CallOverrides): Promise<[number]>;
 
     supportsInterface(
@@ -699,7 +700,11 @@ export class Mint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    treasury(overrides?: CallOverrides): Promise<[string]>;
+    treasury4(overrides?: CallOverrides): Promise<[string]>;
+
+    treasury6(overrides?: CallOverrides): Promise<[string]>;
+
+    treasurySplitter(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -880,11 +885,6 @@ export class Mint extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setTreasury(
-    treasury_: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   startTime(overrides?: CallOverrides): Promise<number>;
 
   supportsInterface(
@@ -919,7 +919,11 @@ export class Mint extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  treasury(overrides?: CallOverrides): Promise<string>;
+  treasury4(overrides?: CallOverrides): Promise<string>;
+
+  treasury6(overrides?: CallOverrides): Promise<string>;
+
+  treasurySplitter(overrides?: CallOverrides): Promise<string>;
 
   withdraw(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -1091,8 +1095,6 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setTreasury(treasury_: string, overrides?: CallOverrides): Promise<void>;
-
     startTime(overrides?: CallOverrides): Promise<number>;
 
     supportsInterface(
@@ -1130,7 +1132,11 @@ export class Mint extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    treasury(overrides?: CallOverrides): Promise<string>;
+    treasury4(overrides?: CallOverrides): Promise<string>;
+
+    treasury6(overrides?: CallOverrides): Promise<string>;
+
+    treasurySplitter(overrides?: CallOverrides): Promise<string>;
 
     withdraw(overrides?: CallOverrides): Promise<void>;
   };
@@ -1393,11 +1399,6 @@ export class Mint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setTreasury(
-      treasury_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
@@ -1435,7 +1436,11 @@ export class Mint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    treasury(overrides?: CallOverrides): Promise<BigNumber>;
+    treasury4(overrides?: CallOverrides): Promise<BigNumber>;
+
+    treasury6(overrides?: CallOverrides): Promise<BigNumber>;
+
+    treasurySplitter(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1625,11 +1630,6 @@ export class Mint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setTreasury(
-      treasury_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(
@@ -1670,7 +1670,11 @@ export class Mint extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    treasury4(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    treasury6(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    treasurySplitter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
       overrides?: Overrides & { from?: string | Promise<string> }

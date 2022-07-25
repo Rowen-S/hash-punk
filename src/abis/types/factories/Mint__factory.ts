@@ -16,7 +16,17 @@ const _abi = [
       },
       {
         internalType: "address",
-        name: "treasury_",
+        name: "treasury4_",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "treasury6_",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "treasurySplitter_",
         type: "address",
       },
       {
@@ -53,11 +63,6 @@ const _abi = [
         internalType: "uint256",
         name: "oneFreeRemainWLA_",
         type: "uint256",
-      },
-      {
-        internalType: "bool",
-        name: "lockedBaseURI_",
-        type: "bool",
       },
     ],
     stateMutability: "nonpayable",
@@ -1052,19 +1057,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "treasury_",
-        type: "address",
-      },
-    ],
-    name: "setTreasury",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "startTime",
     outputs: [
@@ -1227,7 +1219,33 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "treasury",
+    name: "treasury4",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "treasury6",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "treasurySplitter",
     outputs: [
       {
         internalType: "address",
