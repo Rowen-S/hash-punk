@@ -9,7 +9,7 @@ export enum SupportedChainId {
   TEST = 1337,
 }
 
-export const defaultChainId = SupportedChainId.GOERLI
+export const defaultChainId = SupportedChainId.RINKEBY
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
