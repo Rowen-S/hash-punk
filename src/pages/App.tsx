@@ -29,9 +29,6 @@ const BodyWrapper = styled.div`
   align-items: center;
   flex: 1;
   z-index: 1;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 16px;
-  `};
 `
 
 const HeaderWrapper = styled.div`

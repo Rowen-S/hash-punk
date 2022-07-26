@@ -32,6 +32,7 @@ import Loader from 'components/Loader'
 import WhiteList from './WL.json'
 import { NULL_ADDRESS } from 'utils'
 import usePrevious from 'hooks/usePrevious'
+import { Dots } from 'pages/styled'
 
 interface Sign {
   account: string
@@ -98,6 +99,8 @@ export default function Home() {
   const showAccount = Boolean(!account)
 
   const theme = useContext(ThemeContext)
+
+  const [processing, setProcessing] = useState(false)
 
   const [nowTime, setNowTime] = useState<number>()
 
@@ -220,6 +223,7 @@ export default function Home() {
         account
       )
       if (!verify) return
+      setProcessing(true)
       setModal({
         minting: true,
         minthash,
@@ -229,19 +233,21 @@ export default function Home() {
         .allowListTenFreeMint(sign.v, sign.r, sign.s)
         .then((res) => {
           addTransaction(res)
+          res.wait().finally(() => setProcessing(false))
           setModal({
             minting: true,
             minthash: res.hash,
             mintErrorMessage,
           })
         })
-        .catch((err) =>
+        .catch((err) => {
           setModal({
             minting: true,
             minthash,
             mintErrorMessage: err.message,
           })
-        )
+          setProcessing(false)
+        })
     },
     [mintContract, mintErrorMessage, minthash, account, addTransaction]
   )
@@ -259,6 +265,7 @@ export default function Home() {
       )
 
       if (!mintPrice || !verify) return
+      setProcessing(true)
       setModal({
         minting: true,
         minthash,
@@ -276,19 +283,21 @@ export default function Home() {
         })
         .then((res) => {
           addTransaction(res)
+          res.wait().finally(() => setProcessing(false))
           setModal({
             minting: true,
             minthash: res.hash,
             mintErrorMessage,
           })
         })
-        .catch((err) =>
+        .catch((err) => {
+          setProcessing(false)
           setModal({
             minting: true,
             minthash,
             mintErrorMessage: err.message,
           })
-        )
+        })
     },
     [mintContract, mintErrorMessage, amount, mintPrice, minthash, account, addTransaction]
   )
@@ -297,6 +306,7 @@ export default function Home() {
       console.log('publicMint')
 
       if (!mintPrice || !amount) return
+      setProcessing(true)
       setModal({
         minting: true,
         minthash,
@@ -313,19 +323,21 @@ export default function Home() {
         })
         .then((res) => {
           addTransaction(res)
+          res.wait().finally(() => setProcessing(false))
           setModal({
             minting: true,
             minthash: res.hash,
             mintErrorMessage,
           })
         })
-        .catch((err) =>
+        .catch((err) => {
+          setProcessing(false)
           setModal({
             minting: true,
             minthash,
             mintErrorMessage: err.message,
           })
-        )
+        })
     },
     [mintContract, amount, mintPrice, mintErrorMessage, minthash, addTransaction]
   )
@@ -399,12 +411,12 @@ export default function Home() {
               {remainingAmount != 0 ? (
                 accountMinted == 0 ? (
                   isWlB && remainingAmount >= 10 ? (
-                    <MintButton onClick={() => tenFreeMint(isWlB)}>
-                      <Text>Free Mint</Text>
+                    <MintButton disabled={processing} onClick={() => tenFreeMint(isWlB)}>
+                      {processing ? <Dots>Loading</Dots> : <Text>Free Mint</Text>}
                     </MintButton>
                   ) : isWlA && wlAOneFree > 0 ? (
-                    <MintButton onClick={() => oneFreeMint(isWlA, completed)}>
-                      <Text>One Free Mint</Text>
+                    <MintButton disabled={processing} onClick={() => oneFreeMint(isWlA, completed)}>
+                      {processing ? <Dots>Loading</Dots> : <Text>One Free Mint</Text>}
                     </MintButton>
                   ) : (
                     //: publicOneFree > 0 ? (
@@ -412,13 +424,16 @@ export default function Home() {
                     // <Text>One Free Mint</Text>
                     // </MintButton>
                     //)
-                    <MintButton onClick={() => publicMint(false)} disabled={remainingAmount + amount > total}>
-                      <Text>Public Mint</Text>
+                    <MintButton
+                      onClick={() => publicMint(false)}
+                      disabled={processing || remainingAmount + amount > total}
+                    >
+                      {processing ? <Dots>Loading</Dots> : <Text>Public Mint</Text>}
                     </MintButton>
                   )
                 ) : accountMinted > 0 && accountMinted < 5 ? (
-                  <MintButton onClick={() => publicMint(false)}>
-                    <Text>Public Mint</Text>
+                  <MintButton disabled={processing} onClick={() => publicMint(false)}>
+                    {processing ? <Dots>Loading</Dots> : <Text>Public Mint</Text>}
                   </MintButton>
                 ) : (
                   <MintButton disabled>Used</MintButton>
@@ -449,6 +464,7 @@ export default function Home() {
       // publicOneFree,
       remainingAmount,
       wlAOneFree,
+      processing,
       formatNumber,
       handleMinus,
       handlePlus,
