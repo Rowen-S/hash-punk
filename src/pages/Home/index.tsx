@@ -24,7 +24,7 @@ import { BytesLike } from '@ethersproject/bytes'
 import { BigNumberish } from '@ethersproject/bignumber'
 
 import { switchToNetwork } from 'utils/switchToNetwork'
-import { LightGreyCard } from 'components/Card'
+import { PinkCard } from 'components/Card'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { BigNumber } from '@ethersproject/bignumber'
 import Loader from 'components/Loader'
@@ -55,7 +55,8 @@ const HomeContainer = styled(Box)<{ image: string }>`
   background-size: cover;
   background-position: center;
 `
-const MintOptionWrapper = styled(LightGreyCard)`
+const MintOptionWrapper = styled(PinkCard)`
+  color: ${({ theme }) => theme.text1};
   border: 4px dashed ${({ theme }) => theme.red3};
   padding: 1.5rem;
   user-select: none;
@@ -83,7 +84,7 @@ const Operation = styled(ButtonYellow)`
   }
 `
 
-const INDEX_PUBLIC_ONE_FREE = 0
+// const INDEX_PUBLIC_ONE_FREE = 0
 const INDEX_ALLOWLIST_ONE_FREE = 1
 
 export default function Home() {
@@ -137,11 +138,13 @@ export default function Home() {
     return total - currently
   }, [total, currently])
 
-  const publicOneFree = useSingleCallResult(mintContract, 'oneFreeRemain', [INDEX_PUBLIC_ONE_FREE])?.result?.[0]
+  // const publicOneFree = useSingleCallResult(mintContract, 'oneFreeRemain', [INDEX_PUBLIC_ONE_FREE])?.result?.[0]
   const wlAOneFree = useSingleCallResult(mintContract, 'oneFreeRemain', [INDEX_ALLOWLIST_ONE_FREE])?.result?.[0]
 
   // numberMinted
   const accountMinted = useSingleCallResult(mintContract, 'numberMinted', [account ?? NULL_ADDRESS])?.result?.[0]
+  // const accountBurned = useSingleCallResult(mintContract, 'numberBurned', [account ?? NULL_ADDRESS])?.result?.[0]
+  // console.log(accountBurned)
 
   const init = useCallback(async () => {
     const startTime = await mintContract.startTime()
@@ -149,6 +152,8 @@ export default function Home() {
     const mintPrice = await mintContract.PUBLIC_MINT_PRICE()
     // wla === free mint (200)
     const wlAMax = await mintContract.MAX_MINT_PER_ACCOUNT_PUB()
+    console.log('wlAMax', wlAMax.toNumber())
+
     const wlBMax = await mintContract.MAX_MINT_PER_ACCOUNT_WB()
     setInit({ startTime: startTime * 1000, endTime: endTime * 1000, wlAMax, wlBMax, mintPrice })
   }, [mintContract])
@@ -401,11 +406,12 @@ export default function Home() {
                     <MintButton onClick={() => oneFreeMint(isWlA, completed)}>
                       <Text>One Free Mint</Text>
                     </MintButton>
-                  ) : publicOneFree > 0 ? (
-                    <MintButton onClick={() => publicMint(true)}>
-                      <Text>One Free Mint</Text>
-                    </MintButton>
                   ) : (
+                    //: publicOneFree > 0 ? (
+                    //<MintButton onClick={() => publicMint(true)}>
+                    // <Text>One Free Mint</Text>
+                    // </MintButton>
+                    //)
                     <MintButton onClick={() => publicMint(false)} disabled={remainingAmount + amount > total}>
                       <Text>Public Mint</Text>
                     </MintButton>
@@ -440,7 +446,7 @@ export default function Home() {
       isWlA,
       isWlB,
       accountMinted,
-      publicOneFree,
+      // publicOneFree,
       remainingAmount,
       wlAOneFree,
       formatNumber,
@@ -547,7 +553,7 @@ export default function Home() {
         onDismiss={handleDismissSubmissionModal}
         errorMessage={mintErrorMessage}
       />
-      <HomeContainer image={'/config/images/bg.png'}>
+      <HomeContainer image={'/config/images/bg.jpg'}>
         <MintOptionWrapper width={['90%', '70%', '50%']}>
           <AutoColumn justify={'center'} gap="lg">
             <RowFixed>

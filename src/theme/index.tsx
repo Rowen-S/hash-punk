@@ -34,12 +34,14 @@ const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } 
 
 const white = '#FFFFFF'
 const black = '#000000'
+const defaultTheme = '#1a0905'
 
 function colors(darkMode: boolean): Colors {
   return {
     // base
     white,
     black,
+    defaultTheme,
     // text
     text1: darkMode ? '#FFFFFF' : '#000000',
     text2: darkMode ? '#C3C5CB' : '#565A69',
@@ -244,7 +246,7 @@ html {
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.yellow3};
+  background-color: ${({ theme }) => theme.defaultTheme};
 }
 body {
   min-height: 100vh;
