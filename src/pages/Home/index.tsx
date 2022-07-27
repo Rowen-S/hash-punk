@@ -53,8 +53,12 @@ const HomeContainer = styled(Box)<{ image: string }>`
   justify-content: space-evenly;
   align-items: center;
   background-image: ${({ image }) => (image ? `url(${image})` : 'none')};
-  background-size: cover;
   background-position: center;
+  background-size: 100% 90%;
+  background-repeat: no-repeat;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    background-size: cover;
+  `};
 `
 const MintOptionWrapper = styled(PinkCard)`
   color: ${({ theme }) => theme.text1};
