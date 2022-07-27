@@ -2,7 +2,7 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "homepage_url": "https://thedissident.com/",
-  "providedBy": { "name": "Exiled Dissident NFT", "url": "https://thedissident.com/" },
+  "providedBy": { "name": "Exiled Dissident", "url": "https://thedissident.com/" },
   "icons": [
     {
       "src": "./192x192_App_Icon.png",
@@ -18,10 +18,10 @@
     }
   ],
   "orientation": "portrait",
-  "name": "Exiled Dissident NFT",
-  "description": "World has been fighting for territorial expansion. Dissidents from various kingdoms are exiled to kezante… WL free mint, CC0, no discord ",
+  "name": "Exiled Dissident",
+  "description": "The first comic NFT with story made up by the community.  Dissidents from various kingdoms are exiled to Kezante…  WL free, CC0",
   "iconPath": "./images/512x512_App_Icon.png",
-  "short_name": "Exiled Dissident NFT",
+  "short_name": "Exiled Dissident",
   "start_url": ".",
   "theme_color": "#000000"
 }
