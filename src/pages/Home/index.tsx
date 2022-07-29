@@ -378,17 +378,26 @@ export default function Home() {
               {isWlA || isWlB ? (
                 <>
                   <TYPE.largeHeader color={'success'}>You are Whitelisted!</TYPE.largeHeader>
-                  {!completed && (
-                    <TYPE.mediumHeader fontSize={44}>
-                      {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
-                      <br />
-                      left to mint your WL only
-                    </TYPE.mediumHeader>
+                  {completed ? (
+                    <>
+                      <TYPE.mediumHeader color="success"> WL has timed out (30 mins) </TYPE.mediumHeader>
+                      <TYPE.mediumHeader color="success">You can participate in the public sale</TYPE.mediumHeader>
+                    </>
+                  ) : (
+                    <>
+                      <TYPE.mediumHeader fontSize={44}>
+                        {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
+                      </TYPE.mediumHeader>
+
+                      <TYPE.mediumHeader color="success">left to mint your WL</TYPE.mediumHeader>
+
+                      <TYPE.mediumHeader>Only first 1000 WL can get free mint</TYPE.mediumHeader>
+                      <TYPE.mediumHeader>
+                        WL mint {wlAOneFree ? 1000 - wlAOneFree.toNumber() : 0} /1000
+                      </TYPE.mediumHeader>
+                    </>
                   )}
-                  <TYPE.mediumHeader>Only first 1000 WL can get free mint</TYPE.mediumHeader>
-                  <TYPE.mediumHeader>
-                    WL mint left {wlAOneFree ? 1000 - wlAOneFree.toNumber() : 0} /1000
-                  </TYPE.mediumHeader>
+
                   <TYPE.mediumHeader>
                     First NFT free, the rest {mintPrice ? formatEther(mintPrice) : 0.019}eth each,
                   </TYPE.mediumHeader>
@@ -426,11 +435,11 @@ export default function Home() {
                 accountMinted == 0 ? (
                   isWlB && remainingAmount >= 10 ? (
                     <MintButton disabled={processing} onClick={() => tenFreeMint(isWlB)}>
-                      {processing ? <Dots>Loading</Dots> : <Text>MINT</Text>}
+                      {processing ? <Dots>Pending</Dots> : <Text>MINT</Text>}
                     </MintButton>
                   ) : isWlA && wlAOneFree > 0 ? (
                     <MintButton disabled={processing} onClick={() => oneFreeMint(isWlA, completed)}>
-                      {processing ? <Dots>Loading</Dots> : <Text>MINT</Text>}
+                      {processing ? <Dots>Pending</Dots> : <Text>MINT</Text>}
                     </MintButton>
                   ) : (
                     //: publicOneFree > 0 ? (
@@ -442,12 +451,12 @@ export default function Home() {
                       onClick={() => publicMint(false)}
                       disabled={processing || remainingAmount + amount > total}
                     >
-                      {processing ? <Dots>Loading</Dots> : <Text>MINT</Text>}
+                      {processing ? <Dots>Pending</Dots> : <Text>MINT</Text>}
                     </MintButton>
                   )
                 ) : accountMinted > 0 && accountMinted < 5 ? (
                   <MintButton disabled={processing} onClick={() => publicMint(false)}>
-                    {processing ? <Dots>Loading</Dots> : <Text>MINT</Text>}
+                    {processing ? <Dots>Pending</Dots> : <Text>MINT</Text>}
                   </MintButton>
                 ) : (
                   <MintButton disabled>Used</MintButton>
@@ -518,31 +527,35 @@ export default function Home() {
   )
 
   useEffect(() => {
-    if (wlBMax && wlAMax && accountMinted !== undefined) {
-      if (isWlB) {
-        setAmount(wlBMax.toString())
-        setMaxAmount(wlBMax.toNumber())
-      } else {
-        setAmount(wlAMax.sub(accountMinted).toString())
-        setMaxAmount(wlAMax.sub(accountMinted).toNumber())
-      }
+    if (isWlB && wlBMax?.gt(0)) {
+      setAmount(wlBMax.toString() ?? '10')
+      setMaxAmount(wlBMax.toNumber() ?? 10)
     }
-    return () => {
-      setAmount('1')
-      setMaxAmount(5)
+    if (
+      (wlAMax && wlAMax.gt(0) && isWlA && accountMinted && accountMinted.gte(0)) ||
+      (wlAMax && wlAMax?.gt(0) && !isWlB && !isWlA && accountMinted && accountMinted.gte(0))
+    ) {
+      setAmount(wlAMax.sub(accountMinted).toString() ?? '5')
+      setMaxAmount(wlAMax.sub(accountMinted).toNumber() ?? 5)
     }
     // eslint-disable-next-line
-  }, [isWlB, wlAMax, wlBMax])
+  }, [isWlB, wlBMax, wlAMax, setMaxAmount])
 
   const previousMinted = usePrevious(accountMinted)
 
   useEffect(() => {
     if (!accountMinted || !previousMinted) return
     if (!accountMinted.eq(previousMinted)) {
-      setAmount(String(maxAmount - accountMinted.toNumber()))
-      setMaxAmount(maxAmount - accountMinted.toNumber())
+      if (isWlB && wlBMax && wlBMax.gt(0)) {
+        setAmount(wlBMax.sub(accountMinted).toString())
+        setMaxAmount(wlBMax.sub(accountMinted).toNumber())
+      }
+      if ((isWlA && wlAMax) || (!isWlA && !isWlB && wlAMax)) {
+        setAmount(wlAMax.sub(accountMinted).toString())
+        setMaxAmount(wlAMax.sub(accountMinted).toNumber())
+      }
     }
-  }, [accountMinted, maxAmount, previousMinted])
+  }, [accountMinted, isWlA, isWlB, wlBMax, wlAMax, previousMinted])
 
   useEffect(() => {
     if (!nowTime) return
