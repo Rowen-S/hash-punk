@@ -150,7 +150,6 @@ export default function Home() {
     const mintPrice = await mintContract.PUBLIC_MINT_PRICE()
     // wla === free mint (200)
     const wlAMax = await mintContract.MAX_MINT_PER_ACCOUNT_PUB()
-    console.log('wlAMax', wlAMax.toNumber())
 
     const wlBMax = await mintContract.MAX_MINT_PER_ACCOUNT_WB()
     setInit({ startTime: startTime * 1000, endTime: endTime * 1000, wlAMax, wlBMax, mintPrice })
@@ -588,8 +587,8 @@ export default function Home() {
         <MintOptionWrapper width={['90%', '70%', '50%']}>
           <AutoColumn justify={'center'} gap="lg">
             <RowFixed>
-              <Text fontSize={53}>{Number(currently || 0)}</Text>
-              <Text fontSize={35}>&nbsp;/&nbsp;{Number(total || 0)}</Text>
+              <Text fontSize={53}>{currently ? Number(currently || 0) : '-'}</Text>
+              <Text fontSize={35}>&nbsp;/&nbsp;{Number(total || 8888)}</Text>
             </RowFixed>
 
             {startTime && nowTime ? (
