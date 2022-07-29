@@ -29,7 +29,8 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { BigNumber } from '@ethersproject/bignumber'
 import Loader from 'components/Loader'
 
-import WhiteList from './WL.json'
+import WhiteBList from './wlB.json'
+import WhiteAList from './wlA.json'
 import { NULL_ADDRESS } from 'utils'
 import usePrevious from 'hooks/usePrevious'
 import { Dots } from 'pages/styled'
@@ -117,13 +118,12 @@ export default function Home() {
 
   const isWlA: Sign | undefined = useMemo(() => {
     if (!account) return
-    const data = WhiteList.WLA.find((x) => x.account == account)
-    return data
+    return WhiteAList.find((x) => x.account.toLocaleLowerCase() == account.toLocaleLowerCase())
   }, [account])
 
   const isWlB: Sign | undefined = useMemo(() => {
     if (!account) return
-    return WhiteList.WLB.find((x) => x.account == account)
+    return WhiteBList.find((x) => x.account.toLocaleLowerCase() == account.toLocaleLowerCase())
   }, [account])
 
   // currently sold
