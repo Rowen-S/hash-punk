@@ -386,12 +386,14 @@ export default function Home() {
                       left to mint your WL only
                     </TYPE.mediumHeader>
                   )}
+                  <TYPE.mediumHeader>Only first 1000 WL can get free mint</TYPE.mediumHeader>
                   <TYPE.mediumHeader>
-                    first 1000 WL can get free mint WL mint left {wlAOneFree ? 1000 - wlAOneFree.toNumber() : 0} /1000
+                    WL mint left {wlAOneFree ? 1000 - wlAOneFree.toNumber() : 0} /1000
                   </TYPE.mediumHeader>
                   <TYPE.mediumHeader>
-                    First NFT free, the rest {mintPrice ? formatEther(mintPrice) : 0.019}eth each, 5 max per wallet
+                    First NFT free, the rest {mintPrice ? formatEther(mintPrice) : 0.019}eth each,
                   </TYPE.mediumHeader>
+                  <TYPE.mediumHeader> 5 max per wallet</TYPE.mediumHeader>
                 </>
               ) : (
                 <>
@@ -599,13 +601,15 @@ export default function Home() {
             {showAccount ? (
               <>
                 <AutoColumn gap="sm">
+                  <Row>
+                    <TYPE.mediumHeader color={'success'}>Public sale:</TYPE.mediumHeader>
+                    <TYPE.subHeader paddingX={10}> 0.019eth each, 5 max per wallet</TYPE.subHeader>
+                  </Row>
                   <AutoColumn gap="4px">
-                    <Text>Public sale:</Text>
-                    <Text>0.019eth each, 5 max per wallet</Text>
-                  </AutoColumn>
-                  <AutoColumn gap="4px">
-                    <Text>WL mint: </Text>
-                    <Text>Only first 1000 WL can get free mint, FCFS. </Text>
+                    <Row>
+                      <TYPE.mediumHeader color={'success'}>WL mint: </TYPE.mediumHeader>
+                      <TYPE.subHeader paddingX={10}> Only first 1000 WL can get free mint, FCFS.</TYPE.subHeader>
+                    </Row>
                     <Text>First NFT free, the rest 0.019 each, 5 max per wallet</Text>
                     <Text> you will only have 30 mins to mint WL, 3:00 PM UTC - 3:30 PM UTC</Text>
                   </AutoColumn>
