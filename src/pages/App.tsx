@@ -20,15 +20,29 @@ const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
   align-items: flex-start;
+
+  min-height: 100vh;
+  background-image: url('/config/images/bg.jpg');
+  background-position: center;
+  background-size: 100% 90%;
+  background-repeat: no-repeat;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    background-size: cover;
+  `};
 `
 
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: 120px;
   width: 100%;
   align-items: center;
   flex: 1;
   z-index: 1;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 16px;
+    padding-top: 6rem;
+  `};
 `
 
 const HeaderWrapper = styled.div`

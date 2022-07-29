@@ -237,7 +237,7 @@ export default function Header() {
       </Title> */}
 
       <HeaderLinks>
-        <LogoLink href="//">
+        <LogoLink href="//twitter.com/ExiledDissident">
           <Logo src={Twitter} alt="Twitter" />
         </LogoLink>
         {/* <LogoLink href="//">

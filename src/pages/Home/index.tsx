@@ -33,6 +33,7 @@ import WhiteList from './WL.json'
 import { NULL_ADDRESS } from 'utils'
 import usePrevious from 'hooks/usePrevious'
 import { Dots } from 'pages/styled'
+import { TYPE } from 'theme'
 
 interface Sign {
   account: string
@@ -43,22 +44,12 @@ interface Sign {
 
 const HomeWrapper = styled.main`
   width: 100%;
-  min-height: 100vh;
 `
 
-const HomeContainer = styled(Box)<{ image: string }>`
+const HomeContainer = styled(Box)`
   width: 100%;
-  min-height: 100vh;
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
-  background-image: ${({ image }) => (image ? `url(${image})` : 'none')};
-  background-position: center;
-  background-size: 100% 90%;
-  background-repeat: no-repeat;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    background-size: cover;
-  `};
 `
 const MintOptionWrapper = styled(PinkCard)`
   color: ${({ theme }) => theme.text1};
@@ -367,14 +358,6 @@ export default function Home() {
     }) => {
       return (
         <AutoColumn gap="lg" justify={'center'}>
-          {!completed && (
-            <Text fontSize={44}>
-              {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
-            </Text>
-          )}
-          <Text fontSize={22}>1 NFT costs {mintPrice ? formatEther(mintPrice) : 0.01} ETH</Text>
-          <Text fontSize={18}>Excluding gas Fees.</Text>
-          <Text fontSize={18}>Click buy to mint your NFT.</Text>
           {showAccount ? (
             <MintButton onClick={toggleWalletModal}>
               <Text>Connect</Text>
@@ -393,6 +376,32 @@ export default function Home() {
             </MintButton>
           ) : (
             <>
+              {isWlA || isWlB ? (
+                <>
+                  <TYPE.largeHeader color={'success'}>You are Whitelisted!</TYPE.largeHeader>
+                  {!completed && (
+                    <TYPE.mediumHeader fontSize={44}>
+                      {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
+                      <br />
+                      left to mint your WL only
+                    </TYPE.mediumHeader>
+                  )}
+                  <TYPE.mediumHeader>
+                    first 1000 WL can get free mint WL mint left {wlAOneFree ? 1000 - wlAOneFree.toNumber() : 0} /1000
+                  </TYPE.mediumHeader>
+                  <TYPE.mediumHeader>
+                    First NFT free, the rest {mintPrice ? formatEther(mintPrice) : 0.019}eth each, 5 max per wallet
+                  </TYPE.mediumHeader>
+                </>
+              ) : (
+                <>
+                  <TYPE.largeHeader color={'success'}>PUBLIC SALE</TYPE.largeHeader>
+                  <TYPE.mediumHeader>
+                    {mintPrice ? formatEther(mintPrice) : 0.019}eth each, 5 max per wallet
+                  </TYPE.mediumHeader>
+                </>
+              )}
+
               <MintInputWrapper>
                 <Operation
                   onClick={() => handlePlus(parseInt(amount))}
@@ -416,11 +425,11 @@ export default function Home() {
                 accountMinted == 0 ? (
                   isWlB && remainingAmount >= 10 ? (
                     <MintButton disabled={processing} onClick={() => tenFreeMint(isWlB)}>
-                      {processing ? <Dots>Loading</Dots> : <Text>Free Mint</Text>}
+                      {processing ? <Dots>Loading</Dots> : <Text>MINT</Text>}
                     </MintButton>
                   ) : isWlA && wlAOneFree > 0 ? (
                     <MintButton disabled={processing} onClick={() => oneFreeMint(isWlA, completed)}>
-                      {processing ? <Dots>Loading</Dots> : <Text>One Free Mint</Text>}
+                      {processing ? <Dots>Loading</Dots> : <Text>MINT</Text>}
                     </MintButton>
                   ) : (
                     //: publicOneFree > 0 ? (
@@ -432,12 +441,12 @@ export default function Home() {
                       onClick={() => publicMint(false)}
                       disabled={processing || remainingAmount + amount > total}
                     >
-                      {processing ? <Dots>Loading</Dots> : <Text>Public Mint</Text>}
+                      {processing ? <Dots>Loading</Dots> : <Text>MINT</Text>}
                     </MintButton>
                   )
                 ) : accountMinted > 0 && accountMinted < 5 ? (
                   <MintButton disabled={processing} onClick={() => publicMint(false)}>
-                    {processing ? <Dots>Loading</Dots> : <Text>Public Mint</Text>}
+                    {processing ? <Dots>Loading</Dots> : <Text>MINT</Text>}
                   </MintButton>
                 ) : (
                   <MintButton disabled>Used</MintButton>
@@ -573,22 +582,38 @@ export default function Home() {
         onDismiss={handleDismissSubmissionModal}
         errorMessage={mintErrorMessage}
       />
-      <HomeContainer image={'/config/images/bg.jpg'}>
+      <HomeContainer>
         <MintOptionWrapper width={['90%', '70%', '50%']}>
           <AutoColumn justify={'center'} gap="lg">
             <RowFixed>
               <Text fontSize={53}>{Number(currently || 0)}</Text>
               <Text fontSize={35}>&nbsp;/&nbsp;{Number(total || 0)}</Text>
             </RowFixed>
+
             {startTime && nowTime ? (
               <Countdown now={() => nowTime} date={startTime} renderer={initRenderer} />
             ) : (
               <Loader />
             )}
+
             {showAccount ? (
-              <MintButton onClick={toggleWalletModal}>
-                <Text>Connect</Text>
-              </MintButton>
+              <>
+                <AutoColumn gap="sm">
+                  <AutoColumn gap="4px">
+                    <Text>Public sale:</Text>
+                    <Text>0.019eth each, 5 max per wallet</Text>
+                  </AutoColumn>
+                  <AutoColumn gap="4px">
+                    <Text>WL mint: </Text>
+                    <Text>Only first 1000 WL can get free mint, FCFS. </Text>
+                    <Text>First NFT free, the rest 0.019 each, 5 max per wallet</Text>
+                    <Text> you will only have 30 mins to mint WL, 3:00 PM UTC - 3:30 PM UTC</Text>
+                  </AutoColumn>
+                </AutoColumn>
+                <MintButton onClick={toggleWalletModal}>
+                  <Text>connect your wallet</Text>
+                </MintButton>
+              </>
             ) : showSwitchAMainnet ? (
               <MintButton
                 backgroundColor={theme.red1}
