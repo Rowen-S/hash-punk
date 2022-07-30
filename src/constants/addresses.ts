@@ -16,5 +16,5 @@ export const ENS_REGISTRAR_ADDRESSES: AddressMap = {
 
 export const MINT_ADDRESS: AddressMap = {
   [SupportedChainId.GOERLI]: '0xF67E240E1663c67C9896328A779516d0d78EC37E',
-  [SupportedChainId.RINKEBY]: '0xCa1DCd4c0C909009aC2191BaaF4b1c9694A5Aeb9',
+  [SupportedChainId.RINKEBY]: '0xbE98Eb1Dfc252d231305Ca44dED8E5560e0703d0',
 }
