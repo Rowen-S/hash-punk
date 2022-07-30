@@ -1,8 +1,8 @@
 {
   "background_color": "#ffffff",
   "display": "standalone",
-  "homepage_url": "https://thedissident.com/",
-  "providedBy": { "name": "Exiled Dissident", "url": "https://thedissident.com/" },
+  "homepage_url": "https://thedissident.xyz/",
+  "providedBy": { "name": "Exiled Dissident", "url": "https://thedissident.xyz/" },
   "icons": [
     {
       "src": "./192x192_App_Icon.png",
