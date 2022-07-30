@@ -465,11 +465,11 @@ export default function Home() {
                     {processing ? <Dots>Pending</Dots> : <Text>MINT</Text>}
                   </MintButton>
                 ) : (
-                  <MintButton disabled>SOLD OUT</MintButton>
+                  <MintButton disabled>Used</MintButton>
                 )
               ) : (
                 <MintButton disabled>
-                  <Text>SOLD OUT</Text>
+                  <Text>Used</Text>
                 </MintButton>
               )}
             </>
