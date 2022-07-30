@@ -117,13 +117,11 @@ export default function Home() {
 
   const [maxAmount, setMaxAmount] = useState<number>(5)
 
-  // @ts-ignore
   const isWlA: Sign | undefined = useMemo(() => {
     if (!account) return
     return WhiteAList.find((x) => x.account.toLocaleLowerCase() == account.toLocaleLowerCase())
   }, [account])
 
-  // @ts-ignore
   const isWlB: Sign | undefined = useMemo(() => {
     if (!account) return
     return WhiteBList.find((x) => x.account.toLocaleLowerCase() == account.toLocaleLowerCase())
