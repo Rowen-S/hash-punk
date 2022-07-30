@@ -35,7 +35,6 @@ import { NULL_ADDRESS } from 'utils'
 import usePrevious from 'hooks/usePrevious'
 import { Dots } from 'pages/styled'
 import { TYPE } from 'theme'
-import { useETHBalances } from 'state/wallet/hooks'
 
 interface Sign {
   account: string
@@ -87,8 +86,6 @@ const INDEX_ALLOWLIST_ONE_FREE = 1
 
 export default function Home() {
   const { account, chainId, library } = useActiveWeb3React()
-
-  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   const toggleWalletModal = useWalletModalToggle()
   const mintContract = useMintContract()
@@ -274,40 +271,29 @@ export default function Home() {
         ? mintPrice.mul(parseInt(amount) - 1)
         : mintPrice.sub(mintPrice)
 
-      if (userEthBalance?.greaterThan(totalPrice.toHexString())) {
-        mintContract
-          .allowListOneFreeMint(sign.v, sign.r, sign.s, amount, {
-            value: totalPrice,
-          })
-          .then((res) => {
-            addTransaction(res)
-            res.wait().finally(() => setProcessing(false))
-            setModal({
-              minting: true,
-              minthash: res.hash,
-              mintErrorMessage,
-            })
-          })
-          .catch((err) => {
-            setProcessing(false)
-            setModal({
-              minting: true,
-              minthash,
-              mintErrorMessage: err.message,
-            })
-          })
-      } else {
-        setProcessing(false)
-        setModal({
-          minting: true,
-          minthash,
-          mintErrorMessage: `
-          Need ${formatEther(totalPrice)} ETH,You dont have enough ETH
-          `,
+      mintContract
+        .allowListOneFreeMint(sign.v, sign.r, sign.s, amount, {
+          value: totalPrice,
         })
-      }
+        .then((res) => {
+          addTransaction(res)
+          res.wait().finally(() => setProcessing(false))
+          setModal({
+            minting: true,
+            minthash: res.hash,
+            mintErrorMessage,
+          })
+        })
+        .catch((err) => {
+          setProcessing(false)
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        })
     },
-    [mintContract, mintErrorMessage, amount, mintPrice, minthash, userEthBalance, account, addTransaction]
+    [mintContract, mintErrorMessage, amount, mintPrice, minthash, account, addTransaction]
   )
   const publicMint = useCallback(
     (isWlFree: boolean) => {
@@ -324,40 +310,29 @@ export default function Home() {
           : mintPrice.sub(mintPrice)
         : mintPrice.mul(amount)
 
-      if (userEthBalance?.greaterThan(totalPrice.toHexString())) {
-        mintContract
-          .publicMint(amount, {
-            value: totalPrice,
-          })
-          .then((res) => {
-            addTransaction(res)
-            res.wait().finally(() => setProcessing(false))
-            setModal({
-              minting: true,
-              minthash: res.hash,
-              mintErrorMessage,
-            })
-          })
-          .catch((err) => {
-            setProcessing(false)
-            setModal({
-              minting: true,
-              minthash,
-              mintErrorMessage: err.message,
-            })
-          })
-      } else {
-        setProcessing(false)
-        setModal({
-          minting: true,
-          minthash,
-          mintErrorMessage: `
-          Need ${formatEther(totalPrice)} ETH,You dont have enough ETH
-          `,
+      mintContract
+        .publicMint(amount, {
+          value: totalPrice,
         })
-      }
+        .then((res) => {
+          addTransaction(res)
+          res.wait().finally(() => setProcessing(false))
+          setModal({
+            minting: true,
+            minthash: res.hash,
+            mintErrorMessage,
+          })
+        })
+        .catch((err) => {
+          setProcessing(false)
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        })
     },
-    [mintContract, amount, mintPrice, mintErrorMessage, minthash, userEthBalance, addTransaction]
+    [mintContract, amount, mintPrice, mintErrorMessage, minthash, addTransaction]
   )
 
   const formatNumber = useCallback((num: number) => {
