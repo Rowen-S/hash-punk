@@ -14,11 +14,13 @@ import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 const TransactionSubmissionModal = ({
   isOpen,
   hash,
+  toLink,
   errorMessage,
   onDismiss,
 }: {
   isOpen: boolean
   hash: string | undefined
+  toLink?: string
   errorMessage?: ReactNode | undefined
   onDismiss: () => void
 }) => {
@@ -50,7 +52,7 @@ const TransactionSubmissionModal = ({
                 </Text>
               </ExternalLink>
             )}
-            <ButtonPrimary as={Link} to="/" onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
+            <ButtonPrimary as={Link} to={toLink ?? '/'} onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
               <Text fontWeight={500} fontSize={20}>
                 <Trans>Return</Trans>
               </Text>

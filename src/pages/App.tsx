@@ -12,6 +12,8 @@ import Popups from '../components/Popups'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 
 import Home from './Home'
+import Lottery from './Lottery'
+import Personal from './Personal'
 
 import { ThemedBackground } from '../theme'
 import { RedirectPathToHomeOnly } from './Home/redirects'
@@ -20,29 +22,22 @@ const AppWrapper = styled.div`
   display: flex;
   flex-flow: column;
   align-items: flex-start;
-
-  min-height: 100vh;
-  background-image: url('/config/images/bg.jpg');
-  background-position: center;
-  background-size: 100% 90%;
-  background-repeat: no-repeat;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    background-size: cover;
-  `};
+  height: 100%;
+  overflow: hidden;
 `
 
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 120px;
   width: 100%;
+  /* padding: 120px 16px 0px 16px; */
   align-items: center;
   flex: 1;
   z-index: 1;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 16px;
-    padding-top: 6rem;
-  `};
+
+  /* ${({ theme }) => theme.mediaWidth.upToSmall`
+  padding: 6rem 16px 16px 16px;
+  `}; */
 `
 
 const HeaderWrapper = styled.div`
@@ -70,7 +65,9 @@ function App() {
           <Polling />
           <Web3ReactManager>
             <Switch>
-              <Route exact strict path="/" component={Home} />
+              <Route exact strict path="/home" component={Home} />
+              <Route exact strict path="/lottery" component={Lottery} />
+              <Route exact strict path="/personal" component={Personal} />
               <Route component={RedirectPathToHomeOnly} />
             </Switch>
           </Web3ReactManager>

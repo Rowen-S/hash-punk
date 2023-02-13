@@ -1,28 +1,25 @@
-// import { darken } from 'polished'
-// import { NavLink } from 'react-router-dom'
+import { darken } from 'polished'
+import { NavLink } from 'react-router-dom'
 import { Text } from 'rebass'
-// import { useDarkModeManager } from 'state/user/hooks'
+import { useDarkModeManager } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { ExternalLink } from '../../theme'
 import { useETHBalances } from 'state/wallet/hooks'
-import Row from 'components/Row'
+import Row, { RowFixed } from 'components/Row'
+import { ReactComponent as Logo } from '../../assets/svg/logo.svg'
 
 // import Menu from '../Menu'
 // import Row from '../Row'
 import Web3Status from '../Web3Status'
 import NetworkCard from './NetworkCard'
 
-// import LogoPink from '../../assets/svg/logo_pink.png'
-// import LogoDark from '../../assets/svg/logo_white.png'
+// import Twitter from '../../assets/svg/twitter.svg'
+import useTheme from 'hooks/useTheme'
+import Menu from 'components/Menu'
 
-import Twitter from '../../assets/svg/twitter.svg'
-// import Discord from '../../assets/svg/discord.svg'
-// import Opensea from '../../assets/svg/opensea.svg'
-
-const HeaderFrame = styled.div`
+const HeaderFrame = styled.div<{ showBackground: boolean }>`
   display: grid;
-  grid-template-columns: 1fr 330px;
+  grid-template-columns: 120px 1fr 120px;
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -33,22 +30,23 @@ const HeaderFrame = styled.div`
   padding: 1rem;
   z-index: 21;
   position: relative;
+
   /* Background slide effect on scroll. */
-  /* box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.bg2}; */
-  border-bottom: 2px solid transparent;
-  ${({ theme }) => theme.mediaWidth.upToLarge`
-    grid-template-columns: 1fr 1fr;
-  `};
+  background-image: ${({ theme }) => `linear-gradient(to bottom, transparent 50%, ${theme.bg0} 50% )}}`};
+  background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
+  background-size: 100% 200%;
+  box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')};
+  transition: background-position 0.1s, box-shadow 0.1s;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    padding: 1rem;
-    grid-template-columns: 1fr 1fr;
+    padding:  1rem;
+    grid-template-columns: 120px 1fr;
+
   `};
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding:  1rem;
-    grid-template-columns: 1fr 1fr;
-  `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding: 1rem;
+  `}
 `
 
 const HeaderControls = styled.div`
@@ -56,6 +54,23 @@ const HeaderControls = styled.div`
   flex-direction: row;
   align-items: center;
   justify-self: flex-end;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    flex-direction: row;
+    justify-content: space-between;
+    justify-self: center;
+    width: 100%;
+    max-width: 960px;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 99;
+    height: 72px;
+    border-radius: 12px 12px 0 0;
+    background-color: ${({ theme }) => theme.bg1};
+  `};
 `
 
 const HeaderElement = styled.div`
@@ -68,41 +83,36 @@ const HeaderElement = styled.div`
   }
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
+    flex-direction: row-reverse;
     align-items: center;
   `};
 `
 
-// const HeaderLinks = styled(Row)`
-//   justify-self: center;
-//   background-color: ${({ theme }) => theme.bg0};
-//   width: fit-content;
-//   padding: 4px;
-//   border-radius: 16px;
-//   display: grid;
-//   grid-auto-flow: column;
-//   grid-gap: 10px;
-//   overflow: auto;
-//   align-items: center;
-//   ${({ theme }) => theme.mediaWidth.upToLarge`
-//     justify-self: start;
-//     `};
-//   ${({ theme }) => theme.mediaWidth.upToMedium`
-//     justify-self: center;
-//   `};
-//   ${({ theme }) => theme.mediaWidth.upToMedium`
-//     flex-direction: row;
-//     justify-content: space-between;
-//     justify-self: center;
-//     z-index: 99;
-//     position: fixed;
-//     bottom: 0; right: 50%;
-//     transform: translate(50%,-50%);
-//     margin: 0 auto;
-//     background-color: ${({ theme }) => theme.bg0};
-//     border: 1px solid ${({ theme }) => theme.bg2};
-//     box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
-//   `};
-// `
+const HeaderElementWrap = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const HeaderRow = styled(RowFixed)`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+   width: 100%;
+  `};
+`
+
+const HeaderLinks = styled(Row)`
+  justify-self: center;
+  background-color: ${({ theme }) => theme.bg0};
+  width: fit-content;
+  padding: 4px;
+  border-radius: 16px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 10px;
+  overflow: auto;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    justify-self: flex-end;
+  `};
+`
 
 const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
@@ -125,63 +135,60 @@ const BalanceText = styled(Text)`
   `};
 `
 
-// const Title = styled.a`
-//   display: flex;
-//   align-items: center;
-//   pointer-events: auto;
-//   justify-self: flex-start;
-//   margin-right: 12px;
-//   ${({ theme }) => theme.mediaWidth.upToSmall`
-//     justify-self: center;
-//   `};
-//   :hover {
-//     cursor: pointer;
-//   }
-// `
-
-const HeaderLinks = styled(Row)`
-  justify-self: flex-end;
-  width: fit-content;
-  padding: 4px;
-  border-radius: 16px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 10px;
-  overflow: auto;
+const Title = styled.a`
+  display: flex;
   align-items: center;
+  pointer-events: auto;
+  justify-self: flex-start;
+  margin-right: 12px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    justify-self: center;
+  `};
+  :hover {
+    cursor: pointer;
+  }
 `
 
-// const activeClassName = 'ACTIVE'
+const DashBoardIcon = styled.div`
+  transition: transform 0.3s ease;
+  :hover {
+    transform: rotate(-5deg);
+  }
 
-// const StyledNavLink = styled(NavLink).attrs({
-//   activeClassName,
-// })`
-//   ${({ theme }) => theme.flexRowNoWrap}
-//   align-items: left;
-//   border-radius: 3rem;
-//   outline: none;
-//   cursor: pointer;
-//   text-decoration: none;
-//   color: ${({ theme }) => theme.text2};
-//   font-size: 1rem;
-//   font-weight: 500;
-//   padding: 8px 12px;
-//   word-break: break-word;
-//   overflow: hidden;
-//   white-space: nowrap;
-//   &.${activeClassName} {
-//     border-radius: 12px;
-//     font-weight: 600;
-//     justify-content: center;
-//     color: ${({ theme }) => theme.text1};
-//     background-color: ${({ theme }) => theme.bg2};
-//   }
+  position: relative;
+`
 
-//   :hover,
-//   :focus {
-//     color: ${({ theme }) => darken(0.1, theme.text1)};
-//   }
-// `
+const activeClassName = 'ACTIVE'
+
+const StyledNavLink = styled(NavLink).attrs({
+  activeClassName,
+})`
+  ${({ theme }) => theme.flexRowNoWrap}
+  align-items: left;
+  border-radius: 3rem;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${({ theme }) => theme.text2};
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  word-break: break-word;
+  overflow: hidden;
+  white-space: nowrap;
+  &.${activeClassName} {
+    border-radius: 12px;
+    font-weight: 600;
+    justify-content: center;
+    color: ${({ theme }) => theme.text1};
+    background-color: ${({ theme }) => theme.bg2};
+  }
+
+  :hover,
+  :focus {
+    color: ${({ theme }) => darken(0.1, theme.text1)};
+  }
+`
 
 // const StyledExternalLink = styled(ExternalLink).attrs({
 //   activeClassName,
@@ -211,41 +218,32 @@ const HeaderLinks = styled(Row)`
 //   }
 // `
 
-const LogoLink = styled(ExternalLink)`
-  &:not(:first-child) {
-    padding-left: 15px;
-  }
-`
-const Logo = styled.img`
-  width: 1.6875rem;
-  height: 1.6875rem;
-  &:hover {
-    opacity: 0.4;
-  }
-`
 export default function Header() {
   const { account } = useActiveWeb3React()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
-  // const [darkMode] = useDarkModeManager()
+  const [darkMode] = useDarkModeManager()
+
+  const { white, black } = useTheme()
 
   return (
-    <HeaderFrame>
-      {/* <Title href=".">
-        <img height={'44px'} src={darkMode ? LogoDark : LogoPink} alt="logo" />
-      </Title> */}
+    <HeaderFrame showBackground={scrollY > 45}>
+      <HeaderRow>
+        <Title href=".">
+          <DashBoardIcon>
+            <Logo fill={darkMode ? white : black} width="100%" height="44px" title="logo" />
+          </DashBoardIcon>
+        </Title>
+      </HeaderRow>
 
       <HeaderLinks>
-        <LogoLink href="//twitter.com/ExiledDissident">
-          <Logo src={Twitter} alt="Twitter" />
-        </LogoLink>
-        {/* <LogoLink href="//">
-          <Logo src={Discord} alt="Discord" />
-        </LogoLink>
-        <LogoLink href="//">
-          <Logo src={Opensea} alt="Opensea" />
-        </LogoLink> */}
+        <StyledNavLink id={`home-nav-link`} to={'/home'}>
+          Home
+        </StyledNavLink>
+        <StyledNavLink id={`lottery-nav-link`} to={'/lottery'}>
+          Lottery
+        </StyledNavLink>
       </HeaderLinks>
       <HeaderControls>
         <NetworkCard />
@@ -259,6 +257,9 @@ export default function Header() {
             <Web3Status />
           </AccountElement>
         </HeaderElement>
+        <HeaderElementWrap>
+          <Menu />
+        </HeaderElementWrap>
       </HeaderControls>
     </HeaderFrame>
   )

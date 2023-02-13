@@ -11,9 +11,14 @@ export const ENS_REGISTRAR_ADDRESSES: AddressMap = {
   [SupportedChainId.MAINNET]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   [SupportedChainId.ROPSTEN]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   [SupportedChainId.GOERLI]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  [SupportedChainId.RINKEBY]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
 }
 
-export const MINT_ADDRESS: AddressMap = {
-  ...constructSameAddressMap('0xbE98Eb1Dfc252d231305Ca44dED8E5560e0703d0'),
+export const PUNK_ADDRESS: AddressMap = {
+  ...constructSameAddressMap('0x26a6517C13400c6a41129b8D080A7C8966F2fE0f'),
+  [SupportedChainId.GOERLI]: '0x26a6517C13400c6a41129b8D080A7C8966F2fE0f',
+}
+
+export const H_VALUW_ADDRESS: AddressMap = {
+  ...constructSameAddressMap('0xC24fB47e9045f1bE47a2E65af0bcE270F8699cEc'),
+  [SupportedChainId.GOERLI]: '0xC24fB47e9045f1bE47a2E65af0bcE270F8699cEc',
 }

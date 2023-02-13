@@ -5,7 +5,6 @@ export interface Colors {
   // base
   white: Color
   black: Color
-  defaultTheme: Color
 
   // text
   text1: Color
@@ -50,6 +49,8 @@ export interface Colors {
   yellow3: Color
   blue1: Color
   blue2: Color
+
+  blue3: Color
 
   error: Color
   success: Color

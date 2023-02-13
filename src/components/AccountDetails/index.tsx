@@ -175,10 +175,11 @@ const WalletAction = styled(ButtonSecondary)`
 
 interface AccountDetailsProps {
   toggleWalletModal: () => void
+  ENSName?: string
   openOptions: () => void
 }
 
-export default function AccountDetails({ toggleWalletModal, openOptions }: AccountDetailsProps) {
+export default function AccountDetails({ toggleWalletModal, ENSName, openOptions }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
   function formatConnectorName() {
     const { ethereum } = window
@@ -252,7 +253,7 @@ export default function AccountDetails({ toggleWalletModal, openOptions }: Accou
                 <AccountControl>
                   <div>
                     {getStatusIcon()}
-                    <p> {account && shortenAddress(account)}</p>
+                    <p> {ENSName ? ENSName : account && shortenAddress(account)}</p>
                   </div>
                 </AccountControl>
               </AccountGroupingRow>

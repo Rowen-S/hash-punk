@@ -1,8 +1,11 @@
 {
   "background_color": "#ffffff",
   "display": "standalone",
-  "homepage_url": "https://www.thedissident.xyz/",
-  "providedBy": { "name": "Exiled Dissident", "url": "https://www.thedissident.xyz/" },
+  "homepage_url": "https://www.xxxx.xyz/",
+  "providedBy": {
+    "name": "Exiled Dissident",
+    "url": "https://www.xxx.xyz/"
+  },
   "icons": [
     {
       "src": "./192x192_App_Icon.png",
@@ -18,10 +21,10 @@
     }
   ],
   "orientation": "portrait",
-  "name": "Exiled Dissident",
-  "description": "The first comic NFT with story made up by the community.  Dissidents from various kingdoms are exiled to Kezante…  WL free, CC0",
+  "name": "Hash Punk",
+  "description": "xxxxxxxxx",
   "iconPath": "./images/512x512_App_Icon.png",
-  "short_name": "Exiled Dissident",
+  "short_name": "Hash Punk",
   "start_url": ".",
   "theme_color": "#000000"
 }

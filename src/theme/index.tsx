@@ -34,14 +34,12 @@ const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } 
 
 const white = '#FFFFFF'
 const black = '#000000'
-const defaultTheme = '#1a0905'
 
 function colors(darkMode: boolean): Colors {
   return {
     // base
     white,
     black,
-    defaultTheme,
     // text
     text1: darkMode ? '#FFFFFF' : '#000000',
     text2: darkMode ? '#C3C5CB' : '#565A69',
@@ -87,6 +85,7 @@ function colors(darkMode: boolean): Colors {
     yellow3: '#F3B71E',
     blue1: '#2172E5',
     blue2: '#5199FF',
+    blue3: '#2E03F3',
 
     error: '#FD4040',
     success: '#27AE60',
@@ -201,7 +200,7 @@ export const ThemedBackground = styled.div<{ backgroundColor?: string | undefine
   mix-blend-mode: color;
   background: ${({ backgroundColor }) =>
     `radial-gradient(50% 50% at 50% 50%, ${
-      backgroundColor ? backgroundColor : '#fc077d10'
+      backgroundColor ? backgroundColor : '#f0f0f0'
     } 0%, rgba(255, 255, 255, 0) 100%)`};
   transform: translateY(-100vh);
   will-change: background;
@@ -246,11 +245,6 @@ html {
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.defaultTheme};
-}
-body {
-  min-height: 100vh;
-  background-position: 0 -30vh;
-  background-repeat: no-repeat;
+  background-color: ${({ theme }) => theme.bg0};
 }
 `

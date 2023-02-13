@@ -107,7 +107,7 @@ const WALLET_VIEWS = {
   PENDING: 'pending',
 }
 
-export default function WalletModal() {
+export default function WalletModal({ ENSName }: { ENSName?: string }) {
   // important that these are destructed from the account-specific web3-react context
   const { active, account, connector, activate, error } = useWeb3React()
 
@@ -292,7 +292,11 @@ export default function WalletModal() {
     }
     if (account && walletView === WALLET_VIEWS.ACCOUNT) {
       return (
-        <AccountDetails toggleWalletModal={toggleWalletModal} openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)} />
+        <AccountDetails
+          toggleWalletModal={toggleWalletModal}
+          ENSName={ENSName}
+          openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)}
+        />
       )
     }
     return (

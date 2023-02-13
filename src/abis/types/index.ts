@@ -4,9 +4,11 @@
 export type { EnsPublicResolver } from "./EnsPublicResolver";
 export type { EnsRegistrar } from "./EnsRegistrar";
 export type { Erc20 } from "./Erc20";
-export type { Mint } from "./Mint";
+export type { HValue } from "./HValue";
+export type { HashPunk } from "./HashPunk";
 
 export { EnsPublicResolver__factory } from "./factories/EnsPublicResolver__factory";
 export { EnsRegistrar__factory } from "./factories/EnsRegistrar__factory";
 export { Erc20__factory } from "./factories/Erc20__factory";
-export { Mint__factory } from "./factories/Mint__factory";
+export { HValue__factory } from "./factories/HValue__factory";
+export { HashPunk__factory } from "./factories/HashPunk__factory";

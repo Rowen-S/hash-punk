@@ -31,7 +31,7 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 12px;
   cursor: pointer;
   user-select: none;
@@ -80,14 +80,10 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean; error?: b
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  /* background-color: ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)}; */
-  border: 1px dashed ${({ pending, theme }) => (pending ? theme.primary1 : theme.red1)};
-  padding: 1rem;
-  font-family: Nippo-Bold;
-  /* color: ${({ pending, theme }) => (pending ? theme.white : theme.black)}; */
-  color: ${({ theme }) => theme.white};
+  background-color: ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)};
+  border: 1px solid ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg2)};
+  color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};
   font-weight: 500;
-  margin-right: 2px;
   :hover,
   :focus {
     border: 1px solid ${({ theme }) => darken(0.05, theme.bg3)};
@@ -161,8 +157,10 @@ function Web3StatusInner() {
 }
 
 export default function Web3Status() {
-  const { active } = useWeb3React()
+  const { active, account } = useWeb3React()
   const contextNetwork = useWeb3React(NetworkContextName)
+
+  const { ENSName } = useENSName(account ?? undefined)
 
   if (!contextNetwork.active && !active) {
     return null
@@ -171,7 +169,7 @@ export default function Web3Status() {
   return (
     <>
       <Web3StatusInner />
-      <WalletModal />
+      <WalletModal ENSName={ENSName ?? undefined} />
     </>
   )
 }

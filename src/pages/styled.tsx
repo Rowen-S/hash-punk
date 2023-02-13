@@ -1,3 +1,4 @@
+import { Box } from 'rebass'
 import styled, { keyframes } from 'styled-components/macro'
 import { StyledInternalLink } from 'theme'
 
@@ -127,4 +128,19 @@ export const Dots = styled.span`
       content: '...';
     }
   }
+`
+
+export const Line = styled(Box)`
+  width: 100%;
+  height: 2px;
+  background-color: ${({ theme }) => theme.white};
+`
+
+export const AbsImg = styled.img<{ left?: string; right?: string; top?: string; bottom?: string; zIndex?: number }>`
+  position: absolute;
+  left: ${({ left }) => left ?? 'unset'};
+  right: ${({ right }) => right ?? 'unset'};
+  top: ${({ top }) => top ?? 'unset'};
+  bottom: ${({ bottom }) => bottom ?? 'unset'};
+  z-index: ${({ zIndex }) => zIndex ?? 'unset'};
 `

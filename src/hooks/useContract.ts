@@ -6,12 +6,13 @@ import { abi as MulticallABI } from '@uniswap/v3-periphery/artifacts/contracts/l
 
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
-import MINT_ABI from 'abis/mint.json'
+import PUNK_MINT_ABI from 'abis/hash-punk.json'
+import H_VALUE_ABI from 'abis/h-value.json'
 
-import { MULTICALL_ADDRESS, ENS_REGISTRAR_ADDRESSES, MINT_ADDRESS } from 'constants/addresses'
+import { MULTICALL_ADDRESS, ENS_REGISTRAR_ADDRESSES, PUNK_ADDRESS, H_VALUW_ADDRESS } from 'constants/addresses'
 
 import { UniswapInterfaceMulticall } from 'types/v3'
-import { EnsPublicResolver, EnsRegistrar, Mint } from '../abis/types'
+import { EnsPublicResolver, EnsRegistrar, HashPunk, HValue } from '../abis/types'
 
 import { useMemo } from 'react'
 
@@ -50,6 +51,9 @@ export function useENSResolverContract(address: string | undefined, withSignerIf
   return useContract<EnsPublicResolver>(address, ENS_PUBLIC_RESOLVER_ABI, withSignerIfPossible)
 }
 
-export function useMintContract() {
-  return useContract<Mint>(MINT_ADDRESS, MINT_ABI, true) as Mint
+export function useHashPunkContract() {
+  return useContract<HashPunk>(PUNK_ADDRESS, PUNK_MINT_ABI, true) as HashPunk
+}
+export function useHVlaueContract() {
+  return useContract<HValue>(H_VALUW_ADDRESS, H_VALUE_ABI, true) as HValue
 }
