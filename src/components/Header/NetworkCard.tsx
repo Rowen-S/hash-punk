@@ -63,7 +63,7 @@ export default function NetworkCard() {
     if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
       return
     }
-    switchToNetwork({ library, chainId: defaultChainId })
+    switchToNetwork({ library, chainId: Number(defaultChainId) })
     switchToNetwork({ library, chainId })
       .then((x) => x ?? setImplements3085(true))
       .catch(() => setImplements3085(false))

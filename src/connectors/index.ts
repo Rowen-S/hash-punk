@@ -7,15 +7,9 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import LOGO_URL from '../assets/svg/tokenlist.svg'
 import { ALL_SUPPORTED_CHAIN_IDS, SupportedChainId } from '../constants/chains'
 import getLibrary from '../utils/getLibrary'
-// import { FortmaticConnector } from './Fortmatic'
 import { NetworkConnector } from './NetworkConnector'
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
-// const FORMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
-// const PORTIS_ID = process.env.REACT_APP_PORTIS_ID
-
-// const BITSKI_CLIENT_ID = process.env.REACT_APP_BITSKI_CLIENT_ID
-// const BITSKI_CALLBACK_URL = process.env.REACT_APP_BITSKI_CALLBACK_URL
 
 if (typeof INFURA_KEY === 'undefined') {
   throw new Error(`REACT_APP_INFURA_KEY must be a defined environment variable`)
@@ -59,6 +53,6 @@ export const walletconnect = new WalletConnectConnector({
 // mainnet only
 export const walletlink = new WalletLinkConnector({
   url: NETWORK_URLS[SupportedChainId.MAINNET],
-  appName: 'Test',
+  appName: 'HashPunk',
   appLogoUrl: LOGO_URL,
 })

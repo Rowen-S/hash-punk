@@ -89,6 +89,10 @@ msgstr "Initializing..."
 msgid "Install Metamask"
 msgstr "Install Metamask"
 
+#: src/components/Menu/index.tsx
+msgid "Menu"
+msgstr "Menu"
+
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
 msgstr "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
@@ -100,6 +104,10 @@ msgstr "Out of range"
 #: src/components/WalletUnLock/index.tsx
 msgid "PLEASE CONNECT YOUR WALLET"
 msgstr "PLEASE CONNECT YOUR WALLET"
+
+#: src/components/Menu/index.tsx
+msgid "Personal"
+msgstr "Personal"
 
 #: src/components/WalletModal/index.tsx
 msgid "Please connect to the appropriate Ethereum network."
@@ -148,6 +156,10 @@ msgstr "Transaction Submitted"
 #: src/components/WalletModal/PendingView.tsx
 msgid "Try Again"
 msgstr "Try Again"
+
+#: src/components/Menu/index.tsx
+msgid "Twitter"
+msgstr "Twitter"
 
 #: src/components/TransactionSubmissionModal/index.tsx
 msgid "View on Etherscan"

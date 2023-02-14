@@ -5,7 +5,7 @@ export enum SupportedChainId {
   KOVAN = 42,
 }
 
-export const defaultChainId = SupportedChainId.GOERLI
+export const defaultChainId = process.env.REACT_APP_DEFAULT_CHAIN
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
