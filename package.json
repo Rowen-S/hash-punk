@@ -80,6 +80,9 @@
   "resolutions": {
     "@walletconnect/ethereum-provider": "1.6.4"
   },
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
+  },
   "scripts": {
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types './src/abis/**/*.json'",
     "build": "yarn i18n:extract && react-scripts build",
