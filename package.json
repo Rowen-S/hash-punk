@@ -85,8 +85,8 @@
   },
   "scripts": {
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types './src/abis/**/*.json'",
-    "build": "yarn i18n:extract && react-scripts build",
-    "start": "react-scripts start",
+    "build": "yarn compile-external-abi-types && react-scripts build",
+    "start": "yarn compile-external-abi-types && react-scripts start",
     "test": "react-scripts test --env=./custom-test-env.js",
     "i18n:extract": "lingui extract --locale en-US",
     "prei18n:extract": "touch src/locales/en-US.po"
