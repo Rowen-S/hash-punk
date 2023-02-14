@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, Twitter, Check, User } from 'react-feather'
-// Moon, Sun, ,
+import { ChevronLeft, Moon, Sun, Twitter, Check, User } from 'react-feather'
 //Code, , PieChart,
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components/macro'
@@ -15,6 +14,7 @@ import { ExternalLink } from '../../theme'
 import { LOCALE_LABEL, SupportedLocale, SUPPORTED_LOCALES } from 'constants/locales'
 import { useLocationLinkProps } from 'hooks/useLocationLinkProps'
 import { useActiveLocale } from 'hooks/useActiveLocale'
+import { useDarkModeManager } from 'state/user/hooks'
 
 export enum FlyoutAlignment {
   LEFT = 'LEFT',
@@ -196,6 +196,8 @@ export default function Menu() {
   useOnClickOutside(node, open ? toggle : undefined)
   const [menu, setMenu] = useState<'main' | 'lang'>('main')
 
+  const [darkMode, toggleDarkMode] = useDarkModeManager()
+
   useEffect(() => {
     setMenu('main')
   }, [open])
@@ -232,11 +234,11 @@ export default function Menu() {
                       <Trans>Language</Trans>
                     </div>
                     <Globe opacity={0.6} size={16} />
-                  </ToggleMenuItem>
+                  </ToggleMenuItem>*/}
                   <ToggleMenuItem onClick={() => toggleDarkMode()}>
                     <div>{darkMode ? <Trans>Light Theme</Trans> : <Trans>Dark Theme</Trans>}</div>
                     {darkMode ? <Moon opacity={0.6} size={16} /> : <Sun opacity={0.6} size={16} />}
-                  </ToggleMenuItem> */}
+                  </ToggleMenuItem>
                 </MenuFlyout>
               )
           }
