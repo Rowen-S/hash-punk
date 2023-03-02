@@ -10,6 +10,8 @@ import { ReactComponent as Cat } from '../../assets/svg/cat.svg'
 import Light from 'assets/images/light.png'
 
 import Person from '../../assets/images/person.png'
+// import PersonOne from '../../assets/images/person1.png'
+// import PersonTwo from '../../assets/images/person2.png'
 import { AbsImg, Line } from 'pages/styled'
 import { useHashPunkContract } from 'hooks/useContract'
 import { useSingleCallResult } from 'state/multicall/hooks'
@@ -21,6 +23,9 @@ const LotteryWrapper = styled.div`
   position: relative;
   padding: 120px 0px 0px 16px;
   width: 100%;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 20px 0px 0px 0px;
+  `};
 `
 
 const MintBodyWrapper = styled.div`
@@ -32,6 +37,11 @@ const MintBodyWrapper = styled.div`
   `};
   ${({ theme }) => theme.mediaWidth.upToMedium`
     padding-right: 120px;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding-right: 0px;
+    flex-direction: column;
+    padding: 0px 16px;
   `};
 `
 
@@ -47,6 +57,11 @@ const LogoWrapper = styled.div`
 const MintWrapper = styled(AutoColumn)`
   max-width: 360px;
   margin-left: 120px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin: 0px;
+    width: 100%;
+    max-width: unset;
+  `};
 `
 
 const DarkLine = styled(Line)`
@@ -120,7 +135,7 @@ export default function Lottery() {
         errorMessage={mintErrorMessage}
       />
       <MintBodyWrapper>
-        <AbsImg src={Person} height="40%" left="0" bottom="0" zIndex={3} />
+        <AbsImg src={Person} height="40%" left="0" bottom="0" zIndex={-1} />
 
         <LogoWrapper>
           <Logo viewBox="0 0 190 40" width="100%" height="240px" title="logo" />

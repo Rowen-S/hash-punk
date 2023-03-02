@@ -1,4 +1,5 @@
 import { darken } from 'polished'
+import useScrollPosition from '@react-hook/window-scroll'
 import { NavLink } from 'react-router-dom'
 import { Text } from 'rebass'
 import { useDarkModeManager } from 'state/user/hooks'
@@ -224,6 +225,8 @@ export default function Header() {
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   const [darkMode] = useDarkModeManager()
+
+  const scrollY = useScrollPosition()
 
   const { white, black } = useTheme()
 

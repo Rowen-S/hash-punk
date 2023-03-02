@@ -51,6 +51,7 @@ const ExchangeButton = styled(ButtonOutlined)`
   width: 125px;
   border: 2px solid ${({ theme }) => theme.black};
   background-color: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.black};
   border-radius: 8px;
   & > button {
     float: right;
@@ -128,7 +129,7 @@ export default function Personal() {
           <img src={Vouchers} alt="Roll" height="130" />
           <Row justify={'center'}>
             <TYPE.largeHeader color={'white'} fontSize={48}>
-              x {''} {Number(balanceOf) ?? 0}
+              x {''} {balanceOf ? Number(balanceOf) : 0}
             </TYPE.largeHeader>
           </Row>
 

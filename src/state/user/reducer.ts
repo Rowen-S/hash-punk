@@ -83,7 +83,7 @@ export const initialState: UserState = {
     token: '',
     lastUpdateTimestamp: undefined,
   },
-  userDarkMode: true, // default Dark
+  userDarkMode: false, // default Dark
   matchesDarkMode: false,
   userExpertMode: false,
   userLocale: null,
