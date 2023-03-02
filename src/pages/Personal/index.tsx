@@ -115,7 +115,6 @@ export default function Personal() {
       <TransactionSubmissionModal
         isOpen={minting}
         hash={minthash}
-        toLink="/personal"
         onDismiss={handleDismissSubmissionModal}
         errorMessage={mintErrorMessage}
       />

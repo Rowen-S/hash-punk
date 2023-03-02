@@ -130,7 +130,6 @@ export default function Lottery() {
       <TransactionSubmissionModal
         isOpen={minting}
         hash={minthash}
-        toLink="/lottery"
         onDismiss={handleDismissSubmissionModal}
         errorMessage={mintErrorMessage}
       />

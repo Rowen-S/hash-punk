@@ -1,4 +1,4 @@
-import { AutoColumn, ColumnCenter } from 'components/Column'
+import { AutoColumn } from 'components/Column'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
 import Row, { RowBetween } from 'components/Row'
@@ -30,13 +30,10 @@ const HomeWrapper = styled(AutoColumn)`
   /* overflow: hidden;
   overflow-y: auto; */
 `
-const BannerWrapper = styled(ColumnCenter)`
-  /* position: relative;
-  height: calc(100vh - 120px);
-  overflow: hidden; */
-  background-color: #3300ff;
-  height: 850px;
-`
+// const BannerWrapper = styled(ColumnCenter)`
+//   background-color: #3300ff;
+//   height: 850px;
+// `
 
 const HomeAbout = styled.div`
   width: 100%;
@@ -61,7 +58,10 @@ const SwiperWrapper = styled(AutoColumn)`
 export default function Home() {
   return (
     <HomeWrapper>
-      <BannerWrapper></BannerWrapper>
+      <SwiperWrapper>
+        <SwiperPage />
+      </SwiperWrapper>
+      {/* <BannerWrapper></BannerWrapper> */}
       <HomeAbout>
         {/* <AbsImg src={GlobalBg} width="100%" height="80%" bottom="0" zIndex={0} /> */}
 
@@ -88,9 +88,7 @@ export default function Home() {
             }}
           />
         </HomeAboutContent>
-        <SwiperWrapper>
-          <SwiperPage />
-        </SwiperWrapper>
+
         <HomeAboutContent gap="53px">
           <RowBetween>
             <TYPE.label fontSize={42} color="white">
