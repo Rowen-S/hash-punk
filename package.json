@@ -1,7 +1,8 @@
 {
   "name": "sekira",
   "version": "0.1.0",
-  "private": true,
+  "homepage": ".",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@clover-network/clover-connector": "^1.0.0",
     "@ethersproject/experimental": "^5.5.0",
