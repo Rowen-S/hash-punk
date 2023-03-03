@@ -261,7 +261,7 @@ export default function Header() {
           </AccountElement>
         </HeaderElement>
         <HeaderElementWrap>
-          <Menu />
+          <Menu isLogin={account && userEthBalance ? true : false} />
         </HeaderElementWrap>
       </HeaderControls>
     </HeaderFrame>

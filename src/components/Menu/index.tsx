@@ -189,7 +189,8 @@ function LanguageMenu({ close }: { close: () => void }) {
   )
 }
 
-export default function Menu() {
+export default function Menu(props: { isLogin: boolean }) {
+  const { isLogin } = props
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.MENU)
   const toggle = useToggleModal(ApplicationModal.MENU)
@@ -217,12 +218,14 @@ export default function Menu() {
             default:
               return (
                 <MenuFlyout>
-                  <InternalLinkMenuItem to="/personal">
-                    <div>
-                      <Trans>Personal</Trans>
-                    </div>
-                    <User opacity={0.6} size={16} />
-                  </InternalLinkMenuItem>
+                  {isLogin && (
+                    <InternalLinkMenuItem to="/personal">
+                      <div>
+                        <Trans>Personal</Trans>
+                      </div>
+                      <User opacity={0.6} size={16} />
+                    </InternalLinkMenuItem>
+                  )}
                   <MenuItem href="https://twitter.com/">
                     <div>
                       <Trans>Twitter</Trans>
