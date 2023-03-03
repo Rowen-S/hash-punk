@@ -5,7 +5,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 
 import LOGO_URL from '../assets/svg/tokenlist.svg'
-import { ALL_SUPPORTED_CHAIN_IDS, SupportedChainId } from '../constants/chains'
+import { ALL_SUPPORTED_CHAIN_IDS, SupportedChainId, defaultChainId } from '../constants/chains'
 import getLibrary from '../utils/getLibrary'
 import { NetworkConnector } from './NetworkConnector'
 
@@ -26,7 +26,7 @@ const NETWORK_URLS: { [key in SupportedChainId]: string } = {
 
 export const network = new NetworkConnector({
   urls: NETWORK_URLS,
-  defaultChainId: 137,
+  defaultChainId,
 })
 
 let networkLibrary: Web3Provider | undefined

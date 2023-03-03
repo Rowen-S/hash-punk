@@ -6,7 +6,7 @@ import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import styled, { css } from 'styled-components/macro'
 import { switchToNetwork } from 'utils/switchToNetwork'
-import { CHAIN_INFO, defaultChainId, SupportedChainId } from '../../constants/chains'
+import { CHAIN_INFO, defaultChainId } from '../../constants/chains'
 
 const BaseWrapper = css`
   position: relative;
@@ -63,14 +63,13 @@ export default function NetworkCard() {
     if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
       return
     }
-    switchToNetwork({ library, chainId: Number(defaultChainId) })
     switchToNetwork({ library, chainId })
       .then((x) => x ?? setImplements3085(true))
       .catch(() => setImplements3085(false))
   }, [library, chainId])
 
   const info = chainId ? CHAIN_INFO[chainId] : undefined
-  if (!chainId || chainId === SupportedChainId.MAINNET || !info || !library) {
+  if (!chainId || chainId === defaultChainId || !info || !library) {
     return null
   }
   return <FallbackWrapper title={info.label}>{info.label}</FallbackWrapper>

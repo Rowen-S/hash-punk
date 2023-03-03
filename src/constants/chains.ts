@@ -1,3 +1,5 @@
+import { isProductionEnv } from 'utils/env'
+
 export enum SupportedChainId {
   MAINNET = 1,
   ROPSTEN = 3,
@@ -8,7 +10,7 @@ export enum SupportedChainId {
   POLYGON_MUMBAI = 80001,
 }
 
-export const defaultChainId = process.env.REACT_APP_DEFAULT_CHAIN
+export const defaultChainId = isProductionEnv() ? SupportedChainId.POLYGON : SupportedChainId.GOERLI
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(SupportedChainId).filter(
   (id) => typeof id === 'number'
@@ -20,7 +22,6 @@ export const L1_CHAIN_IDS = [
   SupportedChainId.POLYGON,
   SupportedChainId.POLYGON_MUMBAI,
   SupportedChainId.GOERLI,
-  SupportedChainId.KOVAN,
 ] as const
 
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]

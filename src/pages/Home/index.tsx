@@ -6,8 +6,6 @@ import Row, { RowBetween } from 'components/Row'
 import { Image } from 'rebass/styled-components'
 import SwiperPage from './SwiperPage'
 
-// import LogoBanner from 'assets/svg/logo.svg'
-
 import GlobalBg from 'assets/images/bg.png'
 import Author from 'assets/images/author.png'
 import LogoGreen from 'assets/svg/logo-green.svg'

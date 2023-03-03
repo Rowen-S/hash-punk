@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components/macro'
@@ -52,27 +53,29 @@ const HeaderWrapper = styled.div`
 function App() {
   return (
     <ErrorBoundary>
-      <Route component={GoogleAnalyticsReporter} />
-      <Route component={DarkModeQueryParamReader} />
-      <Route component={ApeModeQueryParamReader} />
-      <AppWrapper>
-        <HeaderWrapper>
-          <Header />
-        </HeaderWrapper>
-        <BodyWrapper>
-          <ThemedBackground />
-          <Popups />
-          <Polling />
-          <Web3ReactManager>
-            <Switch>
-              <Route exact strict path="/home" component={Home} />
-              <Route exact strict path="/lottery" component={Lottery} />
-              <Route exact strict path="/personal" component={Personal} />
-              <Route component={RedirectPathToHomeOnly} />
-            </Switch>
-          </Web3ReactManager>
-        </BodyWrapper>
-      </AppWrapper>
+      <Suspense fallback={null}>
+        <Route component={GoogleAnalyticsReporter} />
+        <Route component={DarkModeQueryParamReader} />
+        <Route component={ApeModeQueryParamReader} />
+        <AppWrapper>
+          <HeaderWrapper>
+            <Header />
+          </HeaderWrapper>
+          <BodyWrapper>
+            <ThemedBackground />
+            <Popups />
+            <Polling />
+            <Web3ReactManager>
+              <Switch>
+                <Route exact strict path="/home" component={Home} />
+                <Route exact strict path="/lottery" component={Lottery} />
+                <Route exact strict path="/personal" component={Personal} />
+                <Route component={RedirectPathToHomeOnly} />
+              </Switch>
+            </Web3ReactManager>
+          </BodyWrapper>
+        </AppWrapper>
+      </Suspense>
     </ErrorBoundary>
   )
 }
