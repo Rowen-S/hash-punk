@@ -19,9 +19,9 @@ import 'swiper/swiper-bundle.min.css'
 SwiperCore.use([Autoplay])
 
 import Nft01 from 'assets/preview/001.png'
-import Nft02 from 'assets/preview/002.jpeg'
-import Nft03 from 'assets/preview/003.jpeg'
-import Nft04 from 'assets/preview/004.jpeg'
+import Nft02 from 'assets/preview/002.png'
+import Nft03 from 'assets/preview/003.png'
+import Nft04 from 'assets/preview/004.png'
 import Nft05 from 'assets/preview/005.png'
 
 const Swipers = styled(Swiper)`
