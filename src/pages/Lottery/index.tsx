@@ -22,6 +22,8 @@ import Light from 'assets/images/light.png'
 import Person from '../../assets/images/person.png'
 // import PersonOne from '../../assets/images/person1.png'
 // import PersonTwo from '../../assets/images/person2.png'
+import { Image } from 'rebass/styled-components'
+import Mint from 'assets/svg/mint.svg'
 import { AbsImg, Line } from 'pages/styled'
 
 const LotteryWrapper = styled.div`
@@ -78,6 +80,13 @@ const CatWrapper = styled.div`
   padding: 29px 60px;
   display: flex;
   justify-content: end;
+`
+const MiddleDarkCard = styled(DarkCard)`
+  width: 100%;
+  height: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 export default function Lottery() {
   const { account, chainId, library } = useActiveWeb3React()
@@ -155,7 +164,9 @@ export default function Lottery() {
             3,000 unique collectible characters with proof of ownership stored on the Matic blockchain. Each one is
             unique, and each one of them can be officially owned by a single person on the Matic blockchain.
           </TYPE.subHeader>
-          <DarkCard width="100%" height="360px" />
+          <MiddleDarkCard>
+            <Image src={Mint} />
+          </MiddleDarkCard>
           <RowBetween marginTop={'24px'}>
             <TYPE.black>TOTAL DRAW</TYPE.black>
             <TYPE.black>

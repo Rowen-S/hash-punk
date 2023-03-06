@@ -1,4 +1,4 @@
-import { AutoColumn } from 'components/Column'
+import { AutoColumn, ColumnCenter } from 'components/Column'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
 import Row, { RowBetween } from 'components/Row'
@@ -13,6 +13,7 @@ import LogoRed from 'assets/svg/logo-red.svg'
 import Triangle01 from 'assets/images/triangle01.png'
 import Triangle02 from 'assets/images/triangle02.png'
 import Triangle03 from 'assets/images/triangle03.png'
+import FirstScreen from 'assets/images/firstScreen.png'
 
 import Circle from 'assets/images/circle.png'
 import Cat from 'assets/images/cat.png'
@@ -28,10 +29,14 @@ const HomeWrapper = styled(AutoColumn)`
   /* overflow: hidden;
   overflow-y: auto; */
 `
-// const BannerWrapper = styled(ColumnCenter)`
-//   background-color: #3300ff;
-//   height: 850px;
-// `
+const BannerWrapper = styled(ColumnCenter)`
+  background-color: #3300ff;
+  background-image: url(${FirstScreen});
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position-y: 18vh;
+  height: 100vh;
+`
 
 const HomeAbout = styled.div`
   width: 100%;
@@ -56,10 +61,7 @@ const SwiperWrapper = styled(AutoColumn)`
 export default function Home() {
   return (
     <HomeWrapper>
-      <SwiperWrapper>
-        <SwiperPage />
-      </SwiperWrapper>
-      {/* <BannerWrapper></BannerWrapper> */}
+      <BannerWrapper></BannerWrapper>
       <HomeAbout>
         {/* <AbsImg src={GlobalBg} width="100%" height="80%" bottom="0" zIndex={0} /> */}
 
@@ -87,6 +89,9 @@ export default function Home() {
           />
         </HomeAboutContent>
 
+        <SwiperWrapper>
+          <SwiperPage />
+        </SwiperWrapper>
         <HomeAboutContent gap="53px">
           <RowBetween>
             <TYPE.label fontSize={42} color="white">
@@ -100,8 +105,8 @@ export default function Home() {
               </TYPE.largeHeader>
               <TYPE.label color="white">
                 5,000 unique collectible characters with proof of ownership stored <br /> on the Matic blockchain. No
-                two are exactly alike, and each one <br /> of them can be officially owned by a single person on
-                the Matic <br /> blockchain.
+                two are exactly alike, and each one <br /> of them can be officially owned by a single person on the
+                Matic <br /> blockchain.
               </TYPE.label>
             </AutoColumn>
           </RowBetween>

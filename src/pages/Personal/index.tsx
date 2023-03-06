@@ -10,7 +10,7 @@ import { useHVlaueContract } from 'hooks/useContract'
 // import { AbsImg } from 'pages/styled'
 
 import Person from 'assets/images/person@2x.png'
-import Vouchers from 'assets/svg/vouchers.svg'
+import Vouchers from 'assets/svg/vouchers.png'
 import UsedVouchers from 'assets/svg/usedVouchers.png'
 import { useSingleCallResult } from 'state/multicall/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -60,10 +60,15 @@ const ExchangeButton = styled(ButtonOutlined)`
   & > button {
     float: right;
   }
+  &:disabled {
+    opacity: 100%;
+    background-color: #f2f2f2;
+  }
 `
 const ExchangeButtonGary = styled(ExchangeButton)`
   background-color: transparent;
   color: ${({ theme }) => theme.white};
+  pointer-events: none;
 `
 
 export default function Personal() {
@@ -148,7 +153,11 @@ export default function Personal() {
             <Row justify="end">
               <ExchangeButton onClick={exchangeHoliday}>Exchange</ExchangeButton>
             </Row>
-          ) : null}
+          ) : (
+            <Row justify="end">
+              <ExchangeButton disabled>Exchange</ExchangeButton>
+            </Row>
+          )}
         </HolidayDescWrapper>
       </HolidayCard>
       <HolidayCardGary>
@@ -165,7 +174,7 @@ export default function Personal() {
             <br />5 H value holiday coupons can be exchanged for one day of holiday
           </TYPE.body>
           <Row justify="end">
-            <ExchangeButtonGary>已使用</ExchangeButtonGary>
+            <ExchangeButtonGary>Used</ExchangeButtonGary>
           </Row>
         </HolidayDescWrapper>
       </HolidayCardGary>
