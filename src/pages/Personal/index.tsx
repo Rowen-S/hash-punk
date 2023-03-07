@@ -1,22 +1,15 @@
-import { useCallback, useState } from 'react'
-import Row, { RowBetween } from 'components/Row'
-import { useSingleCallResult } from 'state/multicall/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
-import { useTransactionAdder } from 'state/transactions/hooks'
-import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
+import { RowBetween } from 'components/Row'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
-import Card from 'components/Card'
 import { AutoColumn } from 'components/Column'
-import { ButtonOutlined } from 'components/Button'
-
-import { useHVlaueContract } from 'hooks/useContract'
-
 // import { AbsImg } from 'pages/styled'
-
+import { Box } from 'rebass'
+import { ButtonOutlined } from 'components/Button'
 import Person from 'assets/images/person@2x.png'
-import Vouchers from 'assets/svg/vouchers.png'
-import UsedVouchers from 'assets/svg/usedVouchers.png'
+import Holiday from './Holiday'
+import Mine from './Mine'
+import Rare from './Rare'
+import { useState } from 'react'
 
 const PersonalWrapper = styled(AutoColumn)`
   max-width: 1200px;
@@ -34,182 +27,120 @@ const BenefitImg = styled.img`
   height: 192px;
   right: 46px;
 `
-
-const HolidayCard = styled(Card)`
-  ${({ theme }) => theme.flexRowNoWrap};
-  background-color: ${({ theme }) => theme.blue3};
-  border: 2px solid ${({ theme }) => theme.black};
-  border-radius: 8px;
+const ButtonBox = styled(Box)`
+  display: flex;
+  position: absolute;
+  left: 0;
+  bottom: 30px;
 `
-const HolidayCardGary = styled(HolidayCard)`
-  background-color: #888888;
+const BlueBox = styled.div`
+  margin-right: 12px;
 `
-
-const HolidayDescWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: center;
-`
-
-const ExchangeButton = styled(ButtonOutlined)`
-  width: 125px;
-  border: 2px solid ${({ theme }) => theme.black};
-  background-color: ${({ theme }) => theme.white};
-  color: ${({ theme }) => theme.black};
-  border-radius: 8px;
-  & > button {
-    float: right;
-  }
-  &:disabled {
-    opacity: 100%;
-    background-color: #f2f2f2;
+const BlueBtn = styled(ButtonOutlined)`
+  padding: 5px 30px;
+  border-radius: 4px;
+  &:hover,
+  &:active {
+    color: #fff;
+    border: 1px solid #2e03f3;
+    background: #2e03f3;
+    box-shadow: 0px 1px 4px 0px rgba(46, 3, 243, 0.3), 0px 2px 4px 0px rgba(46, 3, 243, 0.15);
   }
 `
-const ExchangeButtonGary = styled(ExchangeButton)`
-  background-color: transparent;
-  color: ${({ theme }) => theme.white};
-  pointer-events: none;
+const BlueActive = styled(ButtonOutlined)`
+  padding: 5px 30px;
+  border-radius: 4px;
+  color: #fff;
+  border: 1px solid #2e03f3;
+  background: #2e03f3;
+  box-shadow: 0px 1px 4px 0px rgba(46, 3, 243, 0.3), 0px 2px 4px 0px rgba(46, 3, 243, 0.15);
+`
+const RareBtn = styled.div`
+  border: 1px solid #ced0d9;
+  border-radius: 4px;
+  padding: 1px;
+  &:hover,
+  &:active {
+    border-color: transparent;
+    box-shadow: 0px 1px 4px 0px rgba(255, 87, 164, 0.2), 0px 2px 4px 0px rgba(255, 98, 162, 0.4);
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgba(255, 38, 179, 1) 0%, rgba(255, 179, 139, 1) 100%);
+  }
+`
+const RareText = styled(ButtonOutlined)`
+  display: block;
+  padding: 4px 29px;
+  border: none;
+  border-radius: 4px;
+  &:hover,
+  &:active {
+    box-shadow: none;
+    border: none;
+    background: linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%);
+    border-radius: 4px;
+  }
+`
+const RareActive = styled.div`
+  padding: 1px;
+  border-color: transparent;
+  box-shadow: 0px 1px 4px 0px rgba(255, 87, 164, 0.2), 0px 2px 4px 0px rgba(255, 98, 162, 0.4);
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255, 38, 179, 1) 0%, rgba(255, 179, 139, 1) 100%);
+`
+const RareActiveBtn = styled(ButtonOutlined)`
+  padding: 5px 30px;
+  border-radius: 4px;
+  box-shadow: none;
+  border: none;
+  background: linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%);
+  border-radius: 4px;
+  &:hover,
+  &:active {
+    box-shadow: none;
+    border: none;
+  }
 `
 
 export default function Personal() {
-  const { account } = useActiveWeb3React()
-  const hValueContract = useHVlaueContract()
-
-  const addTransaction = useTransactionAdder()
-
-  const balanceOf = useSingleCallResult(hValueContract, 'balanceOf', [account ?? undefined, 3])?.result?.[0]
-  const usedVouchersNum = useSingleCallResult(hValueContract, 'exchangeTimes', [account ?? undefined])?.result?.[0]
-
-  // const hPunkContract = useHashPunkContract()
-  // rare lists note: undefined ? No rarity : xxx.length
-  // const rareList = useSingleCallResult(hPunkContract, 'getUserToRareIds', [account ?? undefined])?.result?.[0]
-
-  const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
-    minting: boolean
-    minthash: string | undefined
-    mintErrorMessage: string | undefined
-  }>({
-    minting: false,
-    minthash: undefined,
-    mintErrorMessage: undefined,
-  })
-
-  const handleDismissSubmissionModal = useCallback(() => {
-    setModal({
-      minting: false,
-      minthash: undefined,
-      mintErrorMessage: undefined,
-    })
-  }, [setModal])
-
-  // const exchangeRate = useCallback(() => {
-  //   if (!rareList?.length) return
-  //   setModal({
-  //     minting: true,
-  //     minthash,
-  //     mintErrorMessage,
-  //   })
-  //   hValueContract
-  //     ?.exchangeHValue(random(rareList))
-  //     .then((res) => {
-  //       addTransaction(res)
-  //       // res.wait().finally(() => setProcessing(false))
-  //       setModal({
-  //         minting: true,
-  //         minthash: res.hash,
-  //         mintErrorMessage,
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       setModal({
-  //         minting: true,
-  //         minthash,
-  //         mintErrorMessage: err.message,
-  //       })
-  //     })
-  // }, [addTransaction, minthash, mintErrorMessage, hValueContract])
-
-  const exchangeHoliday = useCallback(() => {
-    setModal({
-      minting: true,
-      minthash,
-      mintErrorMessage,
-    })
-    hValueContract
-      ?.exchangeHoliday(1)
-      .then((res) => {
-        addTransaction(res)
-        // res.wait().finally(() => setProcessing(false))
-        setModal({
-          minting: true,
-          minthash: res.hash,
-          mintErrorMessage,
-        })
-      })
-      .catch((err) => {
-        setModal({
-          minting: true,
-          minthash,
-          mintErrorMessage: err.message,
-        })
-      })
-  }, [addTransaction, minthash, mintErrorMessage, hValueContract])
-
-  return account ? (
+  const [type, setType] = useState<number>(1)
+  const handleChange = (v: number) => {
+    setType(v)
+  }
+  return (
     <PersonalWrapper gap="54px">
-      <TransactionSubmissionModal
-        isOpen={minting}
-        hash={minthash}
-        onDismiss={handleDismissSubmissionModal}
-        errorMessage={mintErrorMessage}
-      />
       <BenefitCenter>
         <TYPE.largeHeader>Benefit Center</TYPE.largeHeader>
         <BenefitImg src={Person} />
         {/* <AbsImg src={Person} width="408px" height="192px" right="46px" /> */}
-      </BenefitCenter>
-      <HolidayCard>
-        <HolidayDescWrapper>
-          <img src={Vouchers} alt="Roll" height="130" />
-          <Row justify={'center'}>
-            <TYPE.largeHeader color={'white'} fontSize={48}>
-              x {''} {balanceOf ? Number(balanceOf) : 0}
-            </TYPE.largeHeader>
-          </Row>
-
-          <TYPE.body color={'white'}>
-            Note:
-            <br />5 H value holiday coupons can be exchanged for one day of holiday
-          </TYPE.body>
-          {balanceOf && Number(balanceOf) > 0 ? (
-            <Row justify="end">
-              <ExchangeButton onClick={exchangeHoliday}>Exchange</ExchangeButton>
-            </Row>
+        <ButtonBox>
+          {type === 1 ? (
+            <BlueBox>
+              <BlueActive>我的HashPunk</BlueActive>
+            </BlueBox>
           ) : (
-            <Row justify="end">
-              <ExchangeButton disabled>Exchange</ExchangeButton>
-            </Row>
+            <BlueBox>
+              <BlueBtn onClick={() => handleChange(1)}>我的HashPunk</BlueBtn>
+            </BlueBox>
           )}
-        </HolidayDescWrapper>
-      </HolidayCard>
-      <HolidayCardGary>
-        <HolidayDescWrapper>
-          <img src={UsedVouchers} alt="Roll" height="130" />
-          <Row justify={'center'}>
-            <TYPE.largeHeader color={'white'} fontSize={48}>
-              x {''} {usedVouchersNum ? Number(usedVouchersNum) : 0}
-            </TYPE.largeHeader>
-          </Row>
-
-          <TYPE.body color={'white'}>
-            Note:
-            <br />5 H value holiday coupons can be exchanged for one day of holiday
-          </TYPE.body>
-          <Row justify="end">
-            <ExchangeButtonGary>Used</ExchangeButtonGary>
-          </Row>
-        </HolidayDescWrapper>
-      </HolidayCardGary>
+          <BlueBox>
+            {type === 2 ? (
+              <BlueActive>假期兑换</BlueActive>
+            ) : (
+              <BlueBtn onClick={() => handleChange(2)}>假期兑换</BlueBtn>
+            )}
+          </BlueBox>
+          {type === 3 ? (
+            <RareActive>
+              <RareActiveBtn>稀有兑换</RareActiveBtn>
+            </RareActive>
+          ) : (
+            <RareBtn>
+              <RareText onClick={() => handleChange(3)}>稀有兑换</RareText>
+            </RareBtn>
+          )}
+        </ButtonBox>
+      </BenefitCenter>
+      {type === 1 ? <Mine /> : type === 2 ? <Holiday /> : type === 3 ? <Rare /> : null}
     </PersonalWrapper>
-  ) : null
+  )
 }
