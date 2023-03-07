@@ -150,7 +150,7 @@ export default function Home() {
               </TYPE.label>
               <AutoColumn gap="lg">
                 <TYPE.label fontSize={18} color="white">
-                  corp function
+                  ◆ corp function
                 </TYPE.label>
                 <TYPE.label fontSize={18} color="white">
                   ◆ Mrs. Bonnie blue

@@ -24,6 +24,7 @@ interface HValueInterface extends ethers.utils.Interface {
     "Hpoint()": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "baseMetadataURI()": FunctionFragment;
     "burn(address,uint256,uint256)": FunctionFragment;
     "burnBatch(address[],uint256[],uint256[])": FunctionFragment;
     "controller()": FunctionFragment;
@@ -34,6 +35,7 @@ interface HValueInterface extends ethers.utils.Interface {
     "exchangeTimes(address)": FunctionFragment;
     "exists(uint256)": FunctionFragment;
     "hashPunk()": FunctionFragment;
+    "initialize(string)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "luckyEnd()": FunctionFragment;
     "luckyStart()": FunctionFragment;
@@ -43,7 +45,6 @@ interface HValueInterface extends ethers.utils.Interface {
     "negtiveValue(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "passId()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
     "resetCurrentTimeStamp()": FunctionFragment;
     "resetExchangeTimes()": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
@@ -55,7 +56,6 @@ interface HValueInterface extends ethers.utils.Interface {
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply(uint256)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
     "uri(uint256)": FunctionFragment;
     "voucher()": FunctionFragment;
   };
@@ -68,6 +68,10 @@ interface HValueInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "balanceOfBatch",
     values: [string[], BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "baseMetadataURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "burn",
@@ -106,6 +110,7 @@ interface HValueInterface extends ethers.utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "hashPunk", values?: undefined): string;
+  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
@@ -136,10 +141,6 @@ interface HValueInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "passId", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "resetCurrentTimeStamp",
     values?: undefined
@@ -175,10 +176,6 @@ interface HValueInterface extends ethers.utils.Interface {
     functionFragment: "totalSupply",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
-  ): string;
   encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: "voucher", values?: undefined): string;
 
@@ -186,6 +183,10 @@ interface HValueInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "baseMetadataURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
@@ -213,6 +214,7 @@ interface HValueInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hashPunk", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
@@ -228,10 +230,6 @@ interface HValueInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "passId", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "resetCurrentTimeStamp",
     data: BytesLike
@@ -270,23 +268,19 @@ interface HValueInterface extends ethers.utils.Interface {
     functionFragment: "totalSupply",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "voucher", data: BytesLike): Result;
 
   events: {
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
     "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
     "URI(string,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
@@ -300,9 +294,7 @@ export type ApprovalForAllEvent = TypedEvent<
   }
 >;
 
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string] & { previousOwner: string; newOwner: string }
->;
+export type InitializedEvent = TypedEvent<[number] & { version: number }>;
 
 export type TransferBatchEvent = TypedEvent<
   [string, string, string, BigNumber[], BigNumber[]] & {
@@ -386,6 +378,8 @@ export class HValue extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
+    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
+
     burn(
       from: string,
       tokenId: BigNumberish,
@@ -425,6 +419,11 @@ export class HValue extends BaseContract {
 
     hashPunk(overrides?: CallOverrides): Promise<[string]>;
 
+    initialize(
+      _uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     isApprovedForAll(
       account: string,
       operator: string,
@@ -459,10 +458,6 @@ export class HValue extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     passId(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     resetCurrentTimeStamp(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -523,11 +518,6 @@ export class HValue extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
     voucher(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -546,6 +536,8 @@ export class HValue extends BaseContract {
     ids: BigNumberish[],
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
+
+  baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
   burn(
     from: string,
@@ -583,6 +575,11 @@ export class HValue extends BaseContract {
 
   hashPunk(overrides?: CallOverrides): Promise<string>;
 
+  initialize(
+    _uri: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   isApprovedForAll(
     account: string,
     operator: string,
@@ -617,10 +614,6 @@ export class HValue extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   passId(overrides?: CallOverrides): Promise<BigNumber>;
-
-  renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   resetCurrentTimeStamp(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -678,11 +671,6 @@ export class HValue extends BaseContract {
 
   totalSupply(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-  transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   voucher(overrides?: CallOverrides): Promise<BigNumber>;
@@ -701,6 +689,8 @@ export class HValue extends BaseContract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
+
+    baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
     burn(
       from: string,
@@ -738,6 +728,8 @@ export class HValue extends BaseContract {
 
     hashPunk(overrides?: CallOverrides): Promise<string>;
 
+    initialize(_uri: string, overrides?: CallOverrides): Promise<void>;
+
     isApprovedForAll(
       account: string,
       operator: string,
@@ -772,8 +764,6 @@ export class HValue extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     passId(overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     resetCurrentTimeStamp(overrides?: CallOverrides): Promise<void>;
 
@@ -824,11 +814,6 @@ export class HValue extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     voucher(overrides?: CallOverrides): Promise<BigNumber>;
@@ -853,21 +838,13 @@ export class HValue extends BaseContract {
       { account: string; operator: string; approved: boolean }
     >;
 
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): TypedEventFilter<
-      [string, string],
-      { previousOwner: string; newOwner: string }
-    >;
+    "Initialized(uint8)"(
+      version?: null
+    ): TypedEventFilter<[number], { version: number }>;
 
-    OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): TypedEventFilter<
-      [string, string],
-      { previousOwner: string; newOwner: string }
-    >;
+    Initialized(
+      version?: null
+    ): TypedEventFilter<[number], { version: number }>;
 
     "TransferBatch(address,address,address,uint256[],uint256[])"(
       operator?: string | null,
@@ -963,6 +940,8 @@ export class HValue extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     burn(
       from: string,
       tokenId: BigNumberish,
@@ -999,6 +978,11 @@ export class HValue extends BaseContract {
 
     hashPunk(overrides?: CallOverrides): Promise<BigNumber>;
 
+    initialize(
+      _uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     isApprovedForAll(
       account: string,
       operator: string,
@@ -1033,10 +1017,6 @@ export class HValue extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     passId(overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     resetCurrentTimeStamp(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1097,11 +1077,6 @@ export class HValue extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     uri(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     voucher(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1121,6 +1096,8 @@ export class HValue extends BaseContract {
       ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
       from: string,
@@ -1164,6 +1141,11 @@ export class HValue extends BaseContract {
 
     hashPunk(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    initialize(
+      _uri: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     isApprovedForAll(
       account: string,
       operator: string,
@@ -1201,10 +1183,6 @@ export class HValue extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     passId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     resetCurrentTimeStamp(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1263,11 +1241,6 @@ export class HValue extends BaseContract {
     totalSupply(
       id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     uri(
