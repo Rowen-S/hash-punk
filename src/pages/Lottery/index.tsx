@@ -1,4 +1,14 @@
-import { ButtonPrimary } from 'components/Button'
+import { useHashPunkContract } from 'hooks/useContract'
+import { useSingleCallResult } from 'state/multicall/hooks'
+import { useCallback, useState } from 'react'
+import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useWalletModalToggle } from 'state/application/hooks'
+import { defaultChainId } from 'constants/chains'
+import { switchToNetwork } from 'utils/switchToNetwork'
+
+import { ButtonLight, ButtonPrimary } from 'components/Button'
 import { DarkCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
 import { RowBetween } from 'components/Row'
@@ -12,12 +22,9 @@ import Light from 'assets/images/light.png'
 import Person from '../../assets/images/person.png'
 // import PersonOne from '../../assets/images/person1.png'
 // import PersonTwo from '../../assets/images/person2.png'
+import { Image } from 'rebass/styled-components'
+import Mint from 'assets/svg/mint.svg'
 import { AbsImg, Line } from 'pages/styled'
-import { useHashPunkContract } from 'hooks/useContract'
-import { useSingleCallResult } from 'state/multicall/hooks'
-import { useCallback, useState } from 'react'
-import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
-import { useTransactionAdder } from 'state/transactions/hooks'
 
 const LotteryWrapper = styled.div`
   position: relative;
@@ -74,9 +81,25 @@ const CatWrapper = styled.div`
   display: flex;
   justify-content: end;
 `
+const MiddleDarkCard = styled(DarkCard)`
+  width: 100%;
+  height: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 export default function Lottery() {
+  const { account, chainId, library } = useActiveWeb3React()
   const punkContract = useHashPunkContract()
   const addTransaction = useTransactionAdder()
+
+  // toggle wallet when disconnected
+  const toggleWalletModal = useWalletModalToggle()
+
+  const showSwitchAMainnet = Boolean(chainId !== defaultChainId)
+
+  const totalSupply = useSingleCallResult(punkContract, 'totalSupply')?.result?.[0]
+  const maxSupply = useSingleCallResult(punkContract, 'maxSupply')?.result?.[0]
 
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
     minting: boolean
@@ -87,10 +110,6 @@ export default function Lottery() {
     minthash: undefined,
     mintErrorMessage: undefined,
   })
-
-  const totalSupply = useSingleCallResult(punkContract, 'totalSupply')?.result?.[0]
-  const maxSupply = useSingleCallResult(punkContract, 'maxSupply')?.result?.[0]
-
   const handleDismissSubmissionModal = useCallback(() => {
     setModal({
       minting: false,
@@ -130,7 +149,6 @@ export default function Lottery() {
       <TransactionSubmissionModal
         isOpen={minting}
         hash={minthash}
-        toLink="/lottery"
         onDismiss={handleDismissSubmissionModal}
         errorMessage={mintErrorMessage}
       />
@@ -146,16 +164,36 @@ export default function Lottery() {
             3,000 unique collectible characters with proof of ownership stored on the Matic blockchain. Each one is
             unique, and each one of them can be officially owned by a single person on the Matic blockchain.
           </TYPE.subHeader>
-          <DarkCard width="100%" height="360px" />
+          <MiddleDarkCard>
+            <Image src={Mint} />
+          </MiddleDarkCard>
           <RowBetween marginTop={'24px'}>
             <TYPE.black>TOTAL DRAW</TYPE.black>
             <TYPE.black>
               {totalSupply ? Number(totalSupply) : '-'}/{maxSupply ? Number(maxSupply) : '-'}
             </TYPE.black>
           </RowBetween>
-          <ButtonPrimary $borderRadius="8px" onClick={exchangeNFT}>
-            Draw
-          </ButtonPrimary>
+          {!account ? (
+            <ButtonLight $borderRadius="8px" onClick={toggleWalletModal}>
+              Connect Wallet
+            </ButtonLight>
+          ) : showSwitchAMainnet ? (
+            <ButtonPrimary
+              $borderRadius="8px"
+              onClick={() => {
+                if (!library?.provider?.request || !chainId || !library?.provider?.isMetaMask) {
+                  return
+                }
+                switchToNetwork({ library, chainId: defaultChainId })
+              }}
+            >
+              Change Network
+            </ButtonPrimary>
+          ) : (
+            <ButtonPrimary $borderRadius="8px" onClick={exchangeNFT}>
+              Draw
+            </ButtonPrimary>
+          )}
         </MintWrapper>
       </MintBodyWrapper>
       <DarkLine />

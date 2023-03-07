@@ -6,8 +6,6 @@ import Row, { RowBetween } from 'components/Row'
 import { Image } from 'rebass/styled-components'
 import SwiperPage from './SwiperPage'
 
-// import LogoBanner from 'assets/svg/logo.svg'
-
 import GlobalBg from 'assets/images/bg.png'
 import Author from 'assets/images/author.png'
 import LogoGreen from 'assets/svg/logo-green.svg'
@@ -15,6 +13,7 @@ import LogoRed from 'assets/svg/logo-red.svg'
 import Triangle01 from 'assets/images/triangle01.png'
 import Triangle02 from 'assets/images/triangle02.png'
 import Triangle03 from 'assets/images/triangle03.png'
+import FirstScreen from 'assets/images/firstScreen.png'
 
 import Circle from 'assets/images/circle.png'
 import Cat from 'assets/images/cat.png'
@@ -31,11 +30,12 @@ const HomeWrapper = styled(AutoColumn)`
   overflow-y: auto; */
 `
 const BannerWrapper = styled(ColumnCenter)`
-  /* position: relative;
-  height: calc(100vh - 120px);
-  overflow: hidden; */
   background-color: #3300ff;
-  height: 850px;
+  background-image: url(${FirstScreen});
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position-y: 18vh;
+  height: 100vh;
 `
 
 const HomeAbout = styled.div`
@@ -88,6 +88,7 @@ export default function Home() {
             }}
           />
         </HomeAboutContent>
+
         <SwiperWrapper>
           <SwiperPage />
         </SwiperWrapper>
@@ -104,8 +105,8 @@ export default function Home() {
               </TYPE.largeHeader>
               <TYPE.label color="white">
                 5,000 unique collectible characters with proof of ownership stored <br /> on the Matic blockchain. No
-                two are exactly alike, and each one <br /> of them can be officially owned by a single person on
-                the Matic <br /> blockchain.
+                two are exactly alike, and each one <br /> of them can be officially owned by a single person on the
+                Matic <br /> blockchain.
               </TYPE.label>
             </AutoColumn>
           </RowBetween>
@@ -149,10 +150,7 @@ export default function Home() {
               </TYPE.label>
               <AutoColumn gap="lg">
                 <TYPE.label fontSize={18} color="white">
-                  ◆ Mr. Q Li
-                </TYPE.label>
-                <TYPE.label fontSize={18} color="white">
-                  ◆ Mr. Shaw_w
+                  ◆ corp function
                 </TYPE.label>
                 <TYPE.label fontSize={18} color="white">
                   ◆ Mrs. Bonnie blue

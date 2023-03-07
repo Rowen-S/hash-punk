@@ -2,17 +2,15 @@ import { Contract } from '@ethersproject/contracts'
 import { getContract } from 'utils'
 import { useActiveWeb3React } from './web3'
 
-import { abi as MulticallABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
-
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
-import PUNK_MINT_ABI from 'abis/hash-punk.json'
-import H_VALUE_ABI from 'abis/h-value.json'
+import { abi as PUNK_MINT_ABI } from 'abis/HashPunk.json'
+import { abi as H_VALUE_ABI } from 'abis/HValue.json'
+import MulticallABI from 'abis/UniswapInterfaceMulticall.json'
 
 import { MULTICALL_ADDRESS, ENS_REGISTRAR_ADDRESSES, PUNK_ADDRESS, H_VALUW_ADDRESS } from 'constants/addresses'
 
-import { UniswapInterfaceMulticall } from 'types/v3'
-import { EnsPublicResolver, EnsRegistrar, HashPunk, HValue } from '../abis/types'
+import { EnsPublicResolver, EnsRegistrar, HashPunk, HValue, UniswapInterfaceMulticall } from '../abis/types'
 
 import { useMemo } from 'react'
 

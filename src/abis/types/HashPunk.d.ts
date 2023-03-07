@@ -25,9 +25,14 @@ interface HashPunkInterface extends ethers.utils.Interface {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "base()": FunctionFragment;
+    "baseMetadataURI()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
+    "getUserToRareIds(address)": FunctionFragment;
     "hValue()": FunctionFragment;
+    "initialize(string,address,uint256,uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "luckyEnd()": FunctionFragment;
+    "luckyStart()": FunctionFragment;
     "maxSupply()": FunctionFragment;
     "mint(uint256,uint256)": FunctionFragment;
     "name()": FunctionFragment;
@@ -35,7 +40,6 @@ interface HashPunkInterface extends ethers.utils.Interface {
     "ownerOf(uint256)": FunctionFragment;
     "passId()": FunctionFragment;
     "passIdBase()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBase(uint256)": FunctionFragment;
@@ -47,7 +51,7 @@ interface HashPunkInterface extends ethers.utils.Interface {
     "tokenURI(uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    "userToRareIds(address,uint256)": FunctionFragment;
     "voucher()": FunctionFragment;
   };
 
@@ -59,13 +63,30 @@ interface HashPunkInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(functionFragment: "base", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "baseMetadataURI",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "getUserToRareIds",
+    values: [string]
+  ): string;
   encodeFunctionData(functionFragment: "hValue", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [string, string, BigNumberish, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
+  ): string;
+  encodeFunctionData(functionFragment: "luckyEnd", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "luckyStart",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "maxSupply", values?: undefined): string;
   encodeFunctionData(
@@ -81,10 +102,6 @@ interface HashPunkInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "passId", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "passIdBase",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -123,8 +140,8 @@ interface HashPunkInterface extends ethers.utils.Interface {
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
+    functionFragment: "userToRareIds",
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "voucher", values?: undefined): string;
 
@@ -133,14 +150,25 @@ interface HashPunkInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "base", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "baseMetadataURI",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserToRareIds",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "hValue", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "luckyEnd", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "luckyStart", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "maxSupply", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
@@ -148,10 +176,6 @@ interface HashPunkInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "passId", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "passIdBase", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom",
     data: BytesLike
@@ -182,7 +206,7 @@ interface HashPunkInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "transferOwnership",
+    functionFragment: "userToRareIds",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "voucher", data: BytesLike): Result;
@@ -190,13 +214,13 @@ interface HashPunkInterface extends ethers.utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -216,9 +240,7 @@ export type ApprovalForAllEvent = TypedEvent<
   }
 >;
 
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string] & { previousOwner: string; newOwner: string }
->;
+export type InitializedEvent = TypedEvent<[number] & { version: number }>;
 
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber] & { from: string; to: string; tokenId: BigNumber }
@@ -280,18 +302,37 @@ export class HashPunk extends BaseContract {
 
     base(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    getUserToRareIds(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
+
     hValue(overrides?: CallOverrides): Promise<[string]>;
+
+    initialize(
+      _uri: string,
+      _hValue: string,
+      _base: BigNumberish,
+      _passIdBase: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    luckyEnd(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    luckyStart(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     maxSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -313,10 +354,6 @@ export class HashPunk extends BaseContract {
     passId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     passIdBase(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -380,10 +417,11 @@ export class HashPunk extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    userToRareIds(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     voucher(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
@@ -400,18 +438,37 @@ export class HashPunk extends BaseContract {
 
   base(overrides?: CallOverrides): Promise<BigNumber>;
 
+  baseMetadataURI(overrides?: CallOverrides): Promise<string>;
+
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
+  getUserToRareIds(
+    user: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
+
   hValue(overrides?: CallOverrides): Promise<string>;
+
+  initialize(
+    _uri: string,
+    _hValue: string,
+    _base: BigNumberish,
+    _passIdBase: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   isApprovedForAll(
     owner: string,
     operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  luckyEnd(overrides?: CallOverrides): Promise<BigNumber>;
+
+  luckyStart(overrides?: CallOverrides): Promise<BigNumber>;
 
   maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -430,10 +487,6 @@ export class HashPunk extends BaseContract {
   passId(overrides?: CallOverrides): Promise<BigNumber>;
 
   passIdBase(overrides?: CallOverrides): Promise<BigNumber>;
-
-  renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   "safeTransferFrom(address,address,uint256)"(
     from: string,
@@ -494,10 +547,11 @@ export class HashPunk extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  userToRareIds(
+    arg0: string,
+    arg1: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   voucher(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -514,18 +568,37 @@ export class HashPunk extends BaseContract {
 
     base(overrides?: CallOverrides): Promise<BigNumber>;
 
+    baseMetadataURI(overrides?: CallOverrides): Promise<string>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
+    getUserToRareIds(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
+
     hValue(overrides?: CallOverrides): Promise<string>;
+
+    initialize(
+      _uri: string,
+      _hValue: string,
+      _base: BigNumberish,
+      _passIdBase: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    luckyEnd(overrides?: CallOverrides): Promise<BigNumber>;
+
+    luckyStart(overrides?: CallOverrides): Promise<BigNumber>;
 
     maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -544,8 +617,6 @@ export class HashPunk extends BaseContract {
     passId(overrides?: CallOverrides): Promise<BigNumber>;
 
     passIdBase(overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -597,10 +668,11 @@ export class HashPunk extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    transferOwnership(
-      newOwner: string,
+    userToRareIds(
+      arg0: string,
+      arg1: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
     voucher(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -642,21 +714,13 @@ export class HashPunk extends BaseContract {
       { owner: string; operator: string; approved: boolean }
     >;
 
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): TypedEventFilter<
-      [string, string],
-      { previousOwner: string; newOwner: string }
-    >;
+    "Initialized(uint8)"(
+      version?: null
+    ): TypedEventFilter<[number], { version: number }>;
 
-    OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): TypedEventFilter<
-      [string, string],
-      { previousOwner: string; newOwner: string }
-    >;
+    Initialized(
+      version?: null
+    ): TypedEventFilter<[number], { version: number }>;
 
     "Transfer(address,address,uint256)"(
       from?: string | null,
@@ -690,18 +754,37 @@ export class HashPunk extends BaseContract {
 
     base(overrides?: CallOverrides): Promise<BigNumber>;
 
+    baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getUserToRareIds(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     hValue(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initialize(
+      _uri: string,
+      _hValue: string,
+      _base: BigNumberish,
+      _passIdBase: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    luckyEnd(overrides?: CallOverrides): Promise<BigNumber>;
+
+    luckyStart(overrides?: CallOverrides): Promise<BigNumber>;
 
     maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -723,10 +806,6 @@ export class HashPunk extends BaseContract {
     passId(overrides?: CallOverrides): Promise<BigNumber>;
 
     passIdBase(overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -790,9 +869,10 @@ export class HashPunk extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    userToRareIds(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     voucher(overrides?: CallOverrides): Promise<BigNumber>;
@@ -814,18 +894,37 @@ export class HashPunk extends BaseContract {
 
     base(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getUserToRareIds(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     hValue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    initialize(
+      _uri: string,
+      _hValue: string,
+      _base: BigNumberish,
+      _passIdBase: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    luckyEnd(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    luckyStart(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -847,10 +946,6 @@ export class HashPunk extends BaseContract {
     passId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     passIdBase(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: string,
@@ -914,9 +1009,10 @@ export class HashPunk extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    userToRareIds(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     voucher(overrides?: CallOverrides): Promise<PopulatedTransaction>;

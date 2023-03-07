@@ -1,4 +1,9 @@
+import { useCallback, useState } from 'react'
 import Row, { RowBetween } from 'components/Row'
+import { useSingleCallResult } from 'state/multicall/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
 import Card from 'components/Card'
@@ -10,12 +15,8 @@ import { useHVlaueContract } from 'hooks/useContract'
 // import { AbsImg } from 'pages/styled'
 
 import Person from 'assets/images/person@2x.png'
-import Vouchers from 'assets/svg/vouchers.svg'
-import { useSingleCallResult } from 'state/multicall/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { useCallback, useState } from 'react'
-import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
+import Vouchers from 'assets/svg/vouchers.png'
+import UsedVouchers from 'assets/svg/usedVouchers.png'
 
 const PersonalWrapper = styled(AutoColumn)`
   max-width: 1200px;
@@ -40,6 +41,9 @@ const HolidayCard = styled(Card)`
   border: 2px solid ${({ theme }) => theme.black};
   border-radius: 8px;
 `
+const HolidayCardGary = styled(HolidayCard)`
+  background-color: #888888;
+`
 
 const HolidayDescWrapper = styled.div`
   display: grid;
@@ -56,6 +60,15 @@ const ExchangeButton = styled(ButtonOutlined)`
   & > button {
     float: right;
   }
+  &:disabled {
+    opacity: 100%;
+    background-color: #f2f2f2;
+  }
+`
+const ExchangeButtonGary = styled(ExchangeButton)`
+  background-color: transparent;
+  color: ${({ theme }) => theme.white};
+  pointer-events: none;
 `
 
 export default function Personal() {
@@ -65,6 +78,11 @@ export default function Personal() {
   const addTransaction = useTransactionAdder()
 
   const balanceOf = useSingleCallResult(hValueContract, 'balanceOf', [account ?? undefined, 3])?.result?.[0]
+  const usedVouchersNum = useSingleCallResult(hValueContract, 'exchangeTimes', [account ?? undefined])?.result?.[0]
+
+  // const hPunkContract = useHashPunkContract()
+  // rare lists note: undefined ? No rarity : xxx.length
+  // const rareList = useSingleCallResult(hPunkContract, 'getUserToRareIds', [account ?? undefined])?.result?.[0]
 
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
     minting: boolean
@@ -83,6 +101,33 @@ export default function Personal() {
       mintErrorMessage: undefined,
     })
   }, [setModal])
+
+  // const exchangeRate = useCallback(() => {
+  //   if (!rareList?.length) return
+  //   setModal({
+  //     minting: true,
+  //     minthash,
+  //     mintErrorMessage,
+  //   })
+  //   hValueContract
+  //     ?.exchangeHValue(random(rareList))
+  //     .then((res) => {
+  //       addTransaction(res)
+  //       // res.wait().finally(() => setProcessing(false))
+  //       setModal({
+  //         minting: true,
+  //         minthash: res.hash,
+  //         mintErrorMessage,
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       setModal({
+  //         minting: true,
+  //         minthash,
+  //         mintErrorMessage: err.message,
+  //       })
+  //     })
+  // }, [addTransaction, minthash, mintErrorMessage, hValueContract])
 
   const exchangeHoliday = useCallback(() => {
     setModal({
@@ -110,12 +155,11 @@ export default function Personal() {
       })
   }, [addTransaction, minthash, mintErrorMessage, hValueContract])
 
-  return (
+  return account ? (
     <PersonalWrapper gap="54px">
       <TransactionSubmissionModal
         isOpen={minting}
         hash={minthash}
-        toLink="/personal"
         onDismiss={handleDismissSubmissionModal}
         errorMessage={mintErrorMessage}
       />
@@ -137,11 +181,35 @@ export default function Personal() {
             Note:
             <br />5 H value holiday coupons can be exchanged for one day of holiday
           </TYPE.body>
-          <Row justify="end">
-            <ExchangeButton onClick={exchangeHoliday}>Exchange</ExchangeButton>
-          </Row>
+          {balanceOf && Number(balanceOf) > 0 ? (
+            <Row justify="end">
+              <ExchangeButton onClick={exchangeHoliday}>Exchange</ExchangeButton>
+            </Row>
+          ) : (
+            <Row justify="end">
+              <ExchangeButton disabled>Exchange</ExchangeButton>
+            </Row>
+          )}
         </HolidayDescWrapper>
       </HolidayCard>
+      <HolidayCardGary>
+        <HolidayDescWrapper>
+          <img src={UsedVouchers} alt="Roll" height="130" />
+          <Row justify={'center'}>
+            <TYPE.largeHeader color={'white'} fontSize={48}>
+              x {''} {usedVouchersNum ? Number(usedVouchersNum) : 0}
+            </TYPE.largeHeader>
+          </Row>
+
+          <TYPE.body color={'white'}>
+            Note:
+            <br />5 H value holiday coupons can be exchanged for one day of holiday
+          </TYPE.body>
+          <Row justify="end">
+            <ExchangeButtonGary>Used</ExchangeButtonGary>
+          </Row>
+        </HolidayDescWrapper>
+      </HolidayCardGary>
     </PersonalWrapper>
-  )
+  ) : null
 }

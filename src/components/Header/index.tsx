@@ -247,6 +247,11 @@ export default function Header() {
         <StyledNavLink id={`lottery-nav-link`} to={'/lottery'}>
           Lottery
         </StyledNavLink>
+        {account && (
+          <StyledNavLink id={`personal-nav-link`} to={'/personal'}>
+            Benefit
+          </StyledNavLink>
+        )}
       </HeaderLinks>
       <HeaderControls>
         <NetworkCard />

@@ -1,30 +1,26 @@
-import { ReactNode, useContext } from 'react'
-import { ThemeContext } from 'styled-components/macro'
+import { ReactNode } from 'react'
 import { Text } from 'rebass'
-import { ExternalLink, TYPE } from 'theme'
+import { TYPE } from 'theme'
 import { ButtonPrimary } from 'components/Button'
 import { AutoColumn } from 'components/Column'
 import Modal from 'components/Modal'
 import { LoadingView, SubmittedView } from 'components/ModalViews'
-import { Link } from 'react-router-dom'
 import { Trans } from '@lingui/macro'
 import { TransactionErrorContent } from 'components/TransactionConfirmationModal'
-import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 
 const TransactionSubmissionModal = ({
+  onDismiss,
   isOpen,
   hash,
-  toLink,
   errorMessage,
-  onDismiss,
+  inline,
 }: {
+  onDismiss: () => void
   isOpen: boolean
   hash: string | undefined
-  toLink?: string
+  inline?: boolean // not in modal
   errorMessage?: ReactNode | undefined
-  onDismiss: () => void
 }) => {
-  const theme = useContext(ThemeContext)
   return (
     <Modal isOpen={isOpen} onDismiss={onDismiss}>
       {!hash ? (
@@ -45,16 +41,9 @@ const TransactionSubmissionModal = ({
             <Text fontWeight={500} fontSize={20} textAlign="center">
               <Trans>Transaction Submitted</Trans>
             </Text>
-            {hash && (
-              <ExternalLink href={getExplorerLink(1, hash, ExplorerDataType.TRANSACTION)}>
-                <Text fontWeight={500} fontSize={14} color={theme.primary1}>
-                  <Trans>View on Etherscan</Trans>
-                </Text>
-              </ExternalLink>
-            )}
-            <ButtonPrimary as={Link} to={toLink ?? '/'} onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
+            <ButtonPrimary onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
               <Text fontWeight={500} fontSize={20}>
-                <Trans>Return</Trans>
+                {inline ? <Trans>Return</Trans> : <Trans>Close</Trans>}
               </Text>
             </ButtonPrimary>
           </AutoColumn>

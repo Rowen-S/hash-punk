@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, Moon, Sun, Twitter, Check, User } from 'react-feather'
-//Code, , PieChart,
+import { ChevronLeft, Moon, Sun, Check, User } from 'react-feather'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components/macro'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
@@ -9,12 +8,13 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleModal } from '../../state/application/hooks'
 import { Trans } from '@lingui/macro'
-import { ExternalLink } from '../../theme'
+// import { ExternalLink } from '../../theme'
 
 import { LOCALE_LABEL, SupportedLocale, SUPPORTED_LOCALES } from 'constants/locales'
 import { useLocationLinkProps } from 'hooks/useLocationLinkProps'
 import { useActiveLocale } from 'hooks/useActiveLocale'
 import { useDarkModeManager } from 'state/user/hooks'
+import { useWeb3React } from '@web3-react/core'
 
 export enum FlyoutAlignment {
   LEFT = 'LEFT',
@@ -97,20 +97,20 @@ const MenuFlyout = styled.span<{ flyoutAlignment?: FlyoutAlignment }>`
   `};
 `
 
-const MenuItem = styled(ExternalLink)`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  padding: 0.5rem 0.5rem;
-  justify-content: space-between;
-  color: ${({ theme }) => theme.text2};
-  :hover {
-    color: ${({ theme }) => theme.text1};
-    cursor: pointer;
-    text-decoration: none;
-  }
-`
+// const MenuItem = styled(ExternalLink)`
+//   display: flex;
+//   flex: 1;
+//   flex-direction: row;
+//   align-items: center;
+//   padding: 0.5rem 0.5rem;
+//   justify-content: space-between;
+//   color: ${({ theme }) => theme.text2};
+//   :hover {
+//     color: ${({ theme }) => theme.text1};
+//     cursor: pointer;
+//     text-decoration: none;
+//   }
+// `
 
 const InternalMenuItem = styled(Link)`
   flex: 1;
@@ -190,6 +190,7 @@ function LanguageMenu({ close }: { close: () => void }) {
 }
 
 export default function Menu() {
+  const { chainId } = useWeb3React()
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.MENU)
   const toggle = useToggleModal(ApplicationModal.MENU)
@@ -217,19 +218,21 @@ export default function Menu() {
             default:
               return (
                 <MenuFlyout>
-                  <InternalLinkMenuItem to="/personal">
-                    <div>
-                      <Trans>Personal</Trans>
-                    </div>
-                    <User opacity={0.6} size={16} />
-                  </InternalLinkMenuItem>
-                  <MenuItem href="https://twitter.com/">
+                  {chainId && (
+                    <InternalLinkMenuItem to="/personal">
+                      <div>
+                        <Trans>Personal</Trans>
+                      </div>
+                      <User opacity={0.6} size={16} />
+                    </InternalLinkMenuItem>
+                  )}
+                  {/* <MenuItem href="https://twitter.com/">
                     <div>
                       <Trans>Twitter</Trans>
                     </div>
                     <Twitter opacity={0.6} size={16} />
-                  </MenuItem>
-                  {/* <ToggleMenuItem onClick={() => setMenu('lang')}>
+                  </MenuItem> 
+                   <ToggleMenuItem onClick={() => setMenu('lang')}>
                     <div>
                       <Trans>Language</Trans>
                     </div>

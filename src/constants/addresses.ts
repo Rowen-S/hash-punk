@@ -14,11 +14,11 @@ export const ENS_REGISTRAR_ADDRESSES: AddressMap = {
 }
 
 export const PUNK_ADDRESS: AddressMap = {
-  ...constructSameAddressMap('0x26a6517C13400c6a41129b8D080A7C8966F2fE0f'),
-  [SupportedChainId.GOERLI]: '0x26a6517C13400c6a41129b8D080A7C8966F2fE0f',
+  ...constructSameAddressMap('0x3CB49528D7f141a329f0e259B5f6AE35f6cA70b7'),
+  [SupportedChainId.GOERLI]: '0x3CB49528D7f141a329f0e259B5f6AE35f6cA70b7',
 }
 
 export const H_VALUW_ADDRESS: AddressMap = {
-  ...constructSameAddressMap('0xC24fB47e9045f1bE47a2E65af0bcE270F8699cEc'),
-  [SupportedChainId.GOERLI]: '0xC24fB47e9045f1bE47a2E65af0bcE270F8699cEc',
+  ...constructSameAddressMap('0x49ACD631FB3BA458f43081D88F9A200db17244f5'),
+  [SupportedChainId.GOERLI]: '0x49ACD631FB3BA458f43081D88F9A200db17244f5',
 }
