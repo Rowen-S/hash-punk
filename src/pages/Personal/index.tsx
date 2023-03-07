@@ -12,6 +12,7 @@ import Rare from './Rare'
 import { useState } from 'react'
 
 const PersonalWrapper = styled(AutoColumn)`
+  position: relative;
   max-width: 1200px;
   padding: 120px 0px 0px 16px;
   width: 100%;
