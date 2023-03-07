@@ -119,8 +119,8 @@ export default function Rare() {
             </Row>
 
             <TYPE.body color={'white'}>
-              Note:
-              <br />5 H value holiday coupons can be exchanged for one day of holiday
+              注:
+              <br /> 持有1张稀有NFT可兑换70H值
             </TYPE.body>
             {rareList && rareList?.length > 0 ? (
               <Row justify="end">

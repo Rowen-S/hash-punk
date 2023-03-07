@@ -95,6 +95,7 @@ const RareActiveBtn = styled(ButtonOutlined)`
   border: none;
   background: linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%);
   border-radius: 4px;
+  color: #fff;
   &:hover,
   &:active {
     box-shadow: none;
