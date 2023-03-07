@@ -3,6 +3,14 @@ import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 
+// returns the range random values
+export function random(arr: Array<any>) {
+  if (!arr) {
+    throw Error(`Invalid 'array' parameter `)
+  }
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
   try {

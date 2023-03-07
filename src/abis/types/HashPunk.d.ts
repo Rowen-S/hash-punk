@@ -27,6 +27,7 @@ interface HashPunkInterface extends ethers.utils.Interface {
     "base()": FunctionFragment;
     "baseMetadataURI()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
+    "getUserToRareIds(address)": FunctionFragment;
     "hValue()": FunctionFragment;
     "initialize(string,address,uint256,uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
@@ -68,6 +69,10 @@ interface HashPunkInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getUserToRareIds",
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "hValue", values?: undefined): string;
   encodeFunctionData(
@@ -150,6 +155,10 @@ interface HashPunkInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserToRareIds",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "hValue", data: BytesLike): Result;
@@ -300,6 +309,11 @@ export class HashPunk extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    getUserToRareIds(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
+
     hValue(overrides?: CallOverrides): Promise<[string]>;
 
     initialize(
@@ -431,6 +445,11 @@ export class HashPunk extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  getUserToRareIds(
+    user: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
+
   hValue(overrides?: CallOverrides): Promise<string>;
 
   initialize(
@@ -555,6 +574,11 @@ export class HashPunk extends BaseContract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    getUserToRareIds(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     hValue(overrides?: CallOverrides): Promise<string>;
 
@@ -737,6 +761,11 @@ export class HashPunk extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getUserToRareIds(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     hValue(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
@@ -869,6 +898,11 @@ export class HashPunk extends BaseContract {
 
     getApproved(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUserToRareIds(
+      user: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

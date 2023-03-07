@@ -5,7 +5,7 @@ import { useActiveWeb3React } from './web3'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
 import { abi as PUNK_MINT_ABI } from 'abis/HashPunk.json'
-import { abi as H_VALUE_ABI } from 'abis/hValue.json'
+import { abi as H_VALUE_ABI } from 'abis/HValue.json'
 import MulticallABI from 'abis/UniswapInterfaceMulticall.json'
 
 import { MULTICALL_ADDRESS, ENS_REGISTRAR_ADDRESSES, PUNK_ADDRESS, H_VALUW_ADDRESS } from 'constants/addresses'

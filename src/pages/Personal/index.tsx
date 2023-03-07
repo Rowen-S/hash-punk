@@ -1,4 +1,9 @@
+import { useCallback, useState } from 'react'
 import Row, { RowBetween } from 'components/Row'
+import { useSingleCallResult } from 'state/multicall/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
 import Card from 'components/Card'
@@ -12,11 +17,6 @@ import { useHVlaueContract } from 'hooks/useContract'
 import Person from 'assets/images/person@2x.png'
 import Vouchers from 'assets/svg/vouchers.png'
 import UsedVouchers from 'assets/svg/usedVouchers.png'
-import { useSingleCallResult } from 'state/multicall/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { useCallback, useState } from 'react'
-import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
 
 const PersonalWrapper = styled(AutoColumn)`
   max-width: 1200px;
@@ -79,6 +79,11 @@ export default function Personal() {
 
   const balanceOf = useSingleCallResult(hValueContract, 'balanceOf', [account ?? undefined, 3])?.result?.[0]
   const usedVouchersNum = useSingleCallResult(hValueContract, 'exchangeTimes', [account ?? undefined])?.result?.[0]
+
+  // const hPunkContract = useHashPunkContract()
+  // rare lists note: undefined ? No rarity : xxx.length
+  // const rareList = useSingleCallResult(hPunkContract, 'getUserToRareIds', [account ?? undefined])?.result?.[0]
+
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
     minting: boolean
     minthash: string | undefined
@@ -96,6 +101,33 @@ export default function Personal() {
       mintErrorMessage: undefined,
     })
   }, [setModal])
+
+  // const exchangeRate = useCallback(() => {
+  //   if (!rareList?.length) return
+  //   setModal({
+  //     minting: true,
+  //     minthash,
+  //     mintErrorMessage,
+  //   })
+  //   hValueContract
+  //     ?.exchangeHValue(random(rareList))
+  //     .then((res) => {
+  //       addTransaction(res)
+  //       // res.wait().finally(() => setProcessing(false))
+  //       setModal({
+  //         minting: true,
+  //         minthash: res.hash,
+  //         mintErrorMessage,
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       setModal({
+  //         minting: true,
+  //         minthash,
+  //         mintErrorMessage: err.message,
+  //       })
+  //     })
+  // }, [addTransaction, minthash, mintErrorMessage, hValueContract])
 
   const exchangeHoliday = useCallback(() => {
     setModal({
