@@ -2,8 +2,12 @@ import { Text } from 'rebass'
 import Card from 'components/Card'
 import Row from 'components/Row'
 import styled from 'styled-components/macro'
-import Nft01 from 'assets/preview/001.png'
 import NoneImg from 'assets/images/noneImg.png'
+import { useHashPunkContract } from 'hooks/useContract'
+import { useSingleCallResult, useSingleContractMultipleData } from 'state/multicall/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useMemo } from 'react'
+import { TokenImg } from 'components/TokenInterface'
 
 const VerticalRow = styled(Row)`
   flex-flow: row wrap;
@@ -17,13 +21,6 @@ const VerticalCard = styled(Card)`
   padding-left: 8px;
   padding-right: 8px;
 `
-const MineImg = styled.img`
-  width: 100%;
-  height: auto;
-  border-radius: 24px;
-  border: 2px solid #000000;
-  margin-bottom: 16px;
-`
 const TextToken = styled(Text)`
   width: 100%;
   text-align: center;
@@ -33,43 +30,64 @@ const Nothing = styled.img`
   margin: auto;
 `
 export default function Mine() {
+  const { account } = useActiveWeb3React()
+  const hPunkContract = useHashPunkContract()
+
+  const maxSupply = useSingleCallResult(hPunkContract, 'maxSupply')?.result?.[0]
+
+  const callOwner = useSingleContractMultipleData(
+    hPunkContract,
+    'ownerOf',
+    [...new Array(Number(maxSupply ?? 0)).keys()].map((index) => [index])
+  )
+
+  const isError = useMemo(() => callOwner.some(({ error }) => error), [callOwner])
+  const isLoading = useMemo(() => callOwner.some(({ loading }) => loading), [callOwner])
+  const IsSyncing = useMemo(() => callOwner.some(({ syncing }) => syncing), [callOwner])
+  const isValid = useMemo(() => callOwner.some(({ valid }) => valid), [callOwner])
+
+  console.log(isError, isLoading, IsSyncing, isValid)
+
+  // const myNFTData = useMemo(
+  //   () =>
+  //     callOwner
+  //       .map(({ result }) => result?.[0])
+  //       .reduce(
+  //         (accumulator, current, index) => [
+  //           ...accumulator,
+  //           ...(current?.map((onwerData: any) => {
+  //             console.log('onwerData:', onwerData)
+  //             return {
+  //               tokenId: index,
+  //             }
+  //           }) ?? []),
+  //         ],
+  //         []
+  //       ),
+  //   [callOwner]
+  // )
+
+  const callOwnerData = useMemo(
+    () => callOwner.map(({ result }, index) => (result?.[0] === account ? index : 0)).filter((x) => x),
+    [callOwner, account]
+  )
+
+  if (isLoading) return <>Loading...</>
+
   return (
     <>
-      <Nothing src={NoneImg} />
-      <VerticalRow>
-        <VerticalCard>
-          <MineImg src={Nft01} />
-          <TextToken color={'#3300FF'}>#0012</TextToken>
-        </VerticalCard>
-        <VerticalCard>
-          <MineImg src={Nft01} />
-          <TextToken>#0013</TextToken>
-        </VerticalCard>
-        <VerticalCard>
-          <MineImg src={Nft01} />
-          <TextToken>#0013</TextToken>
-        </VerticalCard>
-        <VerticalCard>
-          <MineImg src={Nft01} />
-          <TextToken>#0013</TextToken>
-        </VerticalCard>
-        <VerticalCard>
-          <MineImg src={Nft01} />
-          <TextToken>#0013</TextToken>
-        </VerticalCard>
-        <VerticalCard>
-          <MineImg src={Nft01} />
-          <TextToken>#0013</TextToken>
-        </VerticalCard>
-        <VerticalCard>
-          <MineImg src={Nft01} />
-          <TextToken>#0013</TextToken>
-        </VerticalCard>
-        <VerticalCard>
-          <MineImg src={Nft01} />
-          <TextToken>#0013</TextToken>
-        </VerticalCard>
-      </VerticalRow>
+      {isValid && callOwnerData.length > 0 ? (
+        <VerticalRow>
+          {callOwnerData.map((t) => (
+            <VerticalCard key={t}>
+              <TokenImg tokenId={t} />
+              <TextToken color={'#3300FF'}>#{t}</TextToken>
+            </VerticalCard>
+          ))}
+        </VerticalRow>
+      ) : (
+        <Nothing src={NoneImg} />
+      )}
     </>
   )
 }
