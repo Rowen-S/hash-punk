@@ -75,6 +75,7 @@ const RareText = styled(ButtonOutlined)`
   border-radius: 4px;
   &:hover,
   &:active {
+    color: #fff;
     box-shadow: none;
     border: none;
     background: linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%);

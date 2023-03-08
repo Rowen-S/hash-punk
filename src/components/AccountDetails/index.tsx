@@ -8,7 +8,7 @@ import Copy from './Copy'
 import { ReactComponent as Close } from '../../assets/images/x.svg'
 
 import { injected, walletconnect, walletlink } from '../../connectors'
-import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
+import WalletConnectIcon from '../../assets/images/walletConnectIcon.png'
 
 import Identicon from '../Identicon'
 import { ButtonSecondary } from '../Button'
