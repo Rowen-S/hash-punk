@@ -190,6 +190,26 @@ export const ButtonYellow2 = styled(Base)`
     cursor: auto;
   }
 `
+export const ButtonBlue = styled(Base)`
+  background-color: ${({ theme }) => theme.blue4};
+  color: white;
+  &:focus {
+    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.05, theme.blue4)};
+    background-color: ${({ theme }) => darken(0.05, theme.blue4)};
+  }
+  &:hover {
+    background-color: ${({ theme }) => darken(0.05, theme.blue4)};
+  }
+  &:active {
+    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.1, theme.blue4)};
+    background-color: ${({ theme }) => darken(0.1, theme.blue4)};
+  }
+  &:disabled {
+    background-color: #999;
+    // opacity: 50%;
+    cursor: auto;
+  }
+`
 
 export const ButtonRed = styled(Base)`
   background-color: ${({ theme }) => theme.red3};

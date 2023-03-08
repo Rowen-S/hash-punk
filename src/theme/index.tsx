@@ -86,6 +86,7 @@ function colors(darkMode: boolean): Colors {
     blue1: '#2172E5',
     blue2: '#5199FF',
     blue3: '#2E03F3',
+    blue4: '#3300FF',
 
     error: '#FD4040',
     success: '#27AE60',
