@@ -8,6 +8,7 @@ import { useSingleCallResult, useSingleContractMultipleData } from 'state/multic
 import { useActiveWeb3React } from 'hooks/web3'
 import { useMemo } from 'react'
 import { TokenImg } from 'components/TokenInterface'
+import Loader from 'components/Loader'
 
 const VerticalRow = styled(Row)`
   flex-flow: row wrap;
@@ -72,7 +73,7 @@ export default function Mine() {
     [callOwner, account]
   )
 
-  if (isLoading) return <>Loading...</>
+  if (isLoading) return <Loader />
 
   return (
     <>
