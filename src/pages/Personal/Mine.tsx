@@ -69,18 +69,20 @@ export default function Mine() {
 
   return (
     <>
-      {isValid && callOwnerData.length > 0 ? (
-        <VerticalRow>
-          {callOwnerData.map((t) => (
-            <VerticalCard key={t}>
-              <TokenImg tokenId={t} />
-              <TextToken color={'#3300FF'}>#{t}</TextToken>
-            </VerticalCard>
-          ))}
-        </VerticalRow>
-      ) : (
-        <Nothing src={NoneImg} />
-      )}
+      {isValid ? (
+        callOwnerData.length > 0 ? (
+          <VerticalRow>
+            {callOwnerData.map((t) => (
+              <VerticalCard key={t}>
+                <TokenImg tokenId={t} />
+                <TextToken color={'#3300FF'}>#{t}</TextToken>
+              </VerticalCard>
+            ))}
+          </VerticalRow>
+        ) : (
+          <Nothing src={NoneImg} />
+        )
+      ) : null}
     </>
   )
 }

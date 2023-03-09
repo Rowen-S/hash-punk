@@ -108,6 +108,12 @@ export default function Rare() {
   const hPunkContract = useHashPunkContract()
   // rare lists note: undefined ? No rarity : xxx.length
   const rareList = useSingleCallResult(hPunkContract, 'getUserToRareIds', [account ?? undefined])?.result?.[0]
+
+  console.log(
+    'rareList',
+    rareList?.map((x: { toNumber: () => any }) => x.toNumber())
+  )
+
   const [open, setOpen] = useState<boolean>(false)
   const [tokenId, setToken] = useState<number>()
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{

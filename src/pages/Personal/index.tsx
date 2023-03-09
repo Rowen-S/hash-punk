@@ -9,7 +9,7 @@ import Person from 'assets/images/person@2x.png'
 import Holiday from './Holiday'
 import Mine from './Mine'
 import Rare from './Rare'
-import { useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 
 const PersonalWrapper = styled(AutoColumn)`
   position: relative;
@@ -28,122 +28,94 @@ const BenefitImg = styled.img`
   height: 192px;
   right: 46px;
 `
+
 const ButtonBox = styled(Box)`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  column-gap: 12px;
   position: absolute;
   left: 0;
   bottom: 30px;
 `
-const BlueBox = styled.div`
-  margin-right: 12px;
-`
-const BlueBtn = styled(ButtonOutlined)`
-  padding: 5px 30px;
+
+const RareButtonOutlined = styled(ButtonOutlined)<{ showActivity: boolean }>`
+  width: 125px;
+  color: ${({ theme, showActivity }) => (showActivity ? theme.white : theme.black)};
+  background: ${({ showActivity }) =>
+    showActivity ? 'linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%)' : 'unset'};
+  border: ${({ showActivity }) => showActivity && 'none'};
   border-radius: 4px;
+  padding: 4px;
   &:hover,
   &:active {
-    color: #fff;
+    color: ${({ theme }) => theme.white};
+    box-shadow: none;
+    border: none;
+    background: linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%);
+  }
+`
+const GeneralButtonOutlined = styled(RareButtonOutlined)`
+  background: ${({ showActivity }) => showActivity && '#2e03f3'};
+  &:hover,
+  &:active {
     border: 1px solid #2e03f3;
     background: #2e03f3;
     box-shadow: 0px 1px 4px 0px rgba(46, 3, 243, 0.3), 0px 2px 4px 0px rgba(46, 3, 243, 0.15);
   }
 `
-const BlueActive = styled(ButtonOutlined)`
-  padding: 5px 30px;
-  border-radius: 4px;
-  color: #fff;
-  border: 1px solid #2e03f3;
-  background: #2e03f3;
-  box-shadow: 0px 1px 4px 0px rgba(46, 3, 243, 0.3), 0px 2px 4px 0px rgba(46, 3, 243, 0.15);
-`
-const RareBtn = styled.div`
-  border: 1px solid #ced0d9;
-  border-radius: 4px;
-  padding: 1px;
-  &:hover,
-  &:active {
-    border-color: transparent;
-    box-shadow: 0px 1px 4px 0px rgba(255, 87, 164, 0.2), 0px 2px 4px 0px rgba(255, 98, 162, 0.4);
-    border-radius: 4px;
-    background: linear-gradient(180deg, rgba(255, 38, 179, 1) 0%, rgba(255, 179, 139, 1) 100%);
-  }
-`
-const RareText = styled(ButtonOutlined)`
-  display: block;
-  padding: 4px 29px;
-  border: none;
-  border-radius: 4px;
-  &:hover,
-  &:active {
-    color: #fff;
-    box-shadow: none;
-    border: none;
-    background: linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%);
-    border-radius: 4px;
-  }
-`
-const RareActive = styled.div`
-  padding: 1px;
-  border-color: transparent;
-  box-shadow: 0px 1px 4px 0px rgba(255, 87, 164, 0.2), 0px 2px 4px 0px rgba(255, 98, 162, 0.4);
-  border-radius: 4px;
-  background: linear-gradient(180deg, rgba(255, 38, 179, 1) 0%, rgba(255, 179, 139, 1) 100%);
-`
-const RareActiveBtn = styled(ButtonOutlined)`
-  padding: 5px 30px;
-  border-radius: 4px;
-  box-shadow: none;
-  border: none;
-  background: linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%);
-  border-radius: 4px;
-  color: #fff;
-  &:hover,
-  &:active {
-    box-shadow: none;
-    border: none;
-  }
-`
 
 export default function Personal() {
-  const [type, setType] = useState<number>(1)
-  const handleChange = (v: number) => {
-    setType(v)
-  }
+  const { pathname } = useLocation()
+  const isRareToggled = pathname.includes('/rare')
+  const isHolidayToggled = pathname.includes('/holiday')
+
   return (
     <PersonalWrapper gap="54px">
       <BenefitCenter>
         <TYPE.largeHeader>Benefit Center</TYPE.largeHeader>
         <BenefitImg src={Person} />
-        {/* <AbsImg src={Person} width="408px" height="192px" right="46px" /> */}
-        <ButtonBox>
-          {type === 1 ? (
-            <BlueBox>
-              <BlueActive>我的HashPunk</BlueActive>
-            </BlueBox>
-          ) : (
-            <BlueBox>
-              <BlueBtn onClick={() => handleChange(1)}>我的HashPunk</BlueBtn>
-            </BlueBox>
-          )}
-          <BlueBox>
-            {type === 2 ? (
-              <BlueActive>假期兑换</BlueActive>
-            ) : (
-              <BlueBtn onClick={() => handleChange(2)}>假期兑换</BlueBtn>
-            )}
-          </BlueBox>
-          {type === 3 ? (
-            <RareActive>
-              <RareActiveBtn>稀有兑换</RareActiveBtn>
-            </RareActive>
-          ) : (
-            <RareBtn>
-              <RareText onClick={() => handleChange(3)}>稀有兑换</RareText>
-            </RareBtn>
-          )}
-        </ButtonBox>
+        <ActivitySwitcher
+          showActivity={{
+            isRareToggled,
+            isHolidayToggled,
+          }}
+        />
       </BenefitCenter>
-      {type === 1 ? <Mine /> : type === 2 ? <Holiday /> : type === 3 ? <Rare /> : null}
+      {isRareToggled ? <Rare /> : isHolidayToggled ? <Holiday /> : <Mine />}
     </PersonalWrapper>
+  )
+}
+
+const ActivitySwitcher = ({
+  showActivity,
+}: {
+  showActivity: {
+    isRareToggled: boolean
+    isHolidayToggled: boolean
+  }
+}) => {
+  const history = useHistory()
+
+  return (
+    <ButtonBox>
+      <GeneralButtonOutlined
+        onClick={() => (showActivity.isHolidayToggled || showActivity.isRareToggled) && history.push('/personal')}
+        showActivity={!showActivity.isHolidayToggled && !showActivity.isRareToggled}
+      >
+        我的Punk
+      </GeneralButtonOutlined>
+      <GeneralButtonOutlined
+        onClick={() => !showActivity.isHolidayToggled && history.push('/personal/holiday')}
+        showActivity={showActivity.isHolidayToggled}
+      >
+        假期兑换
+      </GeneralButtonOutlined>
+      <RareButtonOutlined
+        onClick={() => !showActivity.isRareToggled && history.push('/personal/rare')}
+        showActivity={showActivity.isRareToggled}
+      >
+        稀有兑换
+      </RareButtonOutlined>
+    </ButtonBox>
   )
 }
