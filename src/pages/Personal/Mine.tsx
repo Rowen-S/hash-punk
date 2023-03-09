@@ -49,31 +49,10 @@ export default function Mine() {
     [...new Array(Number(maxSupply ?? 0)).keys()].map((index) => [index])
   )
 
-  const isError = useMemo(() => callOwner.some(({ error }) => error), [callOwner])
+  // const isError = useMemo(() => callOwner.some(({ error }) => error), [callOwner])
   const isLoading = useMemo(() => callOwner.some(({ loading }) => loading), [callOwner])
-  const IsSyncing = useMemo(() => callOwner.some(({ syncing }) => syncing), [callOwner])
+  // const IsSyncing = useMemo(() => callOwner.some(({ syncing }) => syncing), [callOwner])
   const isValid = useMemo(() => callOwner.some(({ valid }) => valid), [callOwner])
-
-  console.log(isError, isLoading, IsSyncing, isValid)
-
-  // const myNFTData = useMemo(
-  //   () =>
-  //     callOwner
-  //       .map(({ result }) => result?.[0])
-  //       .reduce(
-  //         (accumulator, current, index) => [
-  //           ...accumulator,
-  //           ...(current?.map((onwerData: any) => {
-  //             console.log('onwerData:', onwerData)
-  //             return {
-  //               tokenId: index,
-  //             }
-  //           }) ?? []),
-  //         ],
-  //         []
-  //       ),
-  //   [callOwner]
-  // )
 
   const callOwnerData = useMemo(
     () => callOwner.map(({ result }, index) => (result?.[0] === account ? index : 0)).filter((x) => x),
