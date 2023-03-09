@@ -30,12 +30,45 @@ const HomeWrapper = styled(AutoColumn)`
   overflow-y: auto; */
 `
 const BannerWrapper = styled(ColumnCenter)`
-  background-color: #3300ff;
+  // background-color: #3300ff;
   background-image: url(${FirstScreen});
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position-y: 18vh;
   height: 100vh;
+  position: relative;
+`
+const BannerDiv = styled.div`
+  background-color: #3300ff;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  // animation: run 5s infinite;
+  animation: run 5s;
+  z-index: -1;
+  @keyframes run {
+    0% {
+      width: 100px;
+      right: 0;
+    }
+    40% {
+      right: 100%;
+    }
+    41% {
+      right: 0;
+      width: 100px;
+    }
+    60% {
+      right: 0;
+      width: 100%;
+    }
+    100% {
+      right: 0;
+      width: 100%;
+    }
+  }
 `
 
 const HomeAbout = styled.div`
@@ -61,7 +94,9 @@ const SwiperWrapper = styled(AutoColumn)`
 export default function Home() {
   return (
     <HomeWrapper>
-      <BannerWrapper></BannerWrapper>
+      <BannerWrapper>
+        <BannerDiv />
+      </BannerWrapper>
       <HomeAbout>
         {/* <AbsImg src={GlobalBg} width="100%" height="80%" bottom="0" zIndex={0} /> */}
 

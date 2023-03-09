@@ -17,7 +17,7 @@ import { CertificateCard } from 'components/Certificate'
 import { random } from 'utils'
 // import ExchangeRare from 'components/ExchangeRare'
 import Modal from 'components/Modal'
-import Nft01 from 'assets/preview/001.png'
+import { TokenImg } from 'components/TokenInterface'
 
 const RareCardBorder = styled.div`
   background: linear-gradient(180deg, rgba(255, 38, 179, 1) 0%, rgba(255, 179, 139, 1) 100%);
@@ -66,6 +66,10 @@ const RareBox = styled.div`
   justify-content: center;
   height: 72px;
 `
+const TokenImgBox = styled.div`
+  height: 76px;
+  width: 76px;
+`
 const TokenText = styled(Text)`
   color: #3500fe;
   margin: 0 16px !important;
@@ -94,7 +98,6 @@ const ActiveCircle = styled(Circle)`
   background-color: #3500fe;
   border-color: #3500fe;
 `
-
 const ResponsiveCheck = styled(Check)`
   size: 13px;
 `
@@ -107,7 +110,7 @@ export default function Rare() {
   // rare lists note: undefined ? No rarity : xxx.length
   const rareList = useSingleCallResult(hPunkContract, 'getUserToRareIds', [account ?? undefined])?.result?.[0]
   const [open, setOpen] = useState<boolean>(false)
-  const [tokenId, setToken] = useState<string>()
+  const [tokenId, setToken] = useState<number>()
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
     minting: boolean
     minthash: string | undefined
@@ -138,7 +141,7 @@ export default function Rare() {
       mintErrorMessage,
     })
     hValueContract
-      ?.exchangeHValue(random(rareList))
+      ?.exchangeHValue(tokenId)
       .then((res) => {
         addTransaction(res)
         // res.wait().finally(() => setProcessing(false))
@@ -198,34 +201,28 @@ export default function Rare() {
             <TYPE.subHeader>请选择要移除的NFT</TYPE.subHeader>
             <CloseIcon onClick={handleOnClose} />
           </RowMargin>
-          <RowMargin onClick={() => setToken('#0012')}>
-            <RareBox>
-              <img src={Nft01} height="72" />
-              <TokenText>#0012</TokenText>
-              <RareTag>稀有</RareTag>
-            </RareBox>
-            {tokenId === '#0012' ? (
-              <ActiveCircle>
-                <ResponsiveCheck size={13} stroke={'white'} />
-              </ActiveCircle>
-            ) : (
-              <Circle></Circle>
-            )}
-          </RowMargin>
-          <RowMargin onClick={() => setToken('#0013')}>
-            <RareBox>
-              <img src={Nft01} height="72" />
-              <TokenText>#0013</TokenText>
-              <RareTag>稀有</RareTag>
-            </RareBox>
-            {tokenId === '#0013' ? (
-              <ActiveCircle>
-                <ResponsiveCheck size={13} stroke={'white'} />
-              </ActiveCircle>
-            ) : (
-              <Circle></Circle>
-            )}
-          </RowMargin>
+          {rareList && rareList?.length > 0 ? (
+            <>
+              {rareList.map((item: number) => (
+                <RowMargin key={item} onClick={() => setToken(item)}>
+                  <RareBox>
+                    <TokenImgBox>
+                      <TokenImg tokenId={item} />
+                    </TokenImgBox>
+                    <TokenText>#{item}</TokenText>
+                    <RareTag>稀有</RareTag>
+                  </RareBox>
+                  {tokenId === item ? (
+                    <ActiveCircle>
+                      <ResponsiveCheck size={13} stroke={'white'} />
+                    </ActiveCircle>
+                  ) : (
+                    <Circle></Circle>
+                  )}
+                </RowMargin>
+              ))}
+            </>
+          ) : null}
           <ButtonBlue disabled={!tokenId} onClick={exchangeRare} style={{ margin: '20px 0 0 0' }}>
             <Text fontWeight={500} fontSize={20}>
               <Trans>立即兑换</Trans>

@@ -8,7 +8,8 @@ import { useSingleCallResult, useSingleContractMultipleData } from 'state/multic
 import { useActiveWeb3React } from 'hooks/web3'
 import { useMemo } from 'react'
 import { TokenImg } from 'components/TokenInterface'
-import Loader from 'components/Loader'
+import { CustomLightSpinner } from 'theme'
+import Circle from '../../assets/images/blue-loader.svg'
 
 const VerticalRow = styled(Row)`
   flex-flow: row wrap;
@@ -28,6 +29,12 @@ const TextToken = styled(Text)`
 `
 const Nothing = styled.img`
   display: block;
+  margin: auto;
+`
+const DataLoader = styled.div`
+  display: block;
+  width: 90px;
+  height: 90px;
   margin: auto;
 `
 export default function Mine() {
@@ -73,7 +80,13 @@ export default function Mine() {
     [callOwner, account]
   )
 
-  if (isLoading) return <Loader />
+  if (isLoading) {
+    return (
+      <DataLoader>
+        <CustomLightSpinner src={Circle} alt="loader" size={'90px'} />
+      </DataLoader>
+    )
+  }
 
   return (
     <>

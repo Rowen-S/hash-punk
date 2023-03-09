@@ -117,7 +117,7 @@ export default function Holiday() {
           </Row>
 
           <TYPE.body color={'white'}>
-            一张券兑换一天假期
+            Note:
             <br />1 holiday coupons can be exchanged for one day of holiday
           </TYPE.body>
           {balanceOf && Number(balanceOf) > 0 ? (
@@ -141,7 +141,7 @@ export default function Holiday() {
           </Row>
 
           <TYPE.body color={'white'}>
-            一张券兑换一天假期
+            Note:
             <br />1 holiday coupons can be exchanged for one day of holiday
           </TYPE.body>
           <Row justify="end">

@@ -1,8 +1,7 @@
 import { useHashPunkContract } from 'hooks/useContract'
 import { useSingleCallResult } from 'state/multicall/hooks'
 import styled from 'styled-components/macro'
-
-import Nft01 from 'assets/preview/001.png'
+import Nft from 'assets/svg/nft-placeholder.svg'
 
 const MineImg = styled.img`
   width: 100%;
@@ -14,5 +13,5 @@ const MineImg = styled.img`
 export function TokenImg({ tokenId }: { tokenId: number }) {
   const hPunkContract = useHashPunkContract()
   const tokenURI = useSingleCallResult(hPunkContract, 'tokenURI', [tokenId])?.result?.[0]
-  return <MineImg src={tokenURI ?? Nft01} />
+  return <MineImg src={tokenURI ?? Nft} />
 }
