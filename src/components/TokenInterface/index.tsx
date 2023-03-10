@@ -1,16 +1,16 @@
 import { useHashPunkContract } from 'hooks/useContract'
-import { useSingleCallResult, useSingleContractMultipleData } from 'state/multicall/hooks'
+import { useSingleContractMultipleData } from 'state/multicall/hooks'
 import styled from 'styled-components/macro'
-import Nft from 'assets/svg/nft-placeholder.svg'
 import uriToHttp from 'utils/uriToHttp'
-import { useEffect, useMemo, useState } from 'react'
-import { useQuery } from 'react-query'
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 
-import { fetchIpfsJson } from 'queries/token/fetchIpfsJson'
 import { get } from 'utils/request'
 import { TokenIpfsJson } from 'queries/types'
 import Card from 'components/Card'
 import { TYPE } from 'theme'
+
+import { Check } from 'react-feather'
+import { RowBetween } from 'components/Row'
 
 const VerticalCard = styled(Card)`
   flex: 0 0 25%;
@@ -72,34 +72,91 @@ export function CollectionImage({ tokenIds }: { tokenIds: number[] }) {
   )
 }
 
-export function TokenImg({ tokenId }: { tokenId: number }) {
+const RareTag = styled.div`
+  width: 42px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  background: linear-gradient(90deg, #ff26b3 0%, #ffb38b 100%);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: AppleSystemUIFont;
+  color: #ffffff;
+`
+
+const Circle = styled.div`
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2a2a2a;
+`
+const ActiveCircle = styled(Circle)`
+  background-color: #3500fe;
+  border-color: #3500fe;
+`
+
+export function SelectImgOpton({
+  tokenIds,
+  tid,
+  toggle,
+}: {
+  tokenIds: number[]
+  tid: number
+  toggle: Dispatch<SetStateAction<number>>
+}) {
   const hPunkContract = useHashPunkContract()
-  const tokenURI = useSingleCallResult(hPunkContract, 'tokenURI', [tokenId])?.result?.[0]
+  const [nftList, setNftList] = useState<TokenIpfsJson[]>()
 
-  let content
-  if (tokenURI) {
-    content = <IpfsImg tokenUrl={tokenURI} />
-  } else {
-    content = <></>
-  }
-  return <>{content}</>
-}
-
-function IpfsImg({ tokenUrl }: { tokenUrl: string }) {
-  const { data: jsonResults, isLoading: jsonLoading } = useQuery('ipfsJson', () =>
-    fetchIpfsJson({ jsonUri: tokenUrl.includes('ipfs://') ? uriToHttp(tokenUrl)[0] : tokenUrl })
+  const tokenURIs = useSingleContractMultipleData(
+    hPunkContract,
+    'tokenURI',
+    tokenIds.map((id) => [id])
   )
 
-  const imageUri = useMemo(() => {
-    if (jsonResults) {
-      return jsonResults.image
+  const isValid = useMemo(() => tokenURIs.some(({ valid }) => valid), [tokenURIs])
+  const isResult = useMemo(() => tokenURIs.some(({ result }) => result), [tokenURIs])
+
+  const tokenURIsData = useMemo(
+    () => isValid && isResult && tokenURIs.map(({ result }) => result?.[0]),
+    [tokenURIs, isValid, isResult]
+  )
+
+  useEffect(() => {
+    if (tokenURIsData && tokenURIsData.length > 0) {
+      const list: any[] = []
+      tokenURIsData.map((t) => {
+        list.push(get(t.includes('ipfs://') ? uriToHttp(t)[0] : t))
+      })
+      Promise.all(list).then((item) => {
+        setNftList(item)
+      })
     }
-    return ''
-  }, [jsonResults])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tokenURIsData])
 
-  if (jsonLoading) {
-    return <MineImg src={Nft} />
-  }
-
-  return <MineImg src={imageUri.includes('ipfs://') ? uriToHttp(imageUri)[0] : imageUri} />
+  return (
+    <>
+      {nftList?.map(({ name, image, edition }) => (
+        <RowBetween key={name} onClick={() => toggle(edition)}>
+          <RowBetween height={70}>
+            <img height={70} width={70} src={image.includes('ipfs://') ? uriToHttp(image)[0] : image} />
+            <TYPE.body color={'blue4'} textAlign="center">
+              #{edition}
+            </TYPE.body>
+            <RareTag>稀有</RareTag>
+          </RowBetween>
+          {tid == edition ? (
+            <ActiveCircle>
+              <Check size={13} stroke={'white'} />
+            </ActiveCircle>
+          ) : (
+            <Circle />
+          )}
+        </RowBetween>
+      ))}
+    </>
+  )
 }

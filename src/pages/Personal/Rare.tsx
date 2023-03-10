@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react'
 import styled from 'styled-components/macro'
 import { TYPE, CloseIcon } from 'theme'
-import { Check } from 'react-feather'
 import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
 import Row, { RowBetween } from 'components/Row'
@@ -16,7 +15,7 @@ import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
 import { CertificateCard } from 'components/Certificate'
 // import ExchangeRare from 'components/ExchangeRare'
 import Modal from 'components/Modal'
-import { TokenImg } from 'components/TokenInterface'
+import { SelectImgOpton } from 'components/TokenInterface'
 
 const RareCardBorder = styled.div`
   background: linear-gradient(180deg, rgba(255, 38, 179, 1) 0%, rgba(255, 179, 139, 1) 100%);
@@ -59,47 +58,6 @@ const SelectNFTWrapper = styled.div`
 const RowMargin = styled(RowBetween)`
   margin: 24px 0;
 `
-const RareBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 72px;
-`
-const TokenImgBox = styled.div`
-  height: 76px;
-  width: 76px;
-`
-const TokenText = styled(Text)`
-  color: #3500fe;
-  margin: 0 16px !important;
-`
-const RareTag = styled.div`
-  width: 42px;
-  height: 24px;
-  line-height: 24px;
-  text-align: center;
-  background: linear-gradient(90deg, #ff26b3 0%, #ffb38b 100%);
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: AppleSystemUIFont;
-  color: #ffffff;
-`
-const Circle = styled.div`
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #2a2a2a;
-`
-const ActiveCircle = styled(Circle)`
-  background-color: #3500fe;
-  border-color: #3500fe;
-`
-const ResponsiveCheck = styled(Check)`
-  size: 13px;
-`
 
 export default function Rare() {
   const { account } = useActiveWeb3React()
@@ -109,13 +67,17 @@ export default function Rare() {
   // rare lists note: undefined ? No rarity : xxx.length
   const rareList = useSingleCallResult(hPunkContract, 'getUserToRareIds', [account ?? undefined])?.result?.[0]
 
-  console.log(
-    'rareList',
-    rareList?.map((x: { toNumber: () => any }) => x.toNumber())
-  )
+  // console.log(
+  //   'rareList',
+  //   rareList,
+  //   rareList?.map((x: { toNumber: () => any }) => x.toNumber())
+  // )
 
   const [open, setOpen] = useState<boolean>(false)
-  const [tokenId, setToken] = useState<number>()
+  const [tokenId, setToken] = useState<number>(0)
+
+  console.log('tokenId:', tokenId)
+
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
     minting: boolean
     minthash: string | undefined
@@ -138,7 +100,6 @@ export default function Rare() {
   }, [setModal])
 
   const exchangeRare = useCallback(() => {
-    debugger
     if (!rareList?.length || !tokenId) return
     setOpen(false)
     setModal({
@@ -147,7 +108,9 @@ export default function Rare() {
       mintErrorMessage,
     })
     hValueContract
-      ?.exchangeHValue(tokenId)
+      ?.exchangeHValue(tokenId, {
+        gasLimit: 1_000_000,
+      })
       .then((res) => {
         addTransaction(res)
         // res.wait().finally(() => setProcessing(false))
@@ -191,7 +154,7 @@ export default function Rare() {
             </TYPE.body>
             {rareList && rareList?.length > 0 ? (
               <Row justify="end">
-                <ExchangeButton onClick={exchangeRare}>Exchange</ExchangeButton>
+                <ExchangeButton onClick={() => setOpen(true)}>Exchange</ExchangeButton>
               </Row>
             ) : (
               <Row justify="end">
@@ -208,27 +171,29 @@ export default function Rare() {
             <CloseIcon onClick={handleOnClose} />
           </RowMargin>
           {rareList && rareList?.length > 0 ? (
-            <>
-              {rareList.map((item: number) => (
-                <RowMargin key={item} onClick={() => setToken(Number(item))}>
-                  <RareBox>
-                    <TokenImgBox>
-                      <TokenImg tokenId={Number(item)} />
-                    </TokenImgBox>
-                    <TokenText>#{Number(item)}</TokenText>
-                    <RareTag>稀有</RareTag>
-                  </RareBox>
-                  {tokenId === Number(item) ? (
-                    <ActiveCircle>
-                      <ResponsiveCheck size={13} stroke={'white'} />
-                    </ActiveCircle>
-                  ) : (
-                    <Circle></Circle>
-                  )}
-                </RowMargin>
-              ))}
-            </>
-          ) : null}
+            <SelectImgOpton tokenIds={rareList?.map((x: any) => Number(x))} tid={tokenId} toggle={setToken} />
+          ) : // <>
+          //   {rareList.map((item: any) => (
+          //     <RowMargin key={item} onClick={() => setToken(Number(item))}>
+          //       <RareBox>
+          //         <TokenImgBox>
+          //           {/* <TokenImg tokenId={Number(item)} /> */}
+          //           <CollectionImage tokenIds={[Number(item)]} />
+          //         </TokenImgBox>
+          //         <TokenText>#{Number(item)}</TokenText>
+          //         <RareTag>稀有</RareTag>
+          //       </RareBox>
+          //       {tokenId === Number(item) ? (
+          //         <ActiveCircle>
+          //           <ResponsiveCheck size={13} stroke={'white'} />
+          //         </ActiveCircle>
+          //       ) : (
+          //         <Circle></Circle>
+          //       )}
+          //     </RowMargin>
+          //   ))}
+          // </>
+          null}
           <ButtonBlue disabled={!tokenId} onClick={exchangeRare} style={{ margin: '20px 0 0 0' }}>
             <Text fontWeight={500} fontSize={20}>
               <Trans>立即兑换</Trans>
