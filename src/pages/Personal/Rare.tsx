@@ -138,6 +138,7 @@ export default function Rare() {
   }, [setModal])
 
   const exchangeRare = useCallback(() => {
+    debugger
     if (!rareList?.length || !tokenId) return
     setOpen(false)
     setModal({
