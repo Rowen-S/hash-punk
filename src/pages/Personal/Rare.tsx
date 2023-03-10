@@ -65,6 +65,7 @@ export default function Rare() {
   const addTransaction = useTransactionAdder()
   const hPunkContract = useHashPunkContract()
   // rare lists note: undefined ? No rarity : xxx.length
+  // const rareList = [1033, 470]
   const rareList = useSingleCallResult(hPunkContract, 'getUserToRareIds', [account ?? undefined])?.result?.[0]
 
   // console.log(
@@ -97,6 +98,7 @@ export default function Rare() {
       minthash: undefined,
       mintErrorMessage: undefined,
     })
+    setToken(0)
   }, [setModal])
 
   const exchangeRare = useCallback(() => {
@@ -108,9 +110,7 @@ export default function Rare() {
       mintErrorMessage,
     })
     hValueContract
-      ?.exchangeHValue(tokenId, {
-        gasLimit: 1_000_000,
-      })
+      ?.exchangeHValue(tokenId)
       .then((res) => {
         addTransaction(res)
         // res.wait().finally(() => setProcessing(false))

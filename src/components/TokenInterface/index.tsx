@@ -71,7 +71,15 @@ export function CollectionImage({ tokenIds }: { tokenIds: number[] }) {
     </>
   )
 }
-
+const RowMargin = styled(RowBetween)`
+  margin: 24px 0;
+`
+const RareBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+`
 const RareTag = styled.div`
   width: 42px;
   height: 24px;
@@ -140,14 +148,19 @@ export function SelectImgOpton({
   return (
     <>
       {nftList?.map(({ name, image, edition }) => (
-        <RowBetween key={name} onClick={() => toggle(edition)}>
-          <RowBetween height={70}>
-            <img height={70} width={70} src={image.includes('ipfs://') ? uriToHttp(image)[0] : image} />
-            <TYPE.body color={'blue4'} textAlign="center">
+        <RowMargin key={name} onClick={() => toggle(edition)}>
+          <RareBox>
+            <img
+              style={{ borderRadius: '8px' }}
+              height={70}
+              width={70}
+              src={image.includes('ipfs://') ? uriToHttp(image)[0] : image}
+            />
+            <TYPE.body color={'blue4'} textAlign="center" margin="0 16px">
               #{edition}
             </TYPE.body>
             <RareTag>稀有</RareTag>
-          </RowBetween>
+          </RareBox>
           {tid == edition ? (
             <ActiveCircle>
               <Check size={13} stroke={'white'} />
@@ -155,7 +168,7 @@ export function SelectImgOpton({
           ) : (
             <Circle />
           )}
-        </RowBetween>
+        </RowMargin>
       ))}
     </>
   )
