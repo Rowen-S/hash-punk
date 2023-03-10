@@ -209,15 +209,15 @@ export default function Rare() {
           {rareList && rareList?.length > 0 ? (
             <>
               {rareList.map((item: number) => (
-                <RowMargin key={item} onClick={() => setToken(item)}>
+                <RowMargin key={item} onClick={() => setToken(Number(item))}>
                   <RareBox>
                     <TokenImgBox>
-                      <TokenImg tokenId={item} />
+                      <TokenImg tokenId={Number(item)} />
                     </TokenImgBox>
-                    <TokenText>#{item}</TokenText>
+                    <TokenText>#{Number(item)}</TokenText>
                     <RareTag>稀有</RareTag>
                   </RareBox>
-                  {tokenId === item ? (
+                  {tokenId === Number(item) ? (
                     <ActiveCircle>
                       <ResponsiveCheck size={13} stroke={'white'} />
                     </ActiveCircle>
