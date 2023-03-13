@@ -46,23 +46,19 @@ const BannerDiv = styled.div`
   width: 100%;
   height: 100vh;
   // animation: run 5s infinite;
-  animation: run 5s;
+  animation: run 1.5s;
   z-index: -1;
   @keyframes run {
     0% {
       width: 100px;
       right: 0;
     }
-    40% {
+    70% {
       right: 100%;
     }
-    41% {
+    71% {
       right: 0;
       width: 100px;
-    }
-    60% {
-      right: 0;
-      width: 100%;
     }
     100% {
       right: 0;

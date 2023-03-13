@@ -72,6 +72,8 @@ const MintWrapper = styled(AutoColumn)`
 `
 
 const DarkLine = styled(Line)`
+  position: relative;
+  z-index: -2;
   margin-top: 137px !important;
   height: 1px;
   background-color: ${({ theme }) => theme.black};
