@@ -5,6 +5,7 @@ import Row, { RowBetween } from 'components/Row'
 
 import { Image } from 'rebass/styled-components'
 import SwiperPage from './SwiperPage'
+import QaContent from './QaContent'
 
 import GlobalBg from 'assets/images/bg.png'
 import Author from 'assets/images/author.png'
@@ -101,13 +102,13 @@ export default function Home() {
         <AbsImg src={Triangle01} width="15%" height="215" right="0" top="1050px" bottom="50%" zIndex={3} />
         <HomeAboutContent gap="90px">
           <TYPE.largeHeader fontSize={42} textAlign="center">
-            HashPunk NFT is an experiment about web3
+            HashPunk is an experiment about web3
           </TYPE.largeHeader>
 
           <AutoColumn gap="lg">
-            <TYPE.black fontSize={18}>INCLUDE</TYPE.black>
+            {/* <TYPE.black fontSize={18}>INCLUDE</TYPE.black>
             <TYPE.black fontSize={18}>5000 UNIQUE</TYPE.black>
-            <TYPE.black fontSize={18}>ON MATIC</TYPE.black>
+            <TYPE.black fontSize={18}>ON MATIC</TYPE.black> */}
           </AutoColumn>
           <Image
             src={LogoGreen}
@@ -135,7 +136,7 @@ export default function Home() {
                 and fun things.
               </TYPE.largeHeader>
               <TYPE.label color="white">
-                5,000 unique collectible characters with proof of ownership stored <br /> on the Matic blockchain. No
+                3,000 unique collectible characters with proof of ownership stored <br /> on the Matic blockchain. No
                 two are exactly alike, and each one <br /> of them can be officially owned by a single person on the
                 Matic <br /> blockchain.
               </TYPE.label>
@@ -173,15 +174,15 @@ export default function Home() {
         <HomeAboutContent>
           <RowBetween marginBottom={100} marginTop={85}>
             <TYPE.label fontSize={42} alignSelf="flex-start" color="white">
-              About <br /> TEAM
+              ABOUT <br /> TEAM
             </TYPE.label>
             <AutoColumn gap="42px">
               <TYPE.label fontSize={18} color="white">
-                This August, five friends launched the HashPunk, and they tried to <br /> build a new visual aesthetic.
+                In 2022, Five friends launched the HashPunk, and they tried to build a new visual aesthetic.{' '}
               </TYPE.label>
               <AutoColumn gap="lg">
                 <TYPE.label fontSize={18} color="white">
-                  ◆ corp function
+                  ◆ Corp Function
                 </TYPE.label>
                 <TYPE.label fontSize={18} color="white">
                   ◆ Mrs. Bonnie blue
@@ -192,8 +193,23 @@ export default function Home() {
                 <TYPE.label fontSize={18} color="white">
                   ◆ Mr. YAO
                 </TYPE.label>
+                <TYPE.label fontSize={18} color="white">
+                  ◆ Mr. Jack Quan
+                </TYPE.label>
+                <TYPE.label fontSize={18} color="white">
+                  ◆ Mrs. Shuya
+                </TYPE.label>
               </AutoColumn>
             </AutoColumn>
+          </RowBetween>
+        </HomeAboutContent>
+        <Line />
+        <HomeAboutContent>
+          <RowBetween marginBottom={100} marginTop={85}>
+            <TYPE.label fontSize={42} alignSelf="flex-start" color="white">
+              FAQ
+            </TYPE.label>
+            <QaContent />
           </RowBetween>
           <Image src={Twitter} margin="0px auto 30px auto" />
           <Row justify="center">
