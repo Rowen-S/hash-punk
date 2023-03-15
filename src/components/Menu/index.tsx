@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, Moon, Sun, Check, User } from 'react-feather'
+import { ChevronLeft, Check, User } from 'react-feather'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components/macro'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
@@ -13,7 +13,7 @@ import { Trans } from '@lingui/macro'
 import { LOCALE_LABEL, SupportedLocale, SUPPORTED_LOCALES } from 'constants/locales'
 import { useLocationLinkProps } from 'hooks/useLocationLinkProps'
 import { useActiveLocale } from 'hooks/useActiveLocale'
-import { useDarkModeManager } from 'state/user/hooks'
+// import { useDarkModeManager } from 'state/user/hooks'
 import { useWeb3React } from '@web3-react/core'
 
 export enum FlyoutAlignment {
@@ -197,7 +197,7 @@ export default function Menu() {
   useOnClickOutside(node, open ? toggle : undefined)
   const [menu, setMenu] = useState<'main' | 'lang'>('main')
 
-  const [darkMode, toggleDarkMode] = useDarkModeManager()
+  // const [darkMode, toggleDarkMode] = useDarkModeManager()
 
   useEffect(() => {
     setMenu('main')
@@ -238,10 +238,10 @@ export default function Menu() {
                     </div>
                     <Globe opacity={0.6} size={16} />
                   </ToggleMenuItem>*/}
-                  <ToggleMenuItem onClick={() => toggleDarkMode()}>
+                  {/* <ToggleMenuItem onClick={() => toggleDarkMode()}>
                     <div>{darkMode ? <Trans>Light Theme</Trans> : <Trans>Dark Theme</Trans>}</div>
                     {darkMode ? <Moon opacity={0.6} size={16} /> : <Sun opacity={0.6} size={16} />}
-                  </ToggleMenuItem>
+                  </ToggleMenuItem> */}
                 </MenuFlyout>
               )
           }
