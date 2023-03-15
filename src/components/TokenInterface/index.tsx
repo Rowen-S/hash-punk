@@ -45,6 +45,11 @@ export function CollectionImage({ tokenIds }: { tokenIds: number[] }) {
     [tokenURIs, isValid, isResult]
   )
 
+  const feach = useMemo(() => {
+    if (tokenURIsData && tokenURIsData.length > 0) return true
+    return false
+  }, [tokenURIsData])
+
   useEffect(() => {
     if (tokenURIsData && tokenURIsData.length > 0) {
       const list: any[] = []
@@ -56,7 +61,7 @@ export function CollectionImage({ tokenIds }: { tokenIds: number[] }) {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenURIsData])
+  }, [feach])
 
   return (
     <>
