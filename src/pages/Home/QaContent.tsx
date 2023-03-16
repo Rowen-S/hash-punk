@@ -126,12 +126,11 @@ export default function QaContent() {
 const FaqItem = ({ isOpen, children }: { isOpen: boolean; children: ReactNode }) => {
   const previous = usePrevious(isOpen)
   // @ts-ignore
-  const { height, opacity, y } = useSpring({
-    from: { height: 0, opacity: 0, y: 0 },
+  const { height, opacity } = useSpring({
+    from: { height: 0, opacity: 0 },
     to: {
-      height: isOpen ? 50 : 0,
+      height: isOpen ? 66 : 0,
       opacity: isOpen ? 1 : 0,
-      y: isOpen ? 45 : 0,
     },
   })
   return (
@@ -141,12 +140,9 @@ const FaqItem = ({ isOpen, children }: { isOpen: boolean; children: ReactNode })
         height: isOpen && previous === isOpen ? 'auto' : height,
       }}
     >
-      {/* @ts-ignore */}
-      <animated.div style={{ y }}>
-        <TYPE.label fontSize={16} color="#9E9E9E" fontWeight="400">
-          {children}
-        </TYPE.label>
-      </animated.div>
+      <TYPE.label fontSize={16} color="#9E9E9E" fontWeight="400">
+        {children}
+      </TYPE.label>
     </Content>
   )
 }
