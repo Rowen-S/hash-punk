@@ -129,7 +129,7 @@ const FaqItem = ({ isOpen, children }: { isOpen: boolean; children: ReactNode })
   const { height, opacity } = useSpring({
     from: { height: 0, opacity: 0 },
     to: {
-      height: isOpen ? 66 : 0,
+      height: isOpen ? 'auto' : 0,
       opacity: isOpen ? 1 : 0,
     },
   })

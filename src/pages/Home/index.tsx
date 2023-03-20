@@ -21,6 +21,8 @@ import Cat from 'assets/images/cat.png'
 import Slash from 'assets/svg/slash01.svg'
 import Twitter from 'assets/svg/twitter.svg'
 import { AbsImg, Line } from 'pages/styled'
+import Hvalue from 'assets/images/hvalue.png'
+import LuckyPass from 'assets/images/luckyPass.gif'
 
 const HomeWrapper = styled(AutoColumn)`
   /* position: relative; */
@@ -173,7 +175,7 @@ export default function Home() {
         <Line />
         <HomeAboutContent>
           <RowBetween marginBottom={100} marginTop={85}>
-            <TYPE.label fontSize={42} alignSelf="flex-start" color="white">
+            <TYPE.label width={450} fontSize={42} alignSelf="flex-start" color="white">
               ABOUT <br /> TEAM
             </TYPE.label>
             <AutoColumn gap="42px">
@@ -201,6 +203,48 @@ export default function Home() {
                 </TYPE.label>
               </AutoColumn>
             </AutoColumn>
+          </RowBetween>
+        </HomeAboutContent>
+        <HomeAboutContent>
+          <RowBetween marginBottom={100} marginTop={85}>
+            <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
+              ABOUT <br /> H VALUE
+            </TYPE.label>
+            <RowBetween>
+              <AutoColumn gap="42px">
+                <TYPE.label fontSize={24} width="480px" color="white">
+                  &quot;H-Value&#34; is a reward mechanism that can be obtained by participating in internal activities.
+                  <br />
+                  <br />
+                  You can exchange 50 H-Values for one HashPunk. If you exchange for a rare HashPunk, you will receive
+                  an additional surprise.
+                </TYPE.label>
+              </AutoColumn>
+              <AutoColumn>
+                <img src={Hvalue} width={240} height={240} />
+              </AutoColumn>
+            </RowBetween>
+          </RowBetween>
+        </HomeAboutContent>
+        <HomeAboutContent>
+          <RowBetween marginBottom={100} marginTop={85}>
+            <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
+              ABOUT <br /> LUCKYPASS
+            </TYPE.label>
+            <RowBetween>
+              <AutoColumn gap="42px">
+                <TYPE.label fontSize={24} width="480px" color="white">
+                  &quot;LuckyPass&#34; is another type of reward card that can be obtained by participating in internal
+                  activities.
+                  <br />
+                  <br />
+                  You can mint one Hashpunk by collecting five &quot;LuckyPass&#34; cards.
+                </TYPE.label>
+              </AutoColumn>
+              <AutoColumn>
+                <img src={LuckyPass} width={240} height={240} />
+              </AutoColumn>
+            </RowBetween>
           </RowBetween>
         </HomeAboutContent>
         <Line />
