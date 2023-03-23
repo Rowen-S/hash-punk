@@ -16,7 +16,7 @@ import NetworkCard from './NetworkCard'
 
 // import Twitter from '../../assets/svg/twitter.svg'
 import useTheme from 'hooks/useTheme'
-import Menu from 'components/Menu'
+// import Menu from 'components/Menu'
 
 const HeaderFrame = styled.div<{ showBackground: boolean }>`
   display: grid;
@@ -89,10 +89,10 @@ const HeaderElement = styled.div`
   `};
 `
 
-const HeaderElementWrap = styled.div`
-  display: flex;
-  align-items: center;
-`
+// const HeaderElementWrap = styled.div`
+//   display: flex;
+//   align-items: center;
+// `
 
 const HeaderRow = styled(RowFixed)`
   ${({ theme }) => theme.mediaWidth.upToMedium`
@@ -265,9 +265,9 @@ export default function Header() {
             <Web3Status />
           </AccountElement>
         </HeaderElement>
-        <HeaderElementWrap>
+        {/* <HeaderElementWrap>
           <Menu />
-        </HeaderElementWrap>
+        </HeaderElementWrap> */}
       </HeaderControls>
     </HeaderFrame>
   )
