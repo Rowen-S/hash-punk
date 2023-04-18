@@ -18,12 +18,6 @@ import 'swiper/swiper-bundle.min.css'
 // install Swiper modules
 SwiperCore.use([Autoplay])
 
-import Nft01 from 'assets/preview/001.png'
-import Nft02 from 'assets/preview/002.png'
-import Nft03 from 'assets/preview/003.png'
-import Nft04 from 'assets/preview/004.png'
-import Nft05 from 'assets/preview/005.png'
-
 const Swipers = styled(Swiper)`
   width: 100%;
   padding: 11px;
@@ -42,11 +36,11 @@ const SwiperBodyImg = styled.img`
 
 export default function SwiperPage() {
   const imgList = [
-    { img: Nft01, tokenId: 1 },
-    { img: Nft02, tokenId: 2 },
-    { img: Nft03, tokenId: 3 },
-    { img: Nft04, tokenId: 4 },
-    { img: Nft05, tokenId: 5 },
+    { img: '/preview/001.png', tokenId: 1 },
+    { img: '/preview/002.png', tokenId: 2 },
+    { img: '/preview/003.png', tokenId: 3 },
+    { img: '/preview/004.png', tokenId: 4 },
+    { img: '/preview/005.png', tokenId: 5 },
   ]
   return (
     <Swipers
