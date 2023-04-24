@@ -1,10 +1,10 @@
 {
   "background_color": "#ffffff",
   "display": "standalone",
-  "homepage_url": "https://www.xxxx.xxx/",
+  "homepage_url": "https://punk.hashkey.com/",
   "providedBy": {
-    "name": "Exiled Dissident",
-    "url": "https://www.xxx.xxx/"
+    "name": "Hash Punk",
+    "url": "https://punk.hashkey.com"
   },
   "icons": [
     {
@@ -22,7 +22,7 @@
   ],
   "orientation": "portrait",
   "name": "Hash Punk",
-  "description": "xxxxxxxxx",
+  "description": "HValue on-chain is an internal web3.0 experimental projet by hashkey Talents land,where users can use their own NFTs to exchange corresponding rewards",
   "iconPath": "./images/512x512_App_Icon.png",
   "short_name": "Hash Punk",
   "start_url": ".",
