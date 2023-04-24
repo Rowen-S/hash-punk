@@ -6,7 +6,7 @@ import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import styled, { css } from 'styled-components/macro'
 import { switchToNetwork } from 'utils/switchToNetwork'
-import { CHAIN_INFO, defaultChainId } from '../../constants/chains'
+import { defaultChainId, getChainInfoOrDefault } from '../../constants/chains'
 
 const BaseWrapper = css`
   position: relative;
@@ -68,7 +68,7 @@ export default function NetworkCard() {
       .catch(() => setImplements3085(false))
   }, [library, chainId])
 
-  const info = chainId ? CHAIN_INFO[chainId] : undefined
+  const info = getChainInfoOrDefault(chainId)
   if (!chainId || chainId === defaultChainId || !info || !library) {
     return null
   }
