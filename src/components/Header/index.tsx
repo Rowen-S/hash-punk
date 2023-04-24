@@ -241,7 +241,7 @@ export default function Header() {
     'isStagingEnv:',
     isStagingEnv(),
     process.env.NODE_ENV,
-    process.env.REACT_APP_STAGING
+    typeof process.env.REACT_APP_STAGING
   )
 
   return (
