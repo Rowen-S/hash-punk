@@ -234,16 +234,6 @@ export default function Header() {
 
   const info = getChainInfoOrDefault(chainId)
 
-  console.log(
-    'env test /n',
-    'isProductionEnv:',
-    isProductionEnv(),
-    'isStagingEnv:',
-    isStagingEnv(),
-    process.env.NODE_ENV,
-    typeof process.env.REACT_APP_STAGING
-  )
-
   return (
     <HeaderFrame showBackground={scrollY > 45}>
       <HeaderRow>
