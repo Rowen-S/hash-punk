@@ -16,6 +16,7 @@ import NetworkCard from './NetworkCard'
 
 // import Twitter from '../../assets/svg/twitter.svg'
 import useTheme from 'hooks/useTheme'
+import { getChainInfoOrDefault } from 'constants/chains'
 // import Menu from 'components/Menu'
 
 const HeaderFrame = styled.div<{ showBackground: boolean }>`
@@ -220,7 +221,7 @@ const StyledNavLink = styled(NavLink).attrs({
 // `
 
 export default function Header() {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
@@ -229,6 +230,8 @@ export default function Header() {
   const scrollY = useScrollPosition()
 
   const { white, black } = useTheme()
+
+  const info = getChainInfoOrDefault(chainId)
 
   return (
     <HeaderFrame showBackground={scrollY > 45}>
@@ -259,7 +262,7 @@ export default function Header() {
           <AccountElement active={!!account}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0, userSelect: 'none' }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                {userEthBalance?.toSignificant(3)} ETH
+                {userEthBalance?.toSignificant(3)} {info?.nativeCurrency?.symbol}
               </BalanceText>
             ) : null}
             <Web3Status />
