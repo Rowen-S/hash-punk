@@ -22,7 +22,6 @@ import Slash from 'assets/svg/slash01.svg'
 import Twitter from 'assets/svg/twitter.svg'
 import { AbsImg, Line } from 'pages/styled'
 import Hvalue from 'assets/images/hvalue.png'
-import LuckyPass from 'assets/images/luckyPass.gif'
 
 const HomeWrapper = styled(AutoColumn)`
   /* position: relative; */
@@ -242,7 +241,7 @@ export default function Home() {
                 </TYPE.label>
               </AutoColumn>
               <AutoColumn>
-                <img src={LuckyPass} width={240} height={240} />
+                <img src={'/preview/luckyPass.gif'} width={240} height={240} />
               </AutoColumn>
             </RowBetween>
           </RowBetween>
