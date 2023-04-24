@@ -7,7 +7,11 @@ export function isTestEnv(): boolean {
 }
 
 export function isStagingEnv(): boolean {
-  return Boolean(process.env.REACT_APP_STAGING)
+  const boolStr = process.env.REACT_APP_STAGING
+  if (boolStr) {
+    return /true/i.test(boolStr)
+  }
+  return false
 }
 
 export function isProductionEnv(): boolean {
