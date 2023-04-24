@@ -11,8 +11,14 @@ import { NetworkConnector } from './NetworkConnector'
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
 
+const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY
+
 if (typeof INFURA_KEY === 'undefined') {
   throw new Error(`REACT_APP_INFURA_KEY must be a defined environment variable`)
+}
+
+if (typeof ALCHEMY_KEY === 'undefined') {
+  throw new Error(`REACT_APP_ALCHEMY_KEY must be a defined environment variable`)
 }
 
 const NETWORK_URLS: { [key in SupportedChainId]: string } = {
@@ -20,7 +26,7 @@ const NETWORK_URLS: { [key in SupportedChainId]: string } = {
   [SupportedChainId.ROPSTEN]: `https://ropsten.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.GOERLI]: `https://goerli.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.KOVAN]: `https://kovan.infura.io/v3/${INFURA_KEY}`,
-  [SupportedChainId.POLYGON]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
+  [SupportedChainId.POLYGON]: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
   [SupportedChainId.POLYGON_MUMBAI]: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
 }
 
