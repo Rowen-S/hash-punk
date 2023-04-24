@@ -17,6 +17,7 @@ import NetworkCard from './NetworkCard'
 // import Twitter from '../../assets/svg/twitter.svg'
 import useTheme from 'hooks/useTheme'
 import { getChainInfoOrDefault } from 'constants/chains'
+import { isProductionEnv } from 'utils/env'
 // import Menu from 'components/Menu'
 
 const HeaderFrame = styled.div<{ showBackground: boolean }>`
@@ -232,6 +233,8 @@ export default function Header() {
   const { white, black } = useTheme()
 
   const info = getChainInfoOrDefault(chainId)
+
+  console.log('env test', isProductionEnv(), process.env.NODE_ENV)
 
   return (
     <HeaderFrame showBackground={scrollY > 45}>
