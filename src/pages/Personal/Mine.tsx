@@ -7,7 +7,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useMemo } from 'react'
 import { CollectionImage } from 'components/TokenInterface'
 import { CustomLightSpinner } from 'theme'
-import Circle from '../../assets/images/blue-loader.svg'
+import Circle from 'assets/images/blue-loader.svg'
 
 const VerticalRow = styled(Row)`
   flex-flow: row wrap;

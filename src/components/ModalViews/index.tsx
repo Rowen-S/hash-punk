@@ -9,7 +9,7 @@ import { TYPE, CloseIcon, CustomLightSpinner } from '../../theme'
 import { ArrowUpCircle } from 'react-feather'
 import { Trans } from '@lingui/macro'
 
-import Circle from '../../assets/images/blue-loader.svg'
+import Circle from 'assets/images/blue-loader.svg'
 import { ExternalLink } from '../../theme/components'
 
 const ConfirmOrLoadingWrapper = styled.div`
