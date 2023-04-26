@@ -39,13 +39,13 @@ const ButtonBox = styled(Box)`
 `
 
 const RareButtonOutlined = styled(ButtonOutlined)<{ showActivity: boolean }>`
-  width: 125px;
   color: ${({ theme, showActivity }) => (showActivity ? theme.white : theme.black)};
   background: ${({ showActivity }) =>
     showActivity ? 'linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%)' : 'unset'};
   border: ${({ showActivity }) => showActivity && 'none'};
   border-radius: 4px;
-  padding: 4px;
+  padding: 4px 10px;
+
   &:hover,
   &:active {
     color: ${({ theme }) => theme.white};

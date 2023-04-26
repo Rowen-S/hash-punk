@@ -68,7 +68,7 @@ function App() {
             <Web3ReactManager>
               <Switch>
                 <Route exact strict path="/home" component={Home} />
-                <Route exact strict path="/lottery" component={Lottery} />
+                <Route exact strict path="/mint" component={Lottery} />
                 <Route exact strict path="/personal" component={Personal} />
                 <Route exact strict path="/personal/rare" component={Personal} />
                 <Route exact strict path="/personal/holiday" component={Personal} />

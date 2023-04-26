@@ -8,7 +8,7 @@ import SwiperPage from './SwiperPage'
 import QaContent from './QaContent'
 
 import GlobalBg from 'assets/images/bg.png'
-import Author from 'assets/images/author.png'
+// import Author from 'assets/images/author.png'
 import LogoGreen from 'assets/svg/logo-green.svg'
 import LogoRed from 'assets/svg/logo-red.svg'
 import Triangle01 from 'assets/images/triangle01.png'
@@ -155,10 +155,11 @@ export default function Home() {
               zIndex: 1,
             }}
           />
-          <TYPE.label fontSize={42} marginTop={-10} color="white">
+          <Row marginTop={250} />
+          {/* <TYPE.label fontSize={42} marginTop={-10} color="white">
             About <br /> Author
-          </TYPE.label>
-          <RowBetween marginTop={47} marginBottom={137}>
+          </TYPE.label> */}
+          {/* <RowBetween marginTop={47} marginBottom={137}>
             <Row width={'195px'} justify="center">
               <Image src={Author} width="116px" height="197px" />
             </Row>
@@ -169,7 +170,7 @@ export default function Home() {
               <br />
               Maybe you know him, maybe you don&apos;t, but that&apos;s okay ///
             </TYPE.label>
-          </RowBetween>
+          </RowBetween> */}
         </HomeAboutContent>
         <Line />
         <HomeAboutContent>

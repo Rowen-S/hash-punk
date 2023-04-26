@@ -247,8 +247,8 @@ export default function Header() {
         <StyledNavLink id={`home-nav-link`} to={'/home'}>
           Home
         </StyledNavLink>
-        <StyledNavLink id={`lottery-nav-link`} to={'/lottery'}>
-          Lottery
+        <StyledNavLink id={`mint-nav-link`} to={'/mint'}>
+          Mint
         </StyledNavLink>
         {account && (
           <StyledNavLink id={`personal-nav-link`} to={'/personal'}>
