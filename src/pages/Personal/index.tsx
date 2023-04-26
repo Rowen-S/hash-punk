@@ -102,19 +102,19 @@ const ActivitySwitcher = ({
         onClick={() => (showActivity.isHolidayToggled || showActivity.isRareToggled) && history.push('/personal')}
         showActivity={!showActivity.isHolidayToggled && !showActivity.isRareToggled}
       >
-        我的Punk
+        My Hashpunk
       </GeneralButtonOutlined>
       <GeneralButtonOutlined
         onClick={() => !showActivity.isHolidayToggled && history.push('/personal/holiday')}
         showActivity={showActivity.isHolidayToggled}
       >
-        假期兑换
+        Holiday Exchange
       </GeneralButtonOutlined>
       <RareButtonOutlined
         onClick={() => !showActivity.isRareToggled && history.push('/personal/rare')}
         showActivity={showActivity.isRareToggled}
       >
-        稀有兑换
+        Rares Exchange
       </RareButtonOutlined>
     </ButtonBox>
   )
