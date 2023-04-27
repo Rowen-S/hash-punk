@@ -127,7 +127,9 @@ export default function Lottery() {
       mintErrorMessage,
     })
     punkContract
-      ?.mint(2, 1)
+      ?.mint(2, 1, {
+        gasLimit: 300_000 * 1,
+      })
       .then((res) => {
         addTransaction(res)
         // res.wait().finally(() => setProcessing(false))
