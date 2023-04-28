@@ -217,15 +217,13 @@ export default function Lottery() {
               />
             </RowBetween>
             <RowBetween>
-              <i>
-                <Row>
-                  <TYPE.black fontSize={28}> {totalSupply ? Number(totalSupply) : '-'}</TYPE.black>
-                  <TYPE.black fontSize={18}>
-                    {'/'}
-                    {maxSupply ? Number(maxSupply) : '-'}
-                  </TYPE.black>
-                </Row>
-              </i>
+              <Row>
+                <TYPE.black fontSize={28}> {totalSupply ? Number(totalSupply) : '-'}</TYPE.black>
+                <TYPE.black fontSize={18}>
+                  {'/'}
+                  {maxSupply ? Number(maxSupply) : '-'}
+                </TYPE.black>
+              </Row>
               <MintInputOption
                 type={'number'}
                 value={amount}
