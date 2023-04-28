@@ -11,7 +11,7 @@ import { switchToNetwork } from 'utils/switchToNetwork'
 import { ButtonLight, ButtonPrimary } from 'components/Button'
 import { DarkCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
-import { RowBetween } from 'components/Row'
+import Row, { RowBetween } from 'components/Row'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
 
@@ -25,6 +25,7 @@ import Person from '../../assets/images/person.png'
 import { Image } from 'rebass/styled-components'
 import Mint from 'assets/svg/mint.svg'
 import { AbsImg, Line } from 'pages/styled'
+import Toggle from 'components/Toggle'
 
 const LotteryWrapper = styled.div`
   position: relative;
@@ -90,6 +91,19 @@ const MiddleDarkCard = styled(DarkCard)`
   justify-content: center;
   align-items: center;
 `
+const MintInputOption = styled.input`
+  flex: 1 1 auto;
+  width: 0;
+  max-width: 80px;
+  font-size: 1rem;
+  padding: 5px;
+  font-weight: 400;
+  width: 100%;
+  border-radius: 8px;
+  background-color: transparent;
+  text-align: center;
+`
+
 export default function Lottery() {
   const { account, chainId, library } = useActiveWeb3React()
   const punkContract = useHashPunkContract()
@@ -102,6 +116,16 @@ export default function Lottery() {
 
   const totalSupply = useSingleCallResult(punkContract, 'totalSupply')?.result?.[0]
   const maxSupply = useSingleCallResult(punkContract, 'maxSupply')?.result?.[0]
+  const [isHvalue, setIsHvalue] = useState(true)
+  const [amount, setAmount] = useState(1)
+
+  const handleAmountInput = useCallback(
+    (value: string) => {
+      value = value.replace(/\D+/, '')
+      setAmount(value == '' ? 1 : Number(value))
+    },
+    [setAmount]
+  )
 
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
     minting: boolean
@@ -121,32 +145,34 @@ export default function Lottery() {
   }, [setModal])
 
   const exchangeNFT = useCallback(() => {
-    setModal({
-      minting: true,
-      minthash,
-      mintErrorMessage,
-    })
-    punkContract
-      ?.mint(2, 1, {
-        gasLimit: 300_000 * 1,
+    if (amount >= 1) {
+      setModal({
+        minting: true,
+        minthash,
+        mintErrorMessage,
       })
-      .then((res) => {
-        addTransaction(res)
-        // res.wait().finally(() => setProcessing(false))
-        setModal({
-          minting: true,
-          minthash: res.hash,
-          mintErrorMessage,
+      punkContract
+        ?.mint(isHvalue ? 2 : 1, amount, {
+          gasLimit: 300_000 * amount,
         })
-      })
-      .catch((err) => {
-        setModal({
-          minting: true,
-          minthash,
-          mintErrorMessage: err.message,
+        .then((res) => {
+          addTransaction(res)
+          // res.wait().finally(() => setProcessing(false))
+          setModal({
+            minting: true,
+            minthash: res.hash,
+            mintErrorMessage,
+          })
         })
-      })
-  }, [mintErrorMessage, minthash, punkContract, addTransaction])
+        .catch((err) => {
+          setModal({
+            minting: true,
+            minthash,
+            mintErrorMessage: err.message,
+          })
+        })
+    }
+  }, [mintErrorMessage, minthash, punkContract, amount, isHvalue, addTransaction])
 
   return (
     <LotteryWrapper>
@@ -171,12 +197,43 @@ export default function Lottery() {
           <MiddleDarkCard>
             <Image src={Mint} />
           </MiddleDarkCard>
-          <RowBetween marginTop={'24px'}>
-            <TYPE.black>TOTAL DRAW</TYPE.black>
-            <TYPE.black>
-              {totalSupply ? Number(totalSupply) : '-'}/{maxSupply ? Number(maxSupply) : '-'}
-            </TYPE.black>
-          </RowBetween>
+          <AutoColumn gap="sm">
+            <RowBetween>
+              <TYPE.black>Minted</TYPE.black>
+              <Toggle
+                id="toggle-mint-type-mode-button"
+                isActive={isHvalue}
+                checked={'Hvalue'}
+                unchecked={'Pass'}
+                toggle={
+                  isHvalue
+                    ? () => {
+                        setIsHvalue(false)
+                      }
+                    : () => {
+                        setIsHvalue(true)
+                      }
+                }
+              />
+            </RowBetween>
+            <RowBetween>
+              <i>
+                <Row>
+                  <TYPE.black fontSize={28}> {totalSupply ? Number(totalSupply) : '-'}</TYPE.black>
+                  <TYPE.black fontSize={18}>
+                    {'/'}
+                    {maxSupply ? Number(maxSupply) : '-'}
+                  </TYPE.black>
+                </Row>
+              </i>
+              <MintInputOption
+                type={'number'}
+                value={amount}
+                min={1}
+                onChange={(val) => handleAmountInput(val.target.value)}
+              />
+            </RowBetween>
+          </AutoColumn>
           {!account ? (
             <ButtonLight $borderRadius="8px" onClick={toggleWalletModal}>
               Connect Wallet
