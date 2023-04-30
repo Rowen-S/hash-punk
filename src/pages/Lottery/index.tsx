@@ -1,4 +1,4 @@
-import { useHashPunkContract } from 'hooks/useContract'
+import { useHVlaueContract, useHashPunkContract } from 'hooks/useContract'
 import { useSingleCallResult } from 'state/multicall/hooks'
 import { useCallback, useState } from 'react'
 import TransactionSubmissionModal from 'components/TransactionSubmissionModal'
@@ -118,6 +118,9 @@ export default function Lottery() {
   const maxSupply = useSingleCallResult(punkContract, 'maxSupply')?.result?.[0]
   const [isHvalue, setIsHvalue] = useState(true)
   const [amount, setAmount] = useState(1)
+  const hValueContract = useHVlaueContract()
+  const balanceOfH = useSingleCallResult(hValueContract, 'balanceOf', [account ?? undefined, 2])?.result?.[0]
+  const balanceOfLucky = useSingleCallResult(hValueContract, 'balanceOf', [account ?? undefined, 1])?.result?.[0]
 
   const handleAmountInput = useCallback(
     (value: string) => {
@@ -146,31 +149,42 @@ export default function Lottery() {
 
   const exchangeNFT = useCallback(() => {
     if (amount >= 1) {
-      setModal({
-        minting: true,
-        minthash,
-        mintErrorMessage,
-      })
-      punkContract
-        ?.mint(isHvalue ? 2 : 1, amount, {
-          gasLimit: 300_000 * amount,
+      if (
+        (isHvalue && amount <= Math.floor(balanceOfH / 50)) ||
+        (!isHvalue && amount <= Math.floor(balanceOfLucky / 5))
+      ) {
+        setModal({
+          minting: true,
+          minthash,
+          mintErrorMessage,
         })
-        .then((res) => {
-          addTransaction(res)
-          // res.wait().finally(() => setProcessing(false))
-          setModal({
-            minting: true,
-            minthash: res.hash,
-            mintErrorMessage,
+        punkContract
+          ?.mint(isHvalue ? 2 : 1, amount, {
+            gasLimit: 300_000 * amount,
           })
-        })
-        .catch((err) => {
-          setModal({
-            minting: true,
-            minthash,
-            mintErrorMessage: err.message,
+          .then((res) => {
+            addTransaction(res)
+            // res.wait().finally(() => setProcessing(false))
+            setModal({
+              minting: true,
+              minthash: res.hash,
+              mintErrorMessage,
+            })
           })
+          .catch((err) => {
+            setModal({
+              minting: true,
+              minthash,
+              mintErrorMessage: err.message,
+            })
+          })
+      } else {
+        setModal({
+          minting: true,
+          minthash: undefined,
+          mintErrorMessage: '余额不足',
         })
+      }
     }
   }, [mintErrorMessage, minthash, punkContract, amount, isHvalue, addTransaction])
 
