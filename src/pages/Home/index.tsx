@@ -72,11 +72,18 @@ const BannerDiv = styled.div`
 const HomeAbout = styled.div`
   width: 100%;
   /* position: relative; */
-  padding: 150px 0;
+  padding: 150px 0 0 0;
   /* background: ${({ theme }) => theme.white}; */
   background: url(${GlobalBg}) no-repeat;
   background-size: 214% 93%;
   background-position: center bottom;
+`
+
+const HomeContent = styled.div`
+  width: 100%;
+  /* position: relative; */
+  padding: 0 0 150px 0;
+  background: ${({ theme }) => theme.black};
 `
 
 const HomeAboutContent = styled(AutoColumn)`
@@ -226,6 +233,8 @@ export default function Home() {
             </RowBetween>
           </RowBetween>
         </HomeAboutContent>
+      </HomeAbout>
+      <HomeContent>
         <HomeAboutContent>
           <RowBetween marginBottom={100} marginTop={85}>
             <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
@@ -247,6 +256,31 @@ export default function Home() {
             </RowBetween>
           </RowBetween>
         </HomeAboutContent>
+        <HomeAboutContent>
+          <RowBetween marginBottom={100} marginTop={85}>
+            <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
+              Statement
+            </TYPE.label>
+            <RowBetween>
+              <AutoColumn gap="42px">
+                <TYPE.label fontSize={24} width="720px" color="white">
+                  This website is only for HashKey Shanghai technical team members, intended to motivate them to
+                  participate in internal activities. The criteria for obtaining H-value or related digital collectibles
+                  casting qualifications are specified in the Shanghai technical team member manual.
+                  <br />
+                  The digital collectibles cast by employees through this website only have collection value, and
+                  employees are not allowed to engage in any type of transaction related to the digital collectibles,
+                  including listing the digital collectibles obtained on digital collectible trading platforms for sale.
+                  The company reserves the right to modify or terminate the activity rules and the duration of the
+                  activity displayed on this website at any time.
+                </TYPE.label>
+              </AutoColumn>
+              {/* <AutoColumn>
+                <img src={'/preview/luckyPass.gif'} width={240} height={240} />
+              </AutoColumn> */}
+            </RowBetween>
+          </RowBetween>
+        </HomeAboutContent>
         <Line />
         <HomeAboutContent>
           <RowBetween marginBottom={100} marginTop={85}>
@@ -261,8 +295,13 @@ export default function Home() {
             <Image src={Cat} width="47" height="40" marginX={50} />
             <Line width={90} />
           </Row>
+          <Row justify="center" marginTop={10}>
+            <TYPE.label fontSize={16} color="white">
+              All rights reserved by Shanghai tech team
+            </TYPE.label>
+          </Row>
         </HomeAboutContent>
-      </HomeAbout>
+      </HomeContent>
     </HomeWrapper>
   )
 }
