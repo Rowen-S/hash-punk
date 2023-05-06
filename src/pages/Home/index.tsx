@@ -290,7 +290,7 @@ export default function Home() {
             <Line width={90} />
           </Row>
           <Row justify="center" marginTop={40}>
-            <TYPE.label fontSize={20} lineHeight={1.5} color="white">
+            <TYPE.label fontSize={16} lineHeight={1.5} color="white">
               All rights reserved by Shanghai tech team
             </TYPE.label>
           </Row>
