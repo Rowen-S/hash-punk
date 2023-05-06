@@ -186,27 +186,21 @@ export default function Home() {
               ABOUT <br /> TEAM
             </TYPE.label>
             <AutoColumn gap="42px">
-              <TYPE.label fontSize={18} color="white">
+              {/* <TYPE.label fontSize={18} color="white">
                 In 2022, Five friends launched the HashPunk, and they tried to build a new visual aesthetic.{' '}
-              </TYPE.label>
+              </TYPE.label> */}
               <AutoColumn gap="lg">
-                <TYPE.label fontSize={18} color="white">
-                  ◆ Corp Function
+                <TYPE.label fontSize={18} width="770px" color="white">
+                  ◆ Corp Function Shanghai
                 </TYPE.label>
                 <TYPE.label fontSize={18} color="white">
-                  ◆ Mrs. Bonnie blue
+                  ◆ Hashkey DEX
                 </TYPE.label>
                 <TYPE.label fontSize={18} color="white">
-                  ◆ Mr. Zhi
+                  ◆ Hashkey Pro
                 </TYPE.label>
                 <TYPE.label fontSize={18} color="white">
-                  ◆ Mr. YAO
-                </TYPE.label>
-                <TYPE.label fontSize={18} color="white">
-                  ◆ Mr. Jack Quan
-                </TYPE.label>
-                <TYPE.label fontSize={18} color="white">
-                  ◆ Mrs. Shuya
+                  ◆ Hashquark
                 </TYPE.label>
               </AutoColumn>
             </AutoColumn>
@@ -263,12 +257,12 @@ export default function Home() {
             </TYPE.label>
             <RowBetween>
               <AutoColumn gap="42px">
-                <TYPE.label fontSize={24} width="720px" color="white">
+                <TYPE.label fontSize={20} lineHeight={1.5} width="720px" color="white">
                   This website is only for HashKey Shanghai technical team members, intended to motivate them to
                   participate in internal activities. The criteria for obtaining H-value or related digital collectibles
-                  casting qualifications are specified in the Shanghai technical team member manual.
-                  <br />
-                  The digital collectibles cast by employees through this website only have collection value, and
+                  casting qualifications are specified in the Shanghai technical team employee handbook.
+                  <br /> <br />
+                  The digital collectibles minted by employees through this website only have collection value, and
                   employees are not allowed to engage in any type of transaction related to the digital collectibles,
                   including listing the digital collectibles obtained on digital collectible trading platforms for sale.
                   The company reserves the right to modify or terminate the activity rules and the duration of the
@@ -295,8 +289,8 @@ export default function Home() {
             <Image src={Cat} width="47" height="40" marginX={50} />
             <Line width={90} />
           </Row>
-          <Row justify="center" marginTop={10}>
-            <TYPE.label fontSize={16} color="white">
+          <Row justify="center" marginTop={40}>
+            <TYPE.label fontSize={20} lineHeight={1.5} color="white">
               All rights reserved by Shanghai tech team
             </TYPE.label>
           </Row>

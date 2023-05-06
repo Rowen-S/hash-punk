@@ -210,12 +210,12 @@ export const ThemedBackground = styled.div<{ backgroundColor?: string | undefine
 
 export const FixedGlobalStyle = createGlobalStyle`
 html, input, textarea, button {
-  font-family: 'Lilita','Inter', sans-serif;
+  font-family: system-ui, -apple-system, Helvetica Neue, Arial, sans-serif;
   font-display: fallback;
 }
 @supports (font-variation-settings: normal) {
   html, input, textarea, button {
-    font-family: 'Lilita','Inter var', sans-serif;
+    font-family: system-ui, -apple-system, Helvetica Neue, Arial, sans-serif;
   }
 }
 html,
