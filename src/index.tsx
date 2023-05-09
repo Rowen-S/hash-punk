@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { NetworkContextName } from './constants/misc'
 import { LanguageProvider } from './i18n'
 import App from 'pages/App'
@@ -63,7 +63,7 @@ ReactDOM.render(
   <StrictMode>
     <FixedGlobalStyle />
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <LanguageProvider>
           <Web3ReactProvider getLibrary={getLibrary}>
             <Web3ProviderNetwork getLibrary={getLibrary}>
@@ -75,7 +75,7 @@ ReactDOM.render(
             </Web3ProviderNetwork>
           </Web3ReactProvider>
         </LanguageProvider>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   </StrictMode>,
   document.getElementById('root')
