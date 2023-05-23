@@ -11,6 +11,7 @@ import Circle from 'assets/images/blue-loader.svg'
 
 import Hvalue from 'assets/images/hvalue.png'
 import Card from 'components/Card'
+import { AutoColumn } from 'components/Column'
 
 const VerticalRow = styled(Row)`
   flex-flow: row wrap;
@@ -78,13 +79,12 @@ export default function Mine() {
       {Number(luckyPassBal) && Number(luckyPassBal) > 0 ? (
         <>
           <TYPE.mediumHeader>LuckyPass</TYPE.mediumHeader>
-          <VerticalRow>
-            {[...new Array(Number(luckyPassBal))].map((x) => (
-              <VerticalCard key={x}>
-                <img src={'/preview/luckyPass.gif'} width="100%" height={'auto'} />
-              </VerticalCard>
-            ))}
-          </VerticalRow>
+          <VerticalCard>
+            <AutoColumn gap="sm">
+              <img src={'/preview/luckyPass.gif'} width="100%" height={'auto'} />
+              <TYPE.largeHeader textAlign={'center'}>X {Number(luckyPassBal)}</TYPE.largeHeader>
+            </AutoColumn>
+          </VerticalCard>
         </>
       ) : null}
 
@@ -92,11 +92,12 @@ export default function Mine() {
         <>
           <TYPE.mediumHeader>H Value</TYPE.mediumHeader>
           <VerticalRow>
-            {[...new Array(Number(hVBal))].map((x) => (
-              <VerticalCard key={x}>
+            <VerticalCard>
+              <AutoColumn gap="sm">
                 <img src={Hvalue} width="100%" height={'auto'} />
-              </VerticalCard>
-            ))}
+                <TYPE.largeHeader textAlign={'center'}>X{Number(hVBal)}</TYPE.largeHeader>
+              </AutoColumn>
+            </VerticalCard>
           </VerticalRow>
         </>
       ) : null}
