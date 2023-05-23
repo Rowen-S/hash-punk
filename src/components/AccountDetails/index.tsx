@@ -15,6 +15,7 @@ import { ButtonSecondary } from '../Button'
 import { ExternalLink as LinkIcon } from 'react-feather'
 import { ExternalLink } from '../../theme'
 import { Trans } from '@lingui/macro'
+import { useHistory } from 'react-router-dom'
 
 const HeaderRow = styled.div`
   ${({ theme }) => theme.flexRowNoWrap};
@@ -181,6 +182,7 @@ interface AccountDetailsProps {
 
 export default function AccountDetails({ toggleWalletModal, ENSName, openOptions }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
+  const history = useHistory()
   function formatConnectorName() {
     const { ethereum } = window
     const isMetaMask = !!(ethereum && ethereum.isMetaMask)
@@ -233,6 +235,7 @@ export default function AccountDetails({ toggleWalletModal, ENSName, openOptions
                     <WalletAction
                       style={{ fontSize: '.825rem', fontWeight: 400, marginRight: '8px' }}
                       onClick={() => {
+                        history.push('/')
                         ;(connector as any).close()
                       }}
                     >
