@@ -186,7 +186,7 @@ export default function Lottery() {
         })
       }
     }
-  }, [mintErrorMessage, minthash, punkContract, amount, isHvalue, addTransaction])
+  }, [amount, isHvalue, balanceOfH, balanceOfLucky, minthash, mintErrorMessage, punkContract, addTransaction])
 
   return (
     <LotteryWrapper>
@@ -217,8 +217,8 @@ export default function Lottery() {
               <Toggle
                 id="toggle-mint-type-mode-button"
                 isActive={isHvalue}
-                checked={'Hvalue'}
-                unchecked={'Pass'}
+                checked={'HValue'}
+                unchecked={'LuckyPass'}
                 toggle={
                   isHvalue
                     ? () => {

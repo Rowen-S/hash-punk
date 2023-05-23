@@ -102,7 +102,7 @@ const ActivitySwitcher = ({
         onClick={() => (showActivity.isHolidayToggled || showActivity.isRareToggled) && history.push('/personal')}
         showActivity={!showActivity.isHolidayToggled && !showActivity.isRareToggled}
       >
-        My Hashpunk
+        My Asset
       </GeneralButtonOutlined>
       <GeneralButtonOutlined
         onClick={() => !showActivity.isHolidayToggled && history.push('/personal/holiday')}

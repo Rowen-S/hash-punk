@@ -1,13 +1,16 @@
 import Row from 'components/Row'
 import styled from 'styled-components/macro'
 import NoneImg from 'assets/images/noneImg.png'
-import { useHashPunkContract } from 'hooks/useContract'
+import { useHashPunkContract, useHVlaueContract } from 'hooks/useContract'
 import { useSingleCallResult, useSingleContractMultipleData } from 'state/multicall/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useMemo } from 'react'
 import { CollectionImage } from 'components/TokenInterface'
-import { CustomLightSpinner } from 'theme'
+import { CustomLightSpinner, TYPE } from 'theme'
 import Circle from 'assets/images/blue-loader.svg'
+
+import Hvalue from 'assets/images/hvalue.png'
+import Card from 'components/Card'
 
 const VerticalRow = styled(Row)`
   flex-flow: row wrap;
@@ -26,9 +29,17 @@ const DataLoader = styled.div`
   height: 90px;
   margin: auto;
 `
+
+const VerticalCard = styled(Card)`
+  flex: 0 0 25%;
+  max-width: 25%;
+  padding-left: 8px;
+  padding-right: 8px;
+`
 export default function Mine() {
   const { account } = useActiveWeb3React()
   const hPunkContract = useHashPunkContract()
+  const hValueContract = useHVlaueContract()
 
   const maxSupply = useSingleCallResult(hPunkContract, 'maxSupply')?.result?.[0]
 
@@ -48,6 +59,12 @@ export default function Mine() {
     [callOwner, account]
   )
 
+  //  LuckyPass
+
+  const luckyPassBal = useSingleCallResult(hValueContract, 'balanceOf', [account ?? '', 1])?.result?.[0]
+
+  const hVBal = useSingleCallResult(hValueContract, 'balanceOf', [account ?? '', 2])?.result?.[0]
+
   if (isLoading) {
     return (
       <DataLoader>
@@ -58,11 +75,40 @@ export default function Mine() {
 
   return (
     <>
+      {Number(luckyPassBal) && Number(luckyPassBal) > 0 ? (
+        <>
+          <TYPE.mediumHeader>LuckyPass</TYPE.mediumHeader>
+          <VerticalRow>
+            {[...new Array(Number(luckyPassBal))].map((x) => (
+              <VerticalCard key={x}>
+                <img src={'/preview/luckyPass.gif'} width="100%" height={'auto'} />
+              </VerticalCard>
+            ))}
+          </VerticalRow>
+        </>
+      ) : null}
+
+      {Number(hVBal) && Number(hVBal) > 0 ? (
+        <>
+          <TYPE.mediumHeader>H Value</TYPE.mediumHeader>
+          <VerticalRow>
+            {[...new Array(Number(hVBal))].map((x) => (
+              <VerticalCard key={x}>
+                <img src={Hvalue} width="100%" height={'auto'} />
+              </VerticalCard>
+            ))}
+          </VerticalRow>
+        </>
+      ) : null}
+
       {isValid ? (
         callOwnerData.length > 0 ? (
-          <VerticalRow>
-            <CollectionImage tokenIds={callOwnerData} />
-          </VerticalRow>
+          <>
+            <TYPE.mediumHeader>Hash Punk</TYPE.mediumHeader>
+            <VerticalRow>
+              <CollectionImage tokenIds={callOwnerData} />
+            </VerticalRow>
+          </>
         ) : (
           <Nothing src={NoneImg} />
         )
