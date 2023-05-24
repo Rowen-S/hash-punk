@@ -23,6 +23,13 @@ const VerticalRow = styled(Row)`
 const Nothing = styled.img`
   display: block;
   margin: auto;
+  width: 30%;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    width: 50%
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 70%
+  `};
 `
 const DataLoader = styled.div`
   display: block;
