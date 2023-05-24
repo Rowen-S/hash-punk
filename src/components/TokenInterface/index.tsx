@@ -67,9 +67,7 @@ export function CollectionImage({ tokenIds }: { tokenIds: number[] }) {
       {nftList?.map(({ name, image, edition }) => (
         <VerticalCard key={name}>
           <MineImg src={image.includes('ipfs://') ? uriToHttp(image)[0] : image} />
-          <TYPE.body color={'blue4'} textAlign="center">
-            #{edition}
-          </TYPE.body>
+          <TYPE.body textAlign="center"># {edition}</TYPE.body>
         </VerticalCard>
       ))}
     </>

@@ -60,6 +60,7 @@ const LogoWrapper = styled.div`
   background: url(${Light}) no-repeat;
   background-position: top;
   background-size: 100% 50%;
+  margin-left: 10%;
 `
 
 const MintWrapper = styled(AutoColumn)`
@@ -102,6 +103,12 @@ const MintInputOption = styled.input`
   border-radius: 8px;
   background-color: transparent;
   text-align: center;
+`
+
+const LogArbing = styled(AbsImg)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: none;
+  `};
 `
 
 export default function Lottery() {
@@ -197,14 +204,14 @@ export default function Lottery() {
         errorMessage={mintErrorMessage}
       />
       <MintBodyWrapper>
-        <AbsImg src={Person} height="40%" left="0" bottom="0" zIndex={-1} />
+        <LogArbing src={Person} height="40%" left="0" bottom="0" zIndex={-1} />
 
         <LogoWrapper>
           <Logo viewBox="0 0 190 40" width="100%" height="240px" title="logo" />
         </LogoWrapper>
 
         <MintWrapper gap="40px">
-          <TYPE.subHeader fontWeight={'bold'}>
+          <TYPE.subHeader fontWeight={'bold'} lineHeight="1.5">
             3,000 unique collectible characters with proof of ownership stored on the Matic blockchain. Each one is
             unique, and each one of them can be officially owned by a single person on the Matic blockchain.
           </TYPE.subHeader>
