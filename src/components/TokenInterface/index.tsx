@@ -17,13 +17,12 @@ const VerticalCard = styled(Card)`
   max-width: 25%;
   padding-left: 8px;
   padding-right: 8px;
+  border-radius: unset;
 `
 
 const MineImg = styled.img`
   width: 100%;
   height: auto;
-  border-radius: 24px;
-  border: 2px solid #000000;
   margin-bottom: 16px;
 `
 

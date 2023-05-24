@@ -9,7 +9,7 @@ import { CollectionImage } from 'components/TokenInterface'
 import { CustomLightSpinner, TYPE } from 'theme'
 import Circle from 'assets/images/blue-loader.svg'
 
-import Hvalue from 'assets/images/hvalue.png'
+import Hvalue from 'assets/images/h-value.png'
 import Card from 'components/Card'
 import { AutoColumn } from 'components/Column'
 
@@ -74,6 +74,10 @@ export default function Mine() {
     )
   }
 
+  if (isValid && !Number(luckyPassBal) && !Number(hVBal) && !callOwnerData.length) {
+    return <Nothing src={NoneImg} />
+  }
+
   return (
     <>
       {Number(luckyPassBal) && Number(luckyPassBal) > 0 ? (
@@ -82,7 +86,7 @@ export default function Mine() {
           <VerticalCard>
             <AutoColumn gap="sm">
               <img src={'/preview/luckyPass.gif'} width="100%" height={'auto'} />
-              <TYPE.largeHeader textAlign={'center'}>X {Number(luckyPassBal)}</TYPE.largeHeader>
+              <TYPE.largeHeader textAlign={'center'}>x {Number(luckyPassBal)}</TYPE.largeHeader>
             </AutoColumn>
           </VerticalCard>
         </>
@@ -95,24 +99,20 @@ export default function Mine() {
             <VerticalCard>
               <AutoColumn gap="sm">
                 <img src={Hvalue} width="100%" height={'auto'} />
-                <TYPE.largeHeader textAlign={'center'}>X{Number(hVBal)}</TYPE.largeHeader>
+                <TYPE.largeHeader textAlign={'center'}>x {Number(hVBal)}</TYPE.largeHeader>
               </AutoColumn>
             </VerticalCard>
           </VerticalRow>
         </>
       ) : null}
 
-      {isValid ? (
-        callOwnerData.length > 0 ? (
-          <>
-            <TYPE.mediumHeader>Hash Punk</TYPE.mediumHeader>
-            <VerticalRow>
-              <CollectionImage tokenIds={callOwnerData} />
-            </VerticalRow>
-          </>
-        ) : (
-          <Nothing src={NoneImg} />
-        )
+      {isValid && callOwnerData.length > 0 ? (
+        <>
+          <TYPE.mediumHeader>Hash Punk</TYPE.mediumHeader>
+          <VerticalRow>
+            <CollectionImage tokenIds={callOwnerData} />
+          </VerticalRow>
+        </>
       ) : null}
     </>
   )
