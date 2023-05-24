@@ -143,7 +143,7 @@ export default function Home() {
                 <br />
                 and fun things.
               </TYPE.largeHeader>
-              <TYPE.label color="white">
+              <TYPE.label color="white" fontWeight={500} lineHeight="1.5">
                 3,000 unique collectible characters with proof of ownership stored <br /> on the Matic blockchain. No
                 two are exactly alike, and each one <br /> of them can be officially owned by a single person on the
                 Matic <br /> blockchain.
@@ -211,16 +211,14 @@ export default function Home() {
             <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
               ABOUT <br /> H VALUE
             </TYPE.label>
-            <RowBetween>
-              <AutoColumn gap="42px">
-                <TYPE.label fontSize={24} width="480px" color="white">
-                  &quot;H-Value&#34; is a reward mechanism that can be obtained by participating in internal activities.
-                  <br />
-                  <br />
-                  You can exchange 50 H-Values for one HashPunk. If you exchange for a rare HashPunk, you will receive
-                  an additional surprise.
-                </TYPE.label>
-              </AutoColumn>
+            <RowBetween align="unset">
+              <TYPE.white fontSize={20} lineHeight="1.5" width="480px">
+                &quot;H-Value&#34; is a reward mechanism that can be obtained by participating in internal activities.
+                <br />
+                <br />
+                You can exchange 50 H-Values for one HashPunk. If you exchange for a rare HashPunk, you will receive an
+                additional surprise.
+              </TYPE.white>
               <AutoColumn>
                 <img src={Hvalue} width={240} height={240} />
               </AutoColumn>
@@ -234,16 +232,14 @@ export default function Home() {
             <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
               ABOUT <br /> LUCKYPASS
             </TYPE.label>
-            <RowBetween>
-              <AutoColumn gap="42px">
-                <TYPE.label fontSize={24} width="480px" color="white">
-                  &quot;LuckyPass&#34; is another type of reward card that can be obtained by participating in internal
-                  activities.
-                  <br />
-                  <br />
-                  You can mint one Hashpunk by collecting five &quot;LuckyPass&#34; cards.
-                </TYPE.label>
-              </AutoColumn>
+            <RowBetween align="unset">
+              <TYPE.white fontSize={20} lineHeight="1.5" width="480px">
+                &quot;LuckyPass&#34; is another type of reward card that can be obtained by participating in internal
+                activities.
+                <br />
+                <br />
+                You can mint one Hashpunk by collecting five &quot;LuckyPass&#34; cards.
+              </TYPE.white>
               <AutoColumn>
                 <img src={'/preview/luckyPass.gif'} width={240} height={240} />
               </AutoColumn>
@@ -253,7 +249,7 @@ export default function Home() {
         <HomeAboutContent>
           <RowBetween marginBottom={100} marginTop={85}>
             <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
-              Statement
+              STATEMENT
             </TYPE.label>
             <RowBetween>
               <AutoColumn gap="42px">
@@ -285,12 +281,12 @@ export default function Home() {
           </RowBetween>
           <Image src={Twitter} margin="0px auto 30px auto" />
           <Row justify="center">
-            <Line width={90} />
+            {/* <Line width={90} /> */}
             <Image src={Cat} width="47" height="40" marginX={50} />
-            <Line width={90} />
+            {/* <Line width={90} /> */}
           </Row>
           <Row justify="center" marginTop={40}>
-            <TYPE.label fontSize={16} lineHeight={1.5} color="white">
+            <TYPE.label fontSize={16} lineHeight={1.5} opacity="0.5" color="white">
               All rights reserved by Shanghai tech team
             </TYPE.label>
           </Row>
