@@ -43,8 +43,9 @@ const qAndA = [
     q: `2. Do i use another wallet address to Mint?`,
     a: (
       <>
-        No, Hashpunk NFT will be subject to whitelist restrictions, and users can only receive H value and
-        <br /> NFT MINT with the unique wallet address of the HashkeyMe wallet.
+        Hashpunk NFTs will be subject to whitelist restrictions, meaning that users can only receive H value and
+        <br /> NFT MINT using the unique wallet address of the HashkeyMe wallet or wallets that support the
+        WalletConnect protocol.
       </>
     ),
   },
