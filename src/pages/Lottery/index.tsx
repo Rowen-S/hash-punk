@@ -270,8 +270,15 @@ export default function Lottery() {
               Change Network
             </ButtonPrimary>
           ) : (
-            <ButtonPrimary $borderRadius="8px" onClick={exchangeNFT}>
-              Draw
+            <ButtonPrimary
+              $borderRadius="8px"
+              disabled
+              onClick={() => {
+                console.log(exchangeNFT)
+              }}
+            >
+              {/* Draw */}
+              Coming Soon
             </ButtonPrimary>
           )}
         </MintWrapper>
