@@ -27,47 +27,55 @@ const MineImg = styled.img`
 `
 
 export function CollectionImage({ tokenIds }: { tokenIds: number[] }) {
-  const hPunkContract = useHashPunkContract()
-  const [nftList, setNftList] = useState<TokenIpfsJson[]>()
+  // const hPunkContract = useHashPunkContract()
+  // const [nftList, setNftList] = useState<TokenIpfsJson[]>()
 
-  const tokenURIs = useSingleContractMultipleData(
-    hPunkContract,
-    'tokenURI',
-    tokenIds.map((id) => [id])
-  )
+  // QmaheBsm2uSwdbtJDUgvJHg1pZVoL65JAFGbA7goQGUsPC
+  // console.log(tokenIds)
 
-  const isValid = useMemo(() => tokenURIs.some(({ valid }) => valid), [tokenURIs])
-  const isResult = useMemo(() => tokenURIs.some(({ result }) => result), [tokenURIs])
+  // const tokenURIs = useSingleContractMultipleData(
+  //   hPunkContract,
+  //   'tokenURI',
+  //   tokenIds.map((id) => [id])
+  // )
 
-  const tokenURIsData = useMemo(
-    () => isValid && isResult && tokenURIs.map(({ result }) => result?.[0]),
-    [tokenURIs, isValid, isResult]
-  )
+  // const isValid = useMemo(() => tokenURIs.some(({ valid }) => valid), [tokenURIs])
+  // const isResult = useMemo(() => tokenURIs.some(({ result }) => result), [tokenURIs])
 
-  const feach = useMemo(() => {
-    if (tokenURIsData && tokenURIsData.length > 0) return true
-    return false
-  }, [tokenURIsData])
+  // const tokenURIsData = useMemo(
+  //   () => isValid && isResult && tokenURIs.map(({ result }) => result?.[0]),
+  //   [tokenURIs, isValid, isResult]
+  // )
 
-  useEffect(() => {
-    if (tokenURIsData && tokenURIsData.length > 0) {
-      const list: any[] = []
-      tokenURIsData.map((t) => {
-        list.push(get(t.includes('ipfs://') ? uriToHttp(t)[0] : t))
-      })
-      Promise.all(list).then((item) => {
-        setNftList(item)
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feach])
+  // const feach = useMemo(() => {
+  //   if (tokenURIsData && tokenURIsData.length > 0) return true
+  //   return false
+  // }, [tokenURIsData])
+
+  // useEffect(() => {
+  //   if (tokenURIsData && tokenURIsData.length > 0) {
+  //     const list: any[] = []
+  //     tokenURIsData.map((t) => {
+  //       list.push(get(t.includes('ipfs://') ? uriToHttp(t)[0] : t))
+  //     })
+  //     Promise.all(list).then((item) => {
+  //       setNftList(item)
+  //     })
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [feach])
 
   return (
     <>
-      {nftList?.map(({ name, image, edition }) => (
-        <VerticalCard key={name}>
-          <MineImg src={image.includes('ipfs://') ? uriToHttp(image)[0] : image} />
-          <TYPE.body textAlign="center"># {edition}</TYPE.body>
+      {tokenIds?.map((item) => (
+        <VerticalCard key={item}>
+          <MineImg
+            src={
+              uriToHttp(`ipfs://QmaheBsm2uSwdbtJDUgvJHg1pZVoL65JAFGbA7goQGUsPC/${item}.png`)[0] ||
+              uriToHttp(`ipfs://QmaheBsm2uSwdbtJDUgvJHg1pZVoL65JAFGbA7goQGUsPC/${item}.png`)[1]
+            }
+          />
+          <TYPE.body textAlign="center"># {item}</TYPE.body>
         </VerticalCard>
       ))}
     </>
