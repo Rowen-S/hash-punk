@@ -1,0 +1,11 @@
+<svg id="Regular_1.5px_arrow_forward" data-name="Regular 1.5px/arrow_forward" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <rect id="Regular_1.5px_arrow_forward_background" data-name="Regular 1.5px/arrow_forward background" class="cls-1" width="16" height="16"/>
+  <path id="Union" d="M6.813,9.52a.5.5,0,0,0,.707,0l3.862-3.862a1.167,1.167,0,0,0,0-1.65L7.52.146a.5.5,0,1,0-.707.707l3.48,3.48H.5a.5.5,0,0,0,0,1h9.793l-3.48,3.48A.5.5,0,0,0,6.813,9.52Z" transform="translate(2.167 3.167)"/>
+</svg>

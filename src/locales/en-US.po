@@ -1,0 +1,191 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Account"
+msgstr "Account"
+
+#: src/components/WalletModal/index.tsx
+msgid "Back"
+msgstr "Back"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Change"
+msgstr "Change"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Close"
+msgstr "Close"
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "Closed"
+msgstr "Closed"
+
+#: src/components/TransactionSubmissionModal/VoteModalFooter.tsx
+msgid "Confirm"
+msgstr "Confirm"
+
+#: src/components/ModalViews/index.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Confirm this transaction in your wallet"
+msgstr "Confirm this transaction in your wallet"
+
+#: src/components/WalletModal/index.tsx
+msgid "Connect wallet"
+msgstr "Connect wallet"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Connected with {name}"
+msgstr "Connected with {name}"
+
+#: src/components/AccountDetails/Copy.tsx
+msgid "Copied"
+msgstr "Copied"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Copy Address"
+msgstr "Copy Address"
+
+#: src/components/AccountDetails/index.tsx
+msgid "Disconnect"
+msgstr "Disconnect"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Dismiss"
+msgstr "Dismiss"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Error"
+msgstr "Error"
+
+#: src/components/WalletModal/PendingView.tsx
+#: src/components/WalletModal/index.tsx
+msgid "Error connecting"
+msgstr "Error connecting"
+
+#: src/components/WalletModal/index.tsx
+msgid "Error connecting. Try refreshing the page."
+msgstr "Error connecting. Try refreshing the page."
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "In range"
+msgstr "In range"
+
+#: src/components/WalletModal/PendingView.tsx
+msgid "Initializing..."
+msgstr "Initializing..."
+
+#: src/components/WalletModal/index.tsx
+msgid "Install Metamask"
+msgstr "Install Metamask"
+
+#: src/components/Menu/index.tsx
+msgid "Menu"
+msgstr "Menu"
+
+#: src/components/Web3ReactManager/index.tsx
+msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
+msgstr "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "Out of range"
+msgstr "Out of range"
+
+#: src/components/WalletUnLock/index.tsx
+msgid "PLEASE CONNECT YOUR WALLET"
+msgstr "PLEASE CONNECT YOUR WALLET"
+
+#: src/components/Menu/index.tsx
+msgid "Personal"
+msgstr "Personal"
+
+#: src/components/WalletModal/index.tsx
+msgid "Please connect to the appropriate Ethereum network."
+msgstr "Please connect to the appropriate Ethereum network."
+
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/TransactionSubmissionModal/index.tsx
+msgid "Return"
+msgstr "Return"
+
+#: src/components/TransactionSubmissionModal/index.tsx
+msgid "Submitting Transaction"
+msgstr "Submitting Transaction"
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
+msgstr "The price of this pool is outside of your selected range. Your position is not currently earning fees."
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "The price of this pool is within your selected range. Your position is currently earning fees."
+msgstr "The price of this pool is within your selected range. Your position is currently earning fees."
+
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/TransactionSubmissionModal/index.tsx
+msgid "Transaction Submitted"
+msgstr "Transaction Submitted"
+
+#: 
+#: 
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Transaction confirmed"
+#~ msgstr "Transaction confirmed"
+
+#: 
+#: 
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Transaction failed"
+#~ msgstr "Transaction failed"
+
+#: src/components/WalletModal/PendingView.tsx
+msgid "Try Again"
+msgstr "Try Again"
+
+#: src/components/Menu/index.tsx
+msgid "Twitter"
+msgstr "Twitter"
+
+#: src/components/TransactionSubmissionModal/index.tsx
+msgid "View on Etherscan"
+msgstr "View on Etherscan"
+
+#: src/components/AccountDetails/index.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "View on Explorer"
+msgstr "View on Explorer"
+
+#: src/components/ModalViews/index.tsx
+msgid "View transaction on Explorer"
+msgstr "View transaction on Explorer"
+
+#: src/components/TransactionConfirmationModal/index.tsx
+msgid "Waiting For Confirmation"
+msgstr "Waiting For Confirmation"
+
+#: src/components/WalletModal/index.tsx
+msgid "Wrong Network"
+msgstr "Wrong Network"
+
+#: src/components/Badge/RangeBadge.tsx
+msgid "Your position has 0 liquidity, and is not earning fees."
+msgstr "Your position has 0 liquidity, and is not earning fees."
+
+#: src/components/Textarea/index.tsx
+msgid "{label}"
+msgstr "{label}"

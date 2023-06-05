@@ -1,0 +1,30 @@
+{
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "homepage_url": "https://punk.hashkey.com/",
+  "providedBy": {
+    "name": "Hash Punk",
+    "url": "https://punk.hashkey.com/"
+  },
+  "icons": [
+    {
+      "src": "./192x192_App_Icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./512x512_App_Icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "portrait",
+  "name": "Hash Punk",
+  "description": "HValue on-chain is an internal web3.0 experimental projet by hashkey Talents land,where users can use their own NFTs to exchange corresponding rewards",
+  "iconPath": "./images/512x512_App_Icon.png",
+  "short_name": "Hash Punk",
+  "start_url": ".",
+  "theme_color": "#000000"
+}
