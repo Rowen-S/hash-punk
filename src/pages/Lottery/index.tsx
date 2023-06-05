@@ -90,6 +90,8 @@ const MiddleDarkCard = styled(DarkCard)`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
   & > img {
     position: absolute;
     width: 600px;
