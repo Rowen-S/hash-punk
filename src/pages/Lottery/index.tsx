@@ -90,12 +90,15 @@ const MiddleDarkCard = styled(DarkCard)`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
   overflow: hidden;
   & > img {
     position: absolute;
     width: 600px;
+    z-index: auto;
   }
+`
+const MintedOption = styled(AutoColumn)`
+  z-index: 5;
 `
 const MintInputOption = styled.input`
   flex: 1 1 auto;
@@ -223,7 +226,7 @@ export default function Lottery() {
           <MiddleDarkCard>
             <Sequential />
           </MiddleDarkCard>
-          <AutoColumn gap="sm">
+          <MintedOption gap="sm">
             <RowBetween>
               <TYPE.black>Minted</TYPE.black>
               <Toggle
@@ -257,7 +260,7 @@ export default function Lottery() {
                 onChange={(val) => handleAmountInput(val.target.value)}
               />
             </RowBetween>
-          </AutoColumn>
+          </MintedOption>
           {!account ? (
             <ButtonLight $borderRadius="8px" onClick={toggleWalletModal}>
               Connect Wallet
