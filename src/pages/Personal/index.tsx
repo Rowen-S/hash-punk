@@ -1,4 +1,3 @@
-import { RowBetween } from 'components/Row'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
 import { AutoColumn } from 'components/Column'
@@ -18,15 +17,23 @@ const PersonalWrapper = styled(AutoColumn)`
   width: 100%;
   height: 100%;
 `
-const BenefitCenter = styled(RowBetween)`
+const BenefitCenter = styled.div`
+  display: flex;
   position: relative;
   border-bottom: 1px solid ${({ theme }) => theme.black};
+  height: 192px;
 `
 
 const BenefitImg = styled.img`
+  position: absolute;
   width: 408px;
-  height: 192px;
   right: 46px;
+  bottom: 0;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%;
+    height: unset;
+    z-index: -1;
+  `};
 `
 
 const ButtonBox = styled(Box)`
@@ -53,6 +60,10 @@ const RareButtonOutlined = styled(ButtonOutlined)<{ showActivity: boolean }>`
     border: none;
     background: linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%);
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 4px;
+  `};
 `
 const GeneralButtonOutlined = styled(RareButtonOutlined)`
   background: ${({ showActivity }) => showActivity && '#2e03f3'};
@@ -72,7 +83,9 @@ export default function Personal() {
   return (
     <PersonalWrapper gap="54px">
       <BenefitCenter>
-        <TYPE.largeHeader>Benefit Center</TYPE.largeHeader>
+        <TYPE.largeHeader alignSelf={'center'} color={['white', 'black']}>
+          Benefit Center
+        </TYPE.largeHeader>
         <BenefitImg src={Person} />
         <ActivitySwitcher
           showActivity={{
@@ -102,7 +115,7 @@ const ActivitySwitcher = ({
         onClick={() => (showActivity.isHolidayToggled || showActivity.isRareToggled) && history.push('/personal')}
         showActivity={!showActivity.isHolidayToggled && !showActivity.isRareToggled}
       >
-        My Asset
+        Asset
       </GeneralButtonOutlined>
       <GeneralButtonOutlined
         onClick={() => !showActivity.isHolidayToggled && history.push('/personal/holiday')}

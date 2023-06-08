@@ -50,6 +50,9 @@ const HeaderWrapper = styled.div`
   top: 0;
   z-index: 2;
 `
+const Marginer = styled.div`
+  margin-top: 5rem;
+`
 
 function App() {
   return (
@@ -77,6 +80,7 @@ function App() {
                 <Route component={RedirectPathToHomeOnly} />
               </Switch>
             </Web3ReactManager>
+            <Marginer />
           </BodyWrapper>
         </AppWrapper>
       </Suspense>

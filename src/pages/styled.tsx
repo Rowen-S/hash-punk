@@ -1,4 +1,4 @@
-import { Box } from 'rebass'
+import { Box, Image } from 'rebass'
 import styled, { keyframes } from 'styled-components/macro'
 import { StyledInternalLink } from 'theme'
 
@@ -136,11 +136,14 @@ export const Line = styled(Box)`
   background-color: ${({ theme }) => theme.white};
 `
 
-export const AbsImg = styled.img<{ left?: string; right?: string; top?: string; bottom?: string; zIndex?: number }>`
+export const AbsImg = styled(Image)<{ left?: string; right?: string; top?: string; bottom?: string; zIndex?: number }>`
   position: absolute;
   left: ${({ left }) => left ?? 'unset'};
   right: ${({ right }) => right ?? 'unset'};
   top: ${({ top }) => top ?? 'unset'};
   bottom: ${({ bottom }) => bottom ?? 'unset'};
   z-index: ${({ zIndex }) => zIndex ?? 'unset'};
+  & .art {
+    z-index: -1;
+  }
 `

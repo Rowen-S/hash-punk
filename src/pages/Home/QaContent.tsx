@@ -6,10 +6,13 @@ import { TYPE } from 'theme'
 import { Line } from 'pages/styled'
 import { animated, useSpring } from 'react-spring'
 import usePrevious from 'hooks/usePrevious'
-import { RowBetween } from 'components/Row'
+import Row from 'components/Row'
+
+const QaContentWrapper = styled(AutoColumn)`
+  width: fit-content;
+`
 
 const QaLine = styled(Line)`
-  // width: 245px;
   height: 1px;
   opacity: 0.3;
 `
@@ -20,8 +23,12 @@ const FaqHeaderIcon = styled(Add)<{ open: boolean }>`
   }
 `
 
-const FaqHeader = styled(RowBetween)`
+const FaqHeader = styled(Row)`
   cursor: pointer;
+  justify-content: space-between;
+  & > div {
+    max-width: 90%;
+  }
 `
 
 const Content = styled(animated.div)`
@@ -100,7 +107,7 @@ const qAndA = [
 export default function QaContent() {
   const [{ isOpen, sIndex }, setIsOpen] = useState<{ isOpen: boolean; sIndex: number }>({ isOpen: false, sIndex: -1 })
   return (
-    <AutoColumn gap="32px">
+    <QaContentWrapper gap="32px">
       <QaLine />
       {qAndA.map((item, index) => (
         <AutoColumn gap="16px" key={index}>
@@ -120,7 +127,7 @@ export default function QaContent() {
           <QaLine />
         </AutoColumn>
       ))}
-    </AutoColumn>
+    </QaContentWrapper>
   )
 }
 

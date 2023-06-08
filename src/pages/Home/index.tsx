@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
 import Row, { RowBetween } from 'components/Row'
 
-import { Image } from 'rebass/styled-components'
+import { Box, Image } from 'rebass/styled-components'
 import SwiperPage from './SwiperPage'
 import QaContent from './QaContent'
 
@@ -84,12 +84,23 @@ const HomeContent = styled.div`
   /* position: relative; */
   padding: 0 0 150px 0;
   background: ${({ theme }) => theme.black};
+  ${RowBetween} {
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      flex-direction: column;
+    `};
+  }
 `
 
 const HomeAboutContent = styled(AutoColumn)`
   max-width: 1200px;
   margin: 0px auto;
   position: relative;
+  padding: 1rem;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      ${RowBetween} {
+        flex-direction: column;
+      }
+  `};
 `
 
 const SwiperWrapper = styled(AutoColumn)`
@@ -103,26 +114,19 @@ export default function Home() {
         <BannerDiv />
       </BannerWrapper>
       <HomeAbout>
-        {/* <AbsImg src={GlobalBg} width="100%" height="80%" bottom="0" zIndex={0} /> */}
-
-        <AbsImg src={Triangle03} width="50%" height="610" right="0" top="1050px" bottom="50%" zIndex={1} />
-        <AbsImg src={Triangle02} width="32%" height="410" right="0" top="1050px" bottom="50%" zIndex={2} />
-        <AbsImg src={Triangle01} width="15%" height="215" right="0" top="1050px" bottom="50%" zIndex={3} />
+        <AbsImg src={Triangle03} width="50%" height="610px" right="0" top="1050px" bottom="50%" zIndex={1} />
+        <AbsImg src={Triangle02} width="32%" height="410px" right="0" top="1050px" bottom="50%" zIndex={2} />
+        <AbsImg src={Triangle01} width="15%" height="215px" right="0" top="1050px" bottom="50%" zIndex={3} />
         <HomeAboutContent gap="90px">
-          <TYPE.largeHeader fontSize={42} textAlign="center">
+          <TYPE.largeHeader fontSize={42} textAlign={['start', 'center']} style={{ zIndex: 2 }}>
             HashPunk is an experiment about web3
           </TYPE.largeHeader>
 
-          <AutoColumn gap="lg">
-            {/* <TYPE.black fontSize={18}>INCLUDE</TYPE.black>
-            <TYPE.black fontSize={18}>5000 UNIQUE</TYPE.black>
-            <TYPE.black fontSize={18}>ON MATIC</TYPE.black> */}
-          </AutoColumn>
           <Image
             src={LogoGreen}
             width="100%"
             height="250px"
-            marginTop={260}
+            marginTop={[100, 260]}
             sx={{
               zIndex: 1,
             }}
@@ -134,25 +138,27 @@ export default function Home() {
         </SwiperWrapper>
         <HomeAboutContent gap="53px">
           <RowBetween>
-            <TYPE.label fontSize={42} color="white">
+            <TYPE.label alignSelf={['flex-start', 'start']} fontSize={42} color="white">
               ART & <br /> PROJECT <br /> IN WEB3
             </TYPE.label>
-            <AutoColumn gap="21px">
-              <TYPE.largeHeader color="white">
-                We make good
-                <br />
-                and fun things.
-              </TYPE.largeHeader>
-              <TYPE.label color="white" fontWeight={500} lineHeight="1.5">
-                3,000 unique collectible characters with proof of ownership stored <br /> on the Matic blockchain. No
-                two are exactly alike, and each one <br /> of them can be officially owned by a single person on the
-                Matic <br /> blockchain.
-              </TYPE.label>
-            </AutoColumn>
+            <Box marginTop={[20, 0]}>
+              <AutoColumn gap="21px">
+                <TYPE.largeHeader color="white">
+                  We make good
+                  <br />
+                  and fun things.
+                </TYPE.largeHeader>
+                <TYPE.label color="white" fontWeight={500} lineHeight="1.5" style={{ zIndex: 1 }}>
+                  3,000 unique collectible characters with proof of ownership stored <br /> on the Matic blockchain. No
+                  two are exactly alike, and each one <br /> of them can be officially owned by a single person on the
+                  Matic <br /> blockchain.
+                </TYPE.label>
+              </AutoColumn>
+            </Box>
           </RowBetween>
-          <AbsImg src={Slash} height="373" right="0" top="250px" zIndex={0} />
-          <AbsImg src={Slash} height="373" right="0" top="347px" zIndex={0} />
-          <AbsImg src={Circle} width="116" height="116" right="0" top="190px" zIndex={0} />
+          <AbsImg className="art" src={Slash} height="373px" right="0" top="250px" zIndex={0} />
+          <AbsImg className="art" src={Slash} height="373px" right="0" top="347px" zIndex={0} />
+          <AbsImg className="art" src={Circle} width="116px" height="116px" right="0" top="190px" zIndex={0} />
 
           <Image
             src={LogoRed}
@@ -162,35 +168,24 @@ export default function Home() {
               zIndex: 1,
             }}
           />
-          <Row marginTop={250} />
-          {/* <TYPE.label fontSize={42} marginTop={-10} color="white">
-            About <br /> Author
-          </TYPE.label> */}
-          {/* <RowBetween marginTop={47} marginBottom={137}>
-            <Row width={'195px'} justify="center">
-              <Image src={Author} width="116px" height="197px" />
-            </Row>
-            <TYPE.label fontSize={18} marginRight={20} color="white">
-              A designer / <br />
-              A crypto Holder //
-              <br />
-              <br />
-              Maybe you know him, maybe you don&apos;t, but that&apos;s okay ///
-            </TYPE.label>
-          </RowBetween> */}
+          <Box marginTop={[0, 250]} />
         </HomeAboutContent>
         <Line />
         <HomeAboutContent>
-          <RowBetween marginBottom={100} marginTop={85}>
-            <TYPE.label width={450} fontSize={42} alignSelf="flex-start" color="white">
+          <Box
+            width={['100%', '640px']}
+            display={'flex'}
+            flexDirection={['column', 'row']}
+            justifyContent={'space-between'}
+            marginBottom={[80, 100]}
+            marginTop={[40, 85]}
+          >
+            <TYPE.label minWidth="unset" fontSize={42} alignSelf="flex-start" color="white">
               ABOUT <br /> TEAM
             </TYPE.label>
-            <AutoColumn gap="42px">
-              {/* <TYPE.label fontSize={18} color="white">
-                In 2022, Five friends launched the HashPunk, and they tried to build a new visual aesthetic.{' '}
-              </TYPE.label> */}
+            <Box marginTop={[20, 0]}>
               <AutoColumn gap="lg">
-                <TYPE.label fontSize={18} width="770px" color="white">
+                <TYPE.label fontSize={18} color="white">
                   ◆ Corp Function Shanghai
                 </TYPE.label>
                 <TYPE.label fontSize={18} color="white">
@@ -203,16 +198,16 @@ export default function Home() {
                   ◆ Hashquark
                 </TYPE.label>
               </AutoColumn>
-            </AutoColumn>
-          </RowBetween>
+            </Box>
+          </Box>
         </HomeAboutContent>
         <HomeAboutContent>
-          <RowBetween marginBottom={100} marginTop={85}>
+          <RowBetween marginBottom={[80, 100]} marginTop={[40, 85]}>
             <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
               ABOUT <br /> H VALUE
             </TYPE.label>
-            <RowBetween align="unset">
-              <TYPE.white fontSize={20} lineHeight="1.5" width="480px">
+            <RowBetween align="unset" marginTop={[20, 0]}>
+              <TYPE.white fontSize={20} lineHeight="1.5" width={['100%', '480px']}>
                 &quot;H-Value&#34; is a reward mechanism that can be obtained by participating in internal activities.
                 <br />
                 <br />
@@ -228,53 +223,46 @@ export default function Home() {
       </HomeAbout>
       <HomeContent>
         <HomeAboutContent>
-          <RowBetween marginBottom={100} marginTop={85}>
-            <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
+          <RowBetween marginBottom={[80, 100]} marginTop={[40, 85]}>
+            <TYPE.label width={['100%', 650]} fontSize={42} alignSelf="flex-start" color="white">
               ABOUT <br /> LUCKYPASS
             </TYPE.label>
-            <RowBetween align="unset">
-              <TYPE.white fontSize={20} lineHeight="1.5" width="480px">
+            <RowBetween align="unset" marginTop={[20, 0]}>
+              <TYPE.white fontSize={20} lineHeight="1.5" width={['100%', '480px']}>
                 &quot;LuckyPass&#34; is another type of reward card that can be obtained by participating in internal
                 activities.
                 <br />
                 <br />
                 You can mint one Hashpunk by collecting five &quot;LuckyPass&#34; cards.
               </TYPE.white>
-              <AutoColumn>
-                <img src={'/preview/luckyPass.gif'} width={240} height={240} />
-              </AutoColumn>
+              <Image marginTop={[20, 0]} src={'/preview/luckyPass.gif'} width={240} height={240} />
             </RowBetween>
           </RowBetween>
         </HomeAboutContent>
         <HomeAboutContent>
-          <RowBetween marginBottom={100} marginTop={85}>
-            <TYPE.label width={650} fontSize={42} alignSelf="flex-start" color="white">
+          <RowBetween marginBottom={[80, 100]} marginTop={[20, 85]}>
+            <TYPE.label width={['100%', 650]} fontSize={42} alignSelf="flex-start" color="white">
               STATEMENT
             </TYPE.label>
-            <RowBetween>
-              <AutoColumn gap="42px">
-                <TYPE.label fontSize={20} lineHeight={1.5} width="720px" color="white">
-                  This website is only for HashKey Shanghai technical team members, intended to motivate them to
-                  participate in internal activities. The criteria for obtaining H-value or related digital collectibles
-                  casting qualifications are specified in the Shanghai technical team employee handbook.
-                  <br /> <br />
-                  The digital collectibles minted by employees through this website only have collection value, and
-                  employees are not allowed to engage in any type of transaction related to the digital collectibles,
-                  including listing the digital collectibles obtained on digital collectible trading platforms for sale.
-                  The company reserves the right to modify or terminate the activity rules and the duration of the
-                  activity displayed on this website at any time.
-                </TYPE.label>
-              </AutoColumn>
-              {/* <AutoColumn>
-                <img src={'/preview/luckyPass.gif'} width={240} height={240} />
-              </AutoColumn> */}
-            </RowBetween>
+            <Row marginTop={[20, 0]}>
+              <TYPE.label fontSize={20} lineHeight={1.5} width="720px" color="white">
+                This website is only for HashKey Shanghai technical team members, intended to motivate them to
+                participate in internal activities. The criteria for obtaining H-value or related digital collectibles
+                casting qualifications are specified in the Shanghai technical team employee handbook.
+                <br /> <br />
+                The digital collectibles minted by employees through this website only have collection value, and
+                employees are not allowed to engage in any type of transaction related to the digital collectibles,
+                including listing the digital collectibles obtained on digital collectible trading platforms for sale.
+                The company reserves the right to modify or terminate the activity rules and the duration of the
+                activity displayed on this website at any time.
+              </TYPE.label>
+            </Row>
           </RowBetween>
         </HomeAboutContent>
         <Line />
         <HomeAboutContent>
-          <RowBetween marginBottom={100} marginTop={85}>
-            <TYPE.label fontSize={42} alignSelf="flex-start" color="white">
+          <RowBetween marginBottom={[80, 100]} marginTop={[40, 85]}>
+            <TYPE.label fontSize={42} marginBottom={[20, 0]} alignSelf={'flex-start'} color="white">
               FAQ
             </TYPE.label>
             <QaContent />

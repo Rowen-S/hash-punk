@@ -27,6 +27,9 @@ const HolidayDescWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
 `
 
 const ExchangeButton = styled(ButtonOutlined)`

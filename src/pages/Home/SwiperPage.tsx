@@ -44,8 +44,22 @@ export default function SwiperPage() {
   ]
   return (
     <Swipers
-      slidesPerView={4.5}
+      slidesPerView={1.2}
       spaceBetween={20}
+      breakpoints={{
+        480: {
+          slidesPerView: 2,
+        },
+        720: {
+          slidesPerView: 2.5,
+        },
+        1024: {
+          slidesPerView: 3.5,
+        },
+        1280: {
+          slidesPerView: 4.5,
+        },
+      }}
       freeMode={true}
       grabCursor={true}
       loop={true}
@@ -56,7 +70,7 @@ export default function SwiperPage() {
       {imgList.map((x) => (
         <SwiperSlide key={x.tokenId}>
           <SwiperBodyImg src={x.img} alt={'#' + x.tokenId} />
-          <TYPE.black fontSize={18} paddingTop={145} paddingBottom={24} textAlign={'center'}>
+          <TYPE.black fontSize={18} paddingTop={[60, 145]} paddingBottom={24} textAlign={'center'}>
             # {x.tokenId}
           </TYPE.black>
         </SwiperSlide>

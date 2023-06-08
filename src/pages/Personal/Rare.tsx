@@ -21,11 +21,10 @@ const RareCardBorder = styled.div`
   background: linear-gradient(180deg, rgba(255, 38, 179, 1) 0%, rgba(255, 179, 139, 1) 100%);
   border-radius: 8px;
   padding: 2px;
-  // background-clip: padding-box;
 `
 
 const RareCard = styled(Card)`
-  ${({ theme }) => theme.flexRowNoWrap};
+  /* ${({ theme }) => theme.flexRowNoWrap}; */
   border-radius: 8px;
   background: linear-gradient(87deg, #ff26b3 0%, #ffb38b 100%);
 `
@@ -34,6 +33,10 @@ const RareDescWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
 `
 
 const ExchangeButton = styled(ButtonOutlined)`
@@ -76,8 +79,6 @@ export default function Rare() {
 
   const [open, setOpen] = useState<boolean>(false)
   const [tokenId, setToken] = useState<number>(0)
-
-  console.log('tokenId:', tokenId)
 
   const [{ minting, minthash, mintErrorMessage }, setModal] = useState<{
     minting: boolean
