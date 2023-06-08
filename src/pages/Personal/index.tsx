@@ -11,47 +11,52 @@ import Rare from './Rare'
 import { useHistory, useLocation } from 'react-router-dom'
 
 const PersonalWrapper = styled(AutoColumn)`
-  position: relative;
   max-width: 1200px;
-  padding: 120px 0px 0px 16px;
+  padding: 120px 16px 5rem 16px;
   width: 100%;
   height: 100%;
 `
 const BenefitCenter = styled.div`
-  display: flex;
   position: relative;
+  display: flex;
   border-bottom: 1px solid ${({ theme }) => theme.black};
-  height: 192px;
+  justify-content: space-between;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    height: 166px;
+  `};
 `
 
 const BenefitImg = styled.img`
-  position: absolute;
   width: 408px;
+  height: 192px;
   right: 46px;
-  bottom: 0;
+  z-index: 1;
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 100%;
-    height: unset;
-    z-index: -1;
+    width: 60%;
+    height: 110px;
   `};
 `
 
 const ButtonBox = styled(Box)`
+  position: absolute;
   display: grid;
   grid-template-columns: repeat(3, auto);
-  column-gap: 12px;
-  position: absolute;
+  grid-gap: 12px;
   left: 0;
   bottom: 30px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    bottom: 10px;
+  `};
 `
 
 const RareButtonOutlined = styled(ButtonOutlined)<{ showActivity: boolean }>`
   color: ${({ theme, showActivity }) => (showActivity ? theme.white : theme.black)};
   background: ${({ showActivity }) =>
     showActivity ? 'linear-gradient(134deg, #ff26b3 0%, #ff42ab 20%, #ffb38b 100%)' : 'unset'};
-  border: ${({ showActivity }) => showActivity && 'none'};
+  border: 1px solid ${({ showActivity, theme }) => (showActivity ? 'none' : theme.bg3)};
+
   border-radius: 4px;
-  padding: 4px 10px;
+  padding: 8px 10px;
 
   &:hover,
   &:active {
@@ -62,7 +67,7 @@ const RareButtonOutlined = styled(ButtonOutlined)<{ showActivity: boolean }>`
   }
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 4px;
+    padding: 3px;
   `};
 `
 const GeneralButtonOutlined = styled(RareButtonOutlined)`
@@ -83,16 +88,17 @@ export default function Personal() {
   return (
     <PersonalWrapper gap="54px">
       <BenefitCenter>
-        <TYPE.largeHeader alignSelf={'center'} color={['white', 'black']}>
-          Benefit Center
-        </TYPE.largeHeader>
+        <AutoColumn>
+          <TYPE.largeHeader alignSelf={'center'}>Benefit Center</TYPE.largeHeader>
+
+          <ActivitySwitcher
+            showActivity={{
+              isRareToggled,
+              isHolidayToggled,
+            }}
+          />
+        </AutoColumn>
         <BenefitImg src={Person} />
-        <ActivitySwitcher
-          showActivity={{
-            isRareToggled,
-            isHolidayToggled,
-          }}
-        />
       </BenefitCenter>
       {isRareToggled ? <Rare /> : isHolidayToggled ? <Holiday /> : <Mine />}
     </PersonalWrapper>

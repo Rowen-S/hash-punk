@@ -73,6 +73,8 @@ export default function Mine() {
 
   const hVBal = useSingleCallResult(hValueContract, 'balanceOf', [account ?? '', 2])?.result?.[0]
 
+  console.log(callOwnerData, luckyPassBal, hVBal)
+
   if (isLoading) {
     return (
       <DataLoader>
@@ -81,7 +83,7 @@ export default function Mine() {
     )
   }
 
-  if (isValid && !Number(luckyPassBal) && !Number(hVBal) && !callOwnerData.length) {
+  if (!isLoading && !luckyPassBal && !hVBal && !callOwnerData.length) {
     return <Nothing src={NoneImg} />
   }
 

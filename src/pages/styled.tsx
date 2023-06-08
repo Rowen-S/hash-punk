@@ -143,7 +143,4 @@ export const AbsImg = styled(Image)<{ left?: string; right?: string; top?: strin
   top: ${({ top }) => top ?? 'unset'};
   bottom: ${({ bottom }) => bottom ?? 'unset'};
   z-index: ${({ zIndex }) => zIndex ?? 'unset'};
-  & .art {
-    z-index: -1;
-  }
 `

@@ -107,6 +107,12 @@ const SwiperWrapper = styled(AutoColumn)`
   margin: 110px 0;
 `
 
+const AboutImg = styled(AbsImg)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: none;
+  `};
+`
+
 export default function Home() {
   return (
     <HomeWrapper>
@@ -114,11 +120,11 @@ export default function Home() {
         <BannerDiv />
       </BannerWrapper>
       <HomeAbout>
-        <AbsImg src={Triangle03} width="50%" height="610px" right="0" top="1050px" bottom="50%" zIndex={1} />
-        <AbsImg src={Triangle02} width="32%" height="410px" right="0" top="1050px" bottom="50%" zIndex={2} />
-        <AbsImg src={Triangle01} width="15%" height="215px" right="0" top="1050px" bottom="50%" zIndex={3} />
+        <AboutImg src={Triangle03} width="50%" height="610px" right="0" top="1050px" bottom="50%" zIndex={1} />
+        <AboutImg src={Triangle02} width="32%" height="410px" right="0" top="1050px" bottom="50%" zIndex={2} />
+        <AboutImg src={Triangle01} width="15%" height="215px" right="0" top="1050px" bottom="50%" zIndex={3} />
         <HomeAboutContent gap="90px">
-          <TYPE.largeHeader fontSize={42} textAlign={['start', 'center']} style={{ zIndex: 2 }}>
+          <TYPE.largeHeader fontSize={42} textAlign={['start', 'center']}>
             HashPunk is an experiment about web3
           </TYPE.largeHeader>
 
