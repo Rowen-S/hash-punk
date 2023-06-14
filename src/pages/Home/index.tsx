@@ -113,6 +113,14 @@ const AboutImg = styled(AbsImg)`
   `};
 `
 
+const VideoCom = styled.video`
+  width: 65%;
+  margin: 0px auto;
+  z-index: 1;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%;
+  `};
+`
 export default function Home() {
   return (
     <HomeWrapper>
@@ -174,7 +182,12 @@ export default function Home() {
               zIndex: 1,
             }}
           />
-          <Box marginTop={[0, 250]} />
+
+          <VideoCom muted autoPlay loop>
+            <source src="/video/finalhd.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </VideoCom>
+          <Box marginTop={[0, 100]} />
         </HomeAboutContent>
         <Line />
         <HomeAboutContent>
